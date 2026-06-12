@@ -1,0 +1,7 @@
+{
+  "error": {
+    "errorId": "UnprocessableRefundAmount",
+    "description": "Cannot refund this payment with the amount 4201. The refund amount must be less than or equal to the payment authorized amount (4200).",
+    "diagnosticsId": "1234567898"
+  }
+}

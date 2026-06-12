@@ -1,0 +1,7 @@
+{
+  "error": {
+    "errorId": "PaymentAlreadyRefunded",
+    "description": "Cannot refund this payment because the payment has already been fully refunded.",
+    "diagnosticsId": "1234567898"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "error": {
+    "errorId": "MetadataContainsEmptyKey",
+    "description": "Metadata field contains empty string key.",
+    "recoverySuggestion": "Either remove empty string keys or provide non-empty string instead.",
+    "diagnosticsId": "1234567898"
+  }
+}

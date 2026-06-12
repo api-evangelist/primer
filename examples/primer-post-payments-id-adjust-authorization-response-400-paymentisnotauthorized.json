@@ -1,0 +1,7 @@
+{
+  "error": {
+    "errorId": "PaymentIsNotAuthorizedYet",
+    "description": "Adjust Authorization is only allowed on authorized payments.",
+    "diagnosticsId": "1234567898"
+  }
+}

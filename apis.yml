@@ -48,6 +48,10 @@ apis:
         url: https://primer.io/docs/api-reference/get-started/overview
       - type: Sandbox
         url: https://api.sandbox.primer.io
+      - type: OpenAPI
+        url: openapi/primer-payments-openapi.yml
+      - type: OpenAPI
+        url: openapi/primer-webhooks-openapi.yml
 common:
   - type: Website
     url: https://primer.io/
@@ -73,6 +77,20 @@ common:
     url: rate-limits/primer-rate-limits.yml
   - type: FinOps
     url: finops/primer-finops.yml
+  - type: JSONSchema
+    url: json-schema/primer-clientsession.json
+  - type: JSONSchema
+    url: json-schema/primer-paymentcreation.json
+  - type: JSONSchema
+    url: json-schema/primer-payment.json
+  - type: JSONSchema
+    url: json-schema/primer-paymentrefund.json
+  - type: JSONSchema
+    url: json-schema/primer-paymentcapture.json
+  - type: Vocabulary
+    url: vocabulary/primer-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/primer-context.jsonld
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

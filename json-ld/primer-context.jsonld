@@ -1,0 +1,60 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "primer": "https://primer.io/docs/api-reference/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Payment": "schema:PaymentChargeSpecification",
+    "ClientSession": "primer:client-session",
+    "PaymentInstrument": "primer:payment-instruments",
+
+    "paymentId": { "@id": "schema:identifier", "@type": "xsd:string" },
+    "amount": { "@id": "schema:price", "@type": "xsd:integer" },
+    "currencyCode": { "@id": "schema:priceCurrency", "@type": "xsd:string" },
+    "status": { "@id": "schema:orderStatus", "@type": "xsd:string" },
+    "orderId": { "@id": "schema:orderNumber", "@type": "xsd:string" },
+
+    "paymentMethodType": { "@id": "primer:paymentMethodType", "@type": "xsd:string" },
+    "processorMerchantId": { "@id": "primer:processorMerchantId", "@type": "xsd:string" },
+    "paymentMethodToken": { "@id": "primer:paymentMethodToken", "@type": "xsd:string" },
+
+    "ClientSessionAPIRequest": "primer:ClientSessionAPIRequest",
+    "PaymentCreationAPIRequest": "primer:PaymentCreationAPIRequest",
+    "PaymentAPIResponse": "primer:PaymentAPIResponse",
+    "PaymentRefundAPIRequest": "primer:PaymentRefundAPIRequest",
+    "PaymentCaptureAPIRequest": "primer:PaymentCaptureAPIRequest",
+
+    "PaymentStatus": "primer:PaymentStatus",
+    "PENDING": "primer:PENDING",
+    "AUTHORIZED": "primer:AUTHORIZED",
+    "SETTLING": "primer:SETTLING",
+    "SETTLED": "primer:SETTLED",
+    "DECLINED": "primer:DECLINED",
+    "CANCELLED": "primer:CANCELLED",
+    "FAILED": "primer:FAILED",
+
+    "customer": { "@id": "schema:customer" },
+    "email": { "@id": "schema:email", "@type": "xsd:string" },
+    "firstName": { "@id": "schema:givenName", "@type": "xsd:string" },
+    "lastName": { "@id": "schema:familyName", "@type": "xsd:string" },
+
+    "billingAddress": { "@id": "schema:billingAddress" },
+    "shippingAddress": { "@id": "schema:deliveryAddress" },
+    "addressLine1": { "@id": "schema:streetAddress", "@type": "xsd:string" },
+    "city": { "@id": "schema:addressLocality", "@type": "xsd:string" },
+    "state": { "@id": "schema:addressRegion", "@type": "xsd:string" },
+    "postalCode": { "@id": "schema:postalCode", "@type": "xsd:string" },
+    "countryCode": { "@id": "schema:addressCountry", "@type": "xsd:string" },
+
+    "lineItems": { "@id": "schema:orderedItem", "@container": "@list" },
+    "name": { "@id": "schema:name", "@type": "xsd:string" },
+    "description": { "@id": "schema:description", "@type": "xsd:string" },
+    "quantity": { "@id": "schema:orderQuantity", "@type": "xsd:integer" },
+    "unitAmount": { "@id": "schema:price", "@type": "xsd:integer" },
+
+    "webhook": { "@id": "primer:webhook" },
+    "createdAt": { "@id": "schema:dateCreated", "@type": "xsd:dateTime" },
+    "updatedAt": { "@id": "schema:dateModified", "@type": "xsd:dateTime" }
+  }
+}

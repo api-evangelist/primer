@@ -1,0 +1,7 @@
+{
+  "error": {
+    "errorId": "PaymentAlreadyAuthorized",
+    "description": "The payment has already been authorized",
+    "diagnosticsId": "1234567898"
+  }
+}

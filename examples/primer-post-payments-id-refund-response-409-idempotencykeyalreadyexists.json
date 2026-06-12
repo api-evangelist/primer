@@ -1,0 +1,9 @@
+{
+  "error": {
+    "errorId": "IdempotencyKeyAlreadyExists",
+    "description": "The idempotency key \"1234567898\" already exists for transaction",
+    "diagnosticsId": "1234567898",
+    "paymentId": "gg3r3tsa3",
+    "paymentStatus": "SETTLED"
+  }
+}

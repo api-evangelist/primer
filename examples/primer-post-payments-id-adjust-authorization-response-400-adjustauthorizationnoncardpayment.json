@@ -1,0 +1,7 @@
+{
+  "error": {
+    "errorId": "AdjustAuthorizationNonCardPayment",
+    "description": "Adjust Authorization is only available on card payments.",
+    "diagnosticsId": "1234567898"
+  }
+}

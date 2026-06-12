@@ -1,0 +1,7 @@
+{
+  "error": {
+    "errorId": "InvalidPaymentStatus",
+    "description": "A settled payment cannot be authorized",
+    "diagnosticsId": "1234567898"
+  }
+}

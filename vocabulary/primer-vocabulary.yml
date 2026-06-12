@@ -1,0 +1,1685 @@
+name: Primer API Vocabulary
+description: Key terms, enumerations, and concepts from the Primer payment orchestration
+  API.
+version: '2.4'
+source: https://primer.io/docs/api-reference/endpoints/v2.4/openapi.yaml
+terms:
+- term: AccountFundingTypeEnum
+  type: enum
+  description: An enumeration.
+  values:
+  - CREDIT
+  - DEBIT
+  - PREPAID
+  - CHARGE
+  - DEFERRED_DEBIT
+  - UNKNOWN
+- term: ApayaCustomerTokenAPISchema
+  type: object
+  description: ''
+  properties:
+  - mx
+  - mnc
+  - mcc
+- term: BinDataAPISchema
+  type: object
+  description: ''
+  properties:
+  - network
+  - issuerCountryCode
+  - issuerName
+  - issuerCurrencyCode
+  - regionalRestriction
+  - accountNumberType
+  - accountFundingType
+  - prepaidReloadableIndicator
+  - productUsageType
+  - productCode
+  - productName
+- term: BlockingPaymentActionTypeEnum
+  type: enum
+  description: An enumeration.
+  values:
+  - 3DS_AUTHENTICATION
+  - USE_PRIMER_SDK
+  - PAYMENT_METHOD_VOUCHER
+  - PROCESSOR_3DS
+- term: CardAccountNumberTypeEnum
+  type: enum
+  description: An enumeration.
+  values:
+  - PRIMARY_ACCOUNT_NUMBER
+  - NETWORK_TOKEN
+  - DIGITAL_PAN
+  - UNKNOWN
+- term: CardNetworkEnum
+  type: enum
+  description: 'The list of available card networks.
+
+    '
+  values:
+  - AMEX
+  - DANKORT
+  - DINERS_CLUB
+  - DISCOVER
+  - EFTPOS
+  - ENROUTE
+  - ELO
+  - HIPER
+  - INTERAC
+  - JCB
+  - MAESTRO
+  - MASTERCARD
+  - MIR
+  - PRIVATE_LABEL
+  - UNIONPAY
+  - VISA
+  - CARTES_BANCAIRES
+  - OTHER
+- term: CardProductTypeEnum
+  type: enum
+  description: An enumeration.
+  values:
+  - CONSUMER
+  - BUSINESS
+  - GOVERNMENT
+  - UNKNOWN
+- term: CardRegionRestrictionEnum
+  type: enum
+  description: An enumeration.
+  values:
+  - DOMESTIC_USE_ONLY
+  - NONE
+  - UNKNOWN
+- term: ClientSessionUpdateAPIRequest
+  type: object
+  description: ''
+  properties:
+  - clientToken
+  - customerId
+  - orderId
+  - currencyCode
+  - amount
+  - metadata
+  - customer
+  - order
+  - paymentMethod
+- term: ClientSessionAPIRequest
+  type: object
+  description: ''
+  properties:
+  - orderId
+  - currencyCode
+  - amount
+  - order
+  - customerId
+  - customer
+  - metadata
+  - paymentMethod
+- term: OrderDetailsAPISchema
+  type: object
+  description: ''
+  properties:
+  - lineItems
+  - countryCode
+  - retailerCountryCode
+  - fees
+  - shipping
+- term: OrderFeesAPISchema
+  type: object
+  description: ''
+  properties:
+  - amount
+  - type
+  - description
+- term: OrderLineItemsAPISchema
+  type: object
+  description: "The details of the line items of the order.\n\nThe total amount of\
+    \ a line item is calculated like so: \n````\n  totalAmount = (amount * quantity)\
+    \ - discountAmount + taxAmount\n```\n"
+  properties:
+  - itemId
+  - name
+  - description
+  - amount
+  - quantity
+  - discountAmount
+  - taxAmount
+  - taxCode
+  - productType
+  - productData
+- term: OrderLineItemsProductDataAPISchema
+  type: object
+  description: Details related to the product
+  properties:
+  - sku
+  - brand
+  - color
+  - globalTradeItemNumber
+  - manufacturerPartNumber
+  - weight
+  - weightUnit
+  - pageUrl
+- term: OrderShippingAPISchema
+  type: object
+  description: ''
+  properties:
+  - amount
+  - methodId
+  - methodName
+  - methodDescription
+- term: CheckoutPaymentMethodOptionsAPISchema
+  type: object
+  description: ''
+  properties:
+  - vaultOnSuccess
+  - vaultOn3DS
+  - vaultOnAgreement
+  - descriptor
+  - paymentType
+  - orderedAllowedCardNetworks
+  - options
+  - authorizationType
+  - firstPaymentReason
+- term: CheckoutPaymentMethodOptionAPISchema
+  type: object
+  description: 'Options for the payment method of type `PAYMENT_METHOD_TYPE`.
+
+    '
+  properties:
+  - surcharge
+  - extraMerchantData
+  - merchantName
+- term: CheckoutPaymentMethodCardOptionAPISchema
+  type: object
+  description: ''
+  properties:
+  - networks
+  - captureVaultedCardCvv
+- term: CheckoutPaymentMethodOptionCardNetworkAPISchema
+  type: object
+  description: ''
+  properties:
+  - AMEX
+  - CARTES_BANCAIRES
+  - DANKORT
+  - DINERS_CLUB
+  - DISCOVER
+  - ENROUTE
+  - ELO
+  - HIPER
+  - INTERAC
+  - JCB
+  - MAESTRO
+  - MASTERCARD
+  - MIR
+  - PRIVATE_LABEL
+  - UNIONPAY
+  - VISA
+  - OTHER
+- term: CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema
+  type: object
+  description: ''
+  properties:
+  - surcharge
+- term: CheckoutPaymentMethodOptionSurchargeAPISchema
+  type: object
+  description: ''
+  properties:
+  - amount
+- term: PaymentRequestPaymentMethodOptionsAPISchema
+  type: object
+  description: ''
+  properties:
+  - vaultOnSuccess
+  - vaultOn3DS
+  - vaultOnAgreement
+  - descriptor
+  - paymentType
+  - authorizationType
+  - firstPaymentReason
+- term: ApplePayIntervalUnit
+  type: enum
+  description: 'Calendar unit representing part of a recurring billing interval.
+
+    '
+  values:
+  - minute
+  - hour
+  - day
+  - month
+  - year
+- term: CheckoutPaymentMethodApplePayOptionAPISchema
+  type: object
+  description: Apple Pay configuration used in a client session's payment method options.
+  properties:
+  - merchantName
+  - recurringPaymentRequest
+  - deferredPaymentRequest
+  - automaticReloadRequest
+- term: ApplePayRecurringRequest
+  type: object
+  description: ''
+  properties:
+  - paymentDescription
+  - billingAgreement
+  - managementUrl
+  - regularBilling
+  - trialBilling
+- term: ApplePayRegularBilling
+  type: object
+  description: ''
+  properties:
+  - label
+  - amount
+  - recurringStartDate
+  - recurringEndDate
+  - recurringIntervalUnit
+  - recurringIntervalCount
+- term: ApplePayTrialBilling
+  type: object
+  description: ''
+  properties:
+  - label
+  - amount
+  - recurringStartDate
+  - recurringEndDate
+  - recurringIntervalUnit
+  - recurringIntervalCount
+- term: ApplePayDeferredRequest
+  type: object
+  description: ''
+  properties:
+  - paymentDescription
+  - billingAgreement
+  - managementUrl
+  - deferredBilling
+  - freeCancellationDate
+  - freeCancellationTimeZone
+- term: ApplePayDeferredBilling
+  type: object
+  description: ''
+  properties:
+  - label
+  - amount
+  - deferredPaymentDate
+- term: ApplePayAutomaticReloadRequest
+  type: object
+  description: ''
+  properties:
+  - paymentDescription
+  - billingAgreement
+  - managementUrl
+  - automaticReloadBilling
+- term: ApplePayAutomaticReloadBilling
+  type: object
+  description: ''
+  properties:
+  - label
+  - amount
+  - automaticReloadThresholdAmount
+- term: PaymentResponsePaymentMethodOptionsAPISchema
+  type: object
+  description: ''
+  properties:
+  - descriptor
+  - paymentType
+  - paymentMethodToken
+  - isVaulted
+  - analyticsId
+  - paymentMethodType
+  - paymentMethodData
+  - threeDSecureAuthentication
+  - authorizationType
+- term: CheckoutCustomerDetailsAPISchema
+  type: object
+  description: ''
+  properties:
+  - emailAddress
+  - mobileNumber
+  - firstName
+  - lastName
+  - billingAddress
+  - shippingAddress
+  - taxId
+  - nationalDocumentId
+- term: CustomerDetailsAPISchema
+  type: object
+  description: ''
+  properties:
+  - emailAddress
+  - mobileNumber
+  - firstName
+  - lastName
+  - billingAddress
+  - shippingAddress
+  - taxId
+  - nationalDocumentId
+- term: ClientSessionWithTokenAPIResponse
+  type: object
+  description: ''
+  properties:
+  - clientToken
+  - clientTokenExpirationDate
+  - orderId
+  - currencyCode
+  - amount
+  - order
+  - customerId
+  - customer
+  - metadata
+  - paymentMethod
+  - warnings
+- term: ClientSessionAPIResponse
+  type: object
+  description: ''
+  properties:
+  - customerId
+  - orderId
+  - currencyCode
+  - amount
+  - metadata
+  - customer
+  - order
+  - paymentMethod
+- term: ClientSessionWarningsAPIResponse
+  type: object
+  description: ''
+  properties:
+  - type
+  - code
+  - message
+- term: CountryCodeEnum
+  type: enum
+  description: "2-letter country code in <a href='https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements'>ISO\
+    \ 3166-1 alpha</a> format, \ne.g. <code>FR</code> for France and <code>GB</code>\
+    \ for the United Kingdom.\n"
+  values:
+  - AW
+  - AF
+  - AO
+  - AI
+  - AX
+  - AL
+  - AD
+  - AE
+  - AR
+  - AM
+  - AS
+  - AQ
+  - TF
+  - AG
+  - AU
+  - AT
+  - AZ
+  - BI
+  - BE
+  - BJ
+  - BQ
+  - BF
+  - BD
+  - BG
+  - BH
+  - BS
+  - BA
+  - BL
+  - BY
+  - BZ
+  - BM
+  - BO
+  - BR
+  - BB
+  - BN
+  - BT
+  - BV
+  - BW
+  - CF
+  - CA
+  - CC
+  - CH
+  - CL
+  - CN
+  - CI
+  - CM
+  - CD
+  - CG
+  - CK
+  - CO
+  - KM
+  - CV
+  - CR
+  - CU
+  - CW
+  - CX
+  - KY
+  - CY
+  - CZ
+  - DE
+  - DJ
+  - DM
+  - DK
+  - DO
+  - DZ
+  - EC
+  - EG
+  - ER
+  - EH
+  - ES
+  - EE
+  - ET
+  - FI
+  - FJ
+  - FK
+  - FR
+  - FO
+  - FM
+  - GA
+  - GB
+  - GE
+  - GG
+  - GH
+  - GI
+  - GN
+  - GP
+  - GM
+  - GW
+  - GQ
+  - GR
+  - GD
+  - GL
+  - GT
+  - GF
+  - GU
+  - GY
+  - HK
+  - HM
+  - HN
+  - HR
+  - HT
+  - HU
+  - ID
+  - IM
+  - IN
+  - IO
+  - IE
+  - IR
+  - IQ
+  - IS
+  - IL
+  - IT
+  - JM
+  - JE
+  - JO
+  - JP
+  - KZ
+  - KE
+  - KG
+  - KH
+  - KI
+  - KN
+  - KR
+  - KW
+  - LA
+  - LB
+  - LR
+  - LY
+  - LC
+  - LI
+  - LK
+  - LS
+  - LT
+  - LU
+  - LV
+  - MO
+  - MF
+  - MA
+  - MC
+  - MD
+  - MG
+  - MV
+  - MX
+  - MH
+  - MK
+  - ML
+  - MT
+  - MM
+  - ME
+  - MN
+  - MP
+  - MZ
+  - MR
+  - MS
+  - MQ
+  - MU
+  - MW
+  - MY
+  - YT
+  - NA
+  - NC
+  - NE
+  - NF
+  - NG
+  - NI
+  - NU
+  - NL
+  - 'NO'
+  - NP
+  - NR
+  - NZ
+  - OM
+  - PK
+  - PA
+  - PN
+  - PE
+  - PH
+  - PW
+  - PG
+  - PL
+  - PR
+  - KP
+  - PT
+  - PY
+  - PS
+  - PF
+  - QA
+  - RE
+  - RO
+  - RU
+  - RW
+  - SA
+  - SD
+  - SN
+  - SG
+  - GS
+  - SH
+  - SJ
+  - SB
+  - SL
+  - SV
+  - SM
+  - SO
+  - PM
+  - RS
+  - SS
+  - ST
+  - SR
+  - SK
+  - SI
+  - SE
+  - SZ
+  - SX
+  - SC
+  - SY
+  - TC
+  - TD
+  - TG
+  - TH
+  - TJ
+  - TK
+  - TM
+  - TL
+  - TO
+  - TT
+  - TN
+  - TR
+  - TV
+  - TW
+  - TZ
+  - UG
+  - UA
+  - UM
+  - UY
+  - US
+  - UZ
+  - VA
+  - VC
+  - VE
+  - VG
+  - VI
+  - VN
+  - VU
+  - WF
+  - WS
+  - YE
+  - ZA
+  - ZM
+  - ZW
+- term: Currency
+  type: enum
+  description: "3-letter currency code in <a href='https://en.wikipedia.org/wiki/ISO_4217#Active_codes'>ISO\
+    \ 4217</a> format, \ne.g. <code>USD</code> for US dollars.\n"
+  values:
+  - AED
+  - AFN
+  - ALL
+  - AMD
+  - ANG
+  - AOA
+  - ARS
+  - AUD
+  - AWG
+  - AZN
+  - BAM
+  - BBD
+  - BDT
+  - BGN
+  - BHD
+  - BIF
+  - BMD
+  - BND
+  - BOB
+  - BOV
+  - BRL
+  - BSD
+  - BTN
+  - BWP
+  - BYR
+  - BYN
+  - BZD
+  - CAD
+  - CDF
+  - CHE
+  - CHF
+  - CHW
+  - CLP
+  - CNY
+  - COP
+  - COU
+  - CRC
+  - CUC
+  - CUP
+  - CVE
+  - CZK
+  - DJF
+  - DKK
+  - DOP
+  - DZD
+  - EGP
+  - ERN
+  - ETB
+  - EUR
+  - FJD
+  - FKP
+  - GBP
+  - GEL
+  - GHS
+  - GIP
+  - GMD
+  - GNF
+  - GTQ
+  - GYD
+  - HKD
+  - HNL
+  - HRK
+  - HTG
+  - HUF
+  - IDR
+  - ILS
+  - INR
+  - IQD
+  - IRR
+  - ISK
+  - JMD
+  - JOD
+  - JPY
+  - KES
+  - KGS
+  - KHR
+  - KMF
+  - KPW
+  - KRW
+  - KWD
+  - KYD
+  - KZT
+  - LAK
+  - LBP
+  - LKR
+  - LRD
+  - LSL
+  - LYD
+  - MAD
+  - MDL
+  - MKD
+  - MMK
+  - MNT
+  - MOP
+  - MRO
+  - MUR
+  - MVR
+  - MWK
+  - MXN
+  - MXV
+  - MYR
+  - MZN
+  - NAD
+  - NGN
+  - NIO
+  - NOK
+  - NPR
+  - NZD
+  - OMR
+  - PAB
+  - PEN
+  - PGK
+  - PHP
+  - PKR
+  - PLN
+  - PYG
+  - QAR
+  - RON
+  - RSD
+  - RUB
+  - RWF
+  - SAR
+  - SBD
+  - SCR
+  - SDG
+  - SEK
+  - SGD
+  - SHP
+  - SOS
+  - SRD
+  - SSP
+  - SVC
+  - SYP
+  - SZL
+  - THB
+  - TJS
+  - TMT
+  - TND
+  - TOP
+  - TRY
+  - TTD
+  - TWD
+  - TZS
+  - UAH
+  - UGX
+  - USD
+  - UYU
+  - UZS
+  - VND
+  - VUV
+  - WST
+  - XAF
+  - XAG
+  - XAU
+  - XBA
+  - XBB
+  - XBC
+  - XBD
+  - XCD
+  - XDR
+  - XFU
+  - XOF
+  - XPD
+  - XPF
+  - XPT
+  - XSU
+  - XTS
+  - XUA
+  - YER
+  - ZAR
+  - ZMW
+  - ZWL
+- term: PaymentResponseProcessorAPISchema
+  type: object
+  description: ''
+  properties:
+  - name
+  - processorMerchantId
+  - amountCaptured
+  - amountRefunded
+- term: GoCardlessMandateAPISchema
+  type: object
+  description: ''
+  properties:
+  - gocardlessMandateId
+- term: IdealPayNLTokenAPISchema
+  type: object
+  description: ''
+  properties:
+  - paymentMethodConfigId
+- term: KlarnaAddressAPISchema
+  type: object
+  description: ''
+  properties:
+  - title
+  - firstName
+  - lastName
+  - email
+  - phoneNumber
+  - addressLine1
+  - addressLine2
+  - addressLine3
+  - city
+  - state
+  - countryCode
+  - postalCode
+- term: KlarnaCustomerTokenAPISchema
+  type: object
+  description: ''
+  properties:
+  - klarnaCustomerToken
+  - sessionData
+- term: KlarnaPaymentSessionAPISchema
+  type: object
+  description: ''
+  properties:
+  - klarnaAuthorizationToken
+  - sessionData
+- term: KlarnaSessionDetailsAPISchema
+  type: object
+  description: ''
+  properties:
+  - recurringDescription
+  - billingAddress
+  - shippingAddress
+  - purchaseCountry
+  - purchaseCurrency
+  - locale
+  - orderLines
+  - tokenDetails
+- term: KlarnaTokenDetails
+  type: object
+  description: ''
+  properties:
+  - type
+  - brand
+  - masked_number
+  - expiry_date
+- term: PayPalBillingAgreementAPISchema
+  type: object
+  description: ''
+  properties:
+  - paypalBillingAgreementId
+  - externalPayerInfo
+  - shippingAddress
+  - paypalStatus
+- term: PayPalExternalPayerInfoAPISchema
+  type: object
+  description: ''
+  properties:
+  - externalPayerId
+  - email
+  - firstName
+  - lastName
+- term: PayPalOrderTokenAPISchema
+  type: object
+  description: ''
+  properties:
+  - paypalOrderId
+  - externalPayerInfo
+  - paypalStatus
+- term: PaymentAPIResponse
+  type: object
+  description: ''
+  properties:
+  - id
+  - date
+  - dateUpdated
+  - status
+  - cardTokenType
+  - orderId
+  - currencyCode
+  - amount
+  - order
+  - customerId
+  - customer
+  - metadata
+  - paymentMethod
+  - processor
+  - requiredAction
+  - statusReason
+  - transactions
+  - riskData
+- term: PaymentCancelAPIRequest
+  type: object
+  description: ''
+  properties:
+  - reason
+  - expand
+- term: PaymentAuthorizationAPIRequest
+  type: object
+  description: ''
+  properties:
+  - processor
+  - expand
+- term: PaymentCaptureAPIRequest
+  type: object
+  description: ''
+  properties:
+  - amount
+  - final
+  - order
+  - metadata
+  - expand
+- term: PaymentCardTokenAPISchema
+  type: object
+  description: ''
+  properties:
+  - first6Digits
+  - last4Digits
+  - expirationMonth
+  - expirationYear
+  - cardholderName
+  - network
+  - isNetworkTokenized
+  - binData
+- term: PaymentCreationAPIRequest
+  type: object
+  description: ''
+  properties:
+  - orderId
+  - currencyCode
+  - amount
+  - order
+  - paymentMethodToken
+  - customerId
+  - customer
+  - metadata
+  - paymentMethod
+  - expand
+- term: StatusReasonAPISchema
+  type: object
+  description: ''
+  properties:
+  - type
+  - declineType
+  - code
+  - message
+  - paymentMethodResultCode
+  - paymentMethodResultMessage
+  - paymentMethodAdviceCode
+  - paymentMethodAdviceMessage
+  - advisedAction
+- term: RiskDataAPISchema
+  type: object
+  description: 'Risk data associated with this payment.
+
+    '
+  properties:
+  - fraudChecks
+  - cvvCheck
+  - avsCheck
+- term: FraudCheckAPISchema
+  type: object
+  description: 'Results of the pre-authorization and post-authorization fraud checks.
+
+    '
+  properties:
+  - source
+  - preAuthorizationResult
+  - preAuthorizationRecommendation
+  - postAuthorizationResult
+- term: FraudDecisionTypeEnum
+  type: enum
+  description: Possible fraud check outcomes.
+  values:
+  - ACCEPT
+  - REFUSE
+  - FAILED
+  - THREE_DS
+  - THREE_DS_EXEMPTION
+- term: PreAuthFraudDecisionTypeEnum
+  type: enum
+  description: Possible pre-authorization fraud check outcomes.
+  values:
+  - ACCEPT
+  - REFUSE
+  - FAILED
+  - THREE_DS
+  - THREE_DS_EXEMPTION
+- term: PostAuthFraudDecisionTypeEnum
+  type: enum
+  description: Possible post-authorization fraud check outcomes.
+  values:
+  - ACCEPT
+  - REFUSE
+  - FAILED
+  - THREE_DS
+- term: PreAuthorizationRecommendationEnum
+  type: enum
+  description: 'Pre-authorization recommendation indicating the SCA exemption or risk
+    assessment path taken. Only present when `preAuthorizationResult` is `THREE_DS_EXEMPTION`.
+
+
+    Values:
+
+    - `TRANSACTION_RISK_ANALYSIS`: Indicates that the fraud check deemed the transaction
+    low risk and recommends applying a Transaction Risk Analysis (TRA) exemption to
+    bypass Strong Customer Authentication (SCA) under PSD2, reducing friction for
+    users.
+
+    '
+  values:
+  - TRANSACTION_RISK_ANALYSIS
+- term: CVVCheckAPISchema
+  type: object
+  description: 'Results of any external CVV check performed on this payment.
+
+    '
+  properties:
+  - source
+  - result
+- term: AVSCheckAPISchema
+  type: object
+  description: 'Results of any external AVS check performed on this payment.
+
+    '
+  properties:
+  - source
+  - result
+- term: AVSRiskAssessmentValues
+  type: object
+  description: ''
+  properties:
+  - streetAddress
+  - postalCode
+- term: RiskAssessmentStatusEnum
+  type: enum
+  description: Possible risk assessment values for CVV and AVS checks.
+  values:
+  - MATCHED
+  - NOT_MATCHED
+  - NOT_VERIFIED
+  - NOT_PROVIDED
+  - NOT_APPLICABLE
+  - SKIPPED
+- term: PaymentMethodTypeEnum
+  type: enum
+  description: Payment method type, where `OFF_SESSION_PAYMENT` is used for APM (Alternative
+    Payment Method) payments and `PAYMENT_CARD` for traditional debit or credit cards.
+    Please note that this list is different from one indicated on [available payment
+    methods](/docs/connections/payment-methods/available-payment-methods) page and
+    values of this field will be changed in the future versions of the API.
+  values:
+  - PAYMENT_CARD
+  - GOOGLE_PAY
+  - APPLE_PAY
+  - PAYPAL
+  - BANK_ACCOUNT
+  - KLARNA
+  - APAYA
+  - OPENNODE
+  - HOOLAH
+  - ATOME
+  - COINBASE
+  - NETS
+  - TWOC2P
+  - CLEARPAY
+  - SHOPEEPAY
+  - TRIPLE_A
+  - AFTERPAY
+  - NOL_PAY
+  - PAY_NL_IDEAL
+  - PAY_NL_BANCONTACT
+  - PAY_NL_DIRECT_DEBIT
+  - PAY_NL_SOFORT_BANKING
+  - PAY_NL_PAYPAL
+  - PAY_NL_PAYCONIQ
+  - PAY_NL_GIROPAY
+  - PAY_NL_P24
+  - PAY_NL_EPS
+  - PAY_NL_KAARTDIRECT
+  - ADYEN_SOFORT
+  - ADYEN_TWINT
+  - ADYEN_GIROPAY
+  - ADYEN_TRUSTLY
+  - ADYEN_ALIPAY
+  - ADYEN_MOBILEPAY
+  - ADYEN_MULTIBANCO
+  - ADYEN_VIPPS
+  - ADYEN_DOTPAY
+  - ADYEN_IDEAL
+  - ADYEN_BLIK
+  - ADYEN_PAYTRAIL
+  - ADYEN_INTERAC
+  - ADYEN_PAYSHOP
+  - ADYEN_MBWAY
+  - ADYEN_AFFIRM
+  - ADYEN_KLARNA
+  - ADYEN_BANCONTACT_PAYCONIQ
+  - ADYEN_EPS
+  - ADYEN_BANCONTACT_CARD
+  - ADYEN_SWISH
+  - MOLLIE_IDEAL
+  - MOLLIE_BANCONTACT
+  - MOLLIE_P24
+  - MOLLIE_GIROPAY
+  - MOLLIE_EPS
+  - MOLLIE_GIFTCARD
+  - MOLLIE_SOFORT
+  - NETAXEPT_PAYTRAIL
+  - BUCKAROO_IDEAL
+  - BUCKAROO_BANCONTACT
+  - BUCKAROO_SOFORT
+  - BUCKAROO_GIROPAY
+  - BUCKAROO_EPS
+  - RAPYD_GCASH
+  - RAPYD_PROMPTPAY
+  - RAPYD_GRABPAY
+  - RAPYD_POLI
+  - RAPYD_FAST
+  - XFERS_PAYNOW
+  - STRIPE_GIROPAY
+  - STRIPE_IDEAL
+  - ALIPAY_CN
+  - CHAI_KAKAOPAY
+  - CHAI_NAVER
+  - CHAI_TOSS
+  - XENDIT_DANA
+  - XENDIT_OVO
+  - XENDIT_SHOPEEPAY
+  - XENDIT_RETAIL_OUTLETS
+  - OMISE_PROMPTPAY
+  - OMISE_TRUEMONEY
+  - EBANX_PAGOFACIL
+  - PACYPAY_WECHAT
+  - PACYPAY_ALIPAY
+  - PACYPAY_ALIPAY_PLUS
+  - WORLDPAY_IDEAL
+  - IPAY88_CARD
+  - INGENICO_PAYPAL
+  - VOLT_PIX
+  - VOLT_BANK_TRANSFER
+  - BRAINTREE_VENMO
+  - THUNES_SPIRIT_OF_CADEAU
+  - THUNES_ILLICADO
+  - THUNES_CARTE_CADEAU_CONFORAMA
+  - THUNES_CHEQUE_FIDELITE_CONFORAMA
+  - SIPS_CPAY
+  - SIPS_CPAYCONFORAMA
+  - MONEXT_CETELEM
+  - MONEXT_CPAY
+- term: PaymentListAPIResponse
+  type: object
+  description: ''
+  properties:
+  - data
+  - nextCursor
+  - prevCursor
+- term: PaymentRefundAPIRequest
+  type: object
+  description: ''
+  properties:
+  - amount
+  - orderId
+  - reason
+  - transactionEventId
+  - expand
+- term: PaymentRequiredActionAPISchema
+  type: object
+  description: ''
+  properties:
+  - name
+  - description
+  - clientToken
+- term: PaymentResumeAPIRequest
+  type: object
+  description: ''
+  properties:
+  - resumeToken
+- term: PaymentSummaryAPISchema
+  type: object
+  description: ''
+  properties:
+  - id
+  - date
+  - dateUpdated
+  - status
+  - orderId
+  - processor
+  - currencyCode
+  - amount
+  - metadata
+- term: PaymentAdjustAuthorizationAPIRequest
+  type: object
+  description: ''
+  properties:
+  - amount
+  - expand
+- term: PaymentAuthorizationRequestProcessorAPISchema
+  type: object
+  description: ''
+  properties:
+  - processorMerchantId
+  - name
+- term: PaymentSummaryProcessorAPISchema
+  type: object
+  description: ''
+  properties:
+  - name
+  - processorMerchantId
+- term: PrepaidReloadableEnum
+  type: enum
+  description: An enumeration.
+  values:
+  - RELOADABLE
+  - NON_RELOADABLE
+  - NOT_APPLICABLE
+  - UNKNOWN
+- term: RecurringTransactionTypeEnum
+  type: enum
+  description: An enumeration.
+  values:
+  - FIRST_PAYMENT
+  - ECOMMERCE
+  - SUBSCRIPTION
+  - UNSCHEDULED
+- term: ProductTypeEnum
+  type: enum
+  description: An enumeration
+  values:
+  - PHYSICAL
+  - DIGITAL
+- term: ThreeDSecureAuthResponseCodeEnum
+  type: enum
+  description: An enumeration.
+  values:
+  - NOT_PERFORMED
+  - SKIPPED
+  - AUTH_SUCCESS
+  - AUTH_FAILED
+  - CHALLENGE
+  - METHOD
+- term: ThreeDSecureAuthenticationAPISchema
+  type: object
+  description: ''
+  properties:
+  - responseCode
+  - reasonCode
+  - reasonText
+  - protocolVersion
+  - challengeIssued
+- term: ThreeDSecureFailedReasonCodeEnum
+  type: enum
+  description: 'This enum is derived from the `transStatusReason` on page 218 of the
+
+    [EMV Co 3DS protocol specification](https://www.emvco.com/terms-of-use/?u=/wp-content/uploads/documents/EMVCo_3DS_Spec_v220_122018.pdf)
+
+
+    | Code | Description                             |
+
+    |------|-----------------------------------------|
+
+    | 01   | Card authentication failed              |
+
+    | 02   | Unknown Device                          |
+
+    | 03   | Unsupported Device                      |
+
+    | 04   | Exceeds authentication frequency limit  |
+
+    | 05   | Expired card                            |
+
+    | 06   | Invalid card number                     |
+
+    | 07   | Invalid transaction                     |
+
+    | 08   | No Card record                          |
+
+    | 09   | Security failure                        |
+
+    | 10   | Stolen card                             |
+
+    | 11   | Suspected fraud                         |
+
+    | 12   | Transaction not permitted to cardholder |
+
+    | 13   | Cardholder not enrolled in service      |
+
+    | 14   | Transaction timed out at the ACS        |
+
+    | 15   | Low confidence                          |
+
+    | 16   | Medium confidence                       |'
+  values:
+  - UNKNOWN
+  - REJECTED_BY_ISSUER
+  - CARD_AUTHENTICATION_FAILED
+  - UNKNOWN_DEVICE
+  - UNSUPPORTED_DEVICE
+  - EXCEEDS_AUTHENTICATION_FREQUENCY_LIMIT
+  - EXPIRED_CARD
+  - INVALID_CARD_NUMBER
+  - INVALID_TRANSACTION
+  - NO_CARD_RECORD
+  - SECURITY_FAILURE
+  - STOLEN_CARD
+  - SUSPECTED_FRAUD
+  - TRANSACTION_NOT_PERMITTED_TO_CARDHOLDER
+  - CARDHOLDER_NOT_ENROLLED_IN_SERVICE
+  - TRANSACTION_TIMED_OUT_AT_THE_ACS
+  - LOW_CONFIDENCE
+  - MEDIUM_CONFIDENCE
+  - HIGH_CONFIDENCE
+  - VERY_HIGH_CONFIDENCE
+  - EXCEEDS_ACS_MAXIMUM_CHALLENGES
+  - NON_PAYMENT_NOT_SUPPORTED
+  - THREE_RI_NOT_SUPPORTED
+  - ACS_TECHNICAL_ISSUE
+  - DECOUPLED_REQUIRED_BY_ACS
+  - DECOUPLED_MAX_EXPIRY_EXCEEDED
+  - DECOUPLED_AUTHENTICATION_INSUFFICIENT_TIME
+  - AUTHENTICATION_ATTEMPTED_BUT_NOT_PERFORMED_BY_CARDHOLDER
+  - ACS_TIMED_OUT
+  - INVALID_ACS_RESPONSE
+  - ACS_SYSTEM_ERROR_RESPONSE
+  - ERROR_GENERATING_CAVV
+  - PROTOCOL_VERSION_NOT_SUPPORTED
+  - TRANSACTION_EXCLUDED_FROM_ATTEMPTS_PROCESSING
+  - REQUESTED_PROGRAM_NOT_SUPPORTED
+- term: ThreeDSecureSkippedReasonCodeEnum
+  type: enum
+  description: An enumeration.
+  values:
+  - GATEWAY_UNAVAILABLE
+  - DISABLED_BY_MERCHANT
+  - NOT_SUPPORTED_BY_ISSUER
+  - FAILED_TO_NEGOTIATE
+  - UNKNOWN_ACS_RESPONSE
+  - 3DS_SERVER_ERROR
+  - ACQUIRER_NOT_CONFIGURED
+  - ACQUIRER_NOT_PARTICIPATING
+  - EXEMPTION_ACCEPTED
+- term: TokenTypeEnum
+  type: enum
+  description: An enumeration.
+  values:
+  - MULTI_USE
+  - SINGLE_USE
+- term: DeclineTypeEnum
+  type: enum
+  description: An enumeration.
+  values:
+  - SOFT_DECLINE
+  - HARD_DECLINE
+- term: TransactionDeclineReasonV2Enum
+  type: enum
+  description: An enumeration.
+  values:
+  - ERROR
+  - INVALID_CARD_NUMBER
+  - EXPIRED_CARD
+  - LOST_OR_STOLEN_CARD
+  - SUSPECTED_FRAUD
+  - UNKNOWN
+  - DECLINED
+  - REFER_TO_CARD_ISSUER
+  - DO_NOT_HONOR
+  - INSUFFICIENT_FUNDS
+  - WITHDRAWAL_LIMIT_EXCEEDED
+  - ISSUER_TEMPORARILY_UNAVAILABLE
+  - AUTHENTICATION_REQUIRED
+- term: AdvisedActionEnum
+  type: enum
+  description: "The Primer-recommended action to take based on the underlying decline\
+    \ reason and advice code. This advised action is unified across all supported\
+    \ processors and payment methods.\n\n- `RETRY_LATER`: The payment was likely declined\
+    \ due to a temporary issue (e.g. Insufficient funds). The payment can be retried\
+    \ immediately or at a later date. \n- `UPDATE_DATA`: The payment was likely declined\
+    \ because critical data was missing or out-of-date. Please ensure you use the\
+    \ most up-to-date payment information and customer details before retrying the\
+    \ payment.\n- `DO_NOT_RETRY`: The payment was declined and should not be retried.\
+    \ You can still charge this payment method for future orders or installments.\n\
+    - `STOP_ALL_PAYMENTS`: The processor or payment method explicitly informs you\
+    \ to stop making any payment requests with this payment method. Please use another\
+    \ payment method to charge this customer.\n- `null`: Primer is unable to determine\
+    \ a recommended action. \n"
+  values:
+  - RETRY_LATER
+  - UPDATE_DATA
+  - DO_NOT_RETRY
+  - STOP_ALL_PAYMENTS
+- term: TransactionEventApiResponse
+  type: object
+  description: ''
+  properties:
+  - id
+  - processorEventId
+  - date
+  - type
+  - amount
+  - final
+- term: TransactionOverviewAPISchema
+  type: object
+  description: ''
+  properties:
+  - date
+  - amount
+  - currencyCode
+  - orderId
+  - transactionType
+  - processorTransactionId
+  - processorName
+  - processorMerchantId
+  - processorStatus
+  - processorStatusReason
+  - cardTokenType
+  - reason
+  - events
+- term: PaymentStatus
+  type: enum
+  description: An enumeration.
+  values:
+  - PENDING
+  - FAILED
+  - AUTHORIZED
+  - SETTLING
+  - PARTIALLY_SETTLED
+  - SETTLED
+  - DECLINED
+  - CANCELLED
+- term: PaymentStatusTypeEnum
+  type: enum
+  description: "The status reason type for the payment, providing more information\
+    \ on the error. \n`APPLICATION_ERROR` indicates something went wrong internally\
+    \ within primer's system. \n`GATEWAY_REJECTED` indicates that request was rejected\
+    \ on the third-party. \n`GATEWAY_TIMEOUT` indicates the timeout limit on the third\
+    \ party request was exceeded. \n`ISSUER_DECLINED` indicates a legitimate decline\
+    \ that is not due to a timeout.\n"
+  values:
+  - APPLICATION_ERROR
+  - GATEWAY_REJECTED
+  - GATEWAY_TIMEOUT
+  - ISSUER_DECLINED
+- term: TransactionTypeEnum
+  type: enum
+  description: An enumeration.
+  values:
+  - SALE
+  - REFUND
+- term: OptionalAddressAPISchema
+  type: object
+  description: ''
+  properties:
+  - firstName
+  - lastName
+  - addressLine1
+  - addressLine2
+  - city
+  - state
+  - countryCode
+  - postalCode
+- term: AddressAPISchema
+  type: object
+  description: ''
+  properties:
+  - firstName
+  - lastName
+  - addressLine1
+  - addressLine2
+  - city
+  - state
+  - countryCode
+  - postalCode
+- term: MerchantPaymentMethodTokenAPIResponse
+  type: object
+  description: ''
+  properties:
+  - createdAt
+  - deletedAt
+  - deleted
+  - token
+  - tokenType
+  - analyticsId
+  - paymentMethodType
+  - paymentMethodData
+  - customerId
+  - description
+  - default
+- term: MerchantPaymentMethodTokenListAPIResponse
+  type: object
+  description: ''
+  properties:
+  - data
+- term: VaultPaymentMethodAPIRequest
+  type: object
+  description: ''
+  properties:
+  - customerId
+- term: PaymentsInsightsBinData
+  type: object
+  description: ''
+  properties:
+  - network
+  - issuerCountryCode
+  - issuerName
+  - productUsageType
+  - accountFundingType
+- term: PaymentsInsightsOrder
+  type: object
+  description: ''
+  properties:
+  - id
+  - countryCode
+- term: PaymentsInsightsPatchedPayment
+  type: object
+  description: ''
+  properties:
+  - paymentId
+  - currencyCode
+  - processor
+  - amount
+  - createdAt
+  - order
+  - status
+  - statusReason
+  - paymentMethod
+  - metadata
+  - paymentType
+  - descriptor
+- term: PaymentsInsightsPayment
+  type: object
+  description: ''
+  properties:
+  - paymentId
+  - currencyCode
+  - processor
+  - amount
+  - createdAt
+  - order
+  - status
+  - statusReason
+  - paymentMethod
+  - metadata
+  - paymentType
+  - descriptor
+- term: PaymentsInsightsPaymentMethod
+  type: object
+  description: ''
+  properties:
+  - paymentMethodType
+  - data
+  - threeDSecureAuthentication
+- term: PaymentsInsightsPaymentMethodData
+  type: object
+  description: ''
+  properties:
+  - binData
+  - first6Digits
+- term: PaymentsInsightsProcessor
+  type: object
+  description: ''
+  properties:
+  - name
+  - merchantId
+- term: PaymentsInsightsStatusReason
+  type: object
+  description: ''
+  properties:
+  - type
+  - declineType
+  - code
+  - message
+- term: PaymentsInsightsThreeDSecureAuthentication
+  type: object
+  description: ''
+  properties:
+  - transStatus
+  - transStatusReason
+  - responseCode
+  - challengeIssued
+  - protocolVersion
+  - reasonCode
+  - reasonText
+  - eci
+- term: ErrorObject
+  type: object
+  description: An object containing information about the error that occurred.
+  properties:
+  - errorId
+  - description
+  - recoverySuggestion
+  - diagnosticsId
+  - validationErrors
+- term: 202AcceptedResponse
+  type: object
+  description: ''
+  properties:
+  - error
+- term: 400ErrorResponse
+  type: object
+  description: ''
+  properties:
+  - error
+- term: 404ErrorResponse
+  type: object
+  description: ''
+  properties:
+  - error
+- term: 409ErrorResponse
+  type: object
+  description: ''
+  properties:
+  - error
+- term: 422ErrorResponse
+  type: object
+  description: ''
+  properties:
+  - error
+- term: AuthorizationTypeEnum
+  type: enum
+  description: Type of authorization for the payment.
+  values:
+  - ESTIMATED
+  - FINAL
+- term: CardTokenTypeEnum
+  type: enum
+  description: An enumeration.
+  values:
+  - CARD_PAN
+  - NETWORK_TOKEN
+  - PROCESSOR_TOKEN
+- term: FirstPaymentReasonEnum
+  type: enum
+  description: 'The reason for the first payment. This is used for informing payment
+    processors about the specific reason a payment method is being stored.
+
+    Defaults to None if not provided.
+
+    '
+  values:
+  - CardOnFile
+  - Recurring
+  - Unscheduled

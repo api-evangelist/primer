@@ -1,0 +1,7 @@
+{
+  "error": {
+    "errorId": "MerchantAccountNotFound",
+    "description": "The merchant account could not be found",
+    "diagnosticsId": "1234567898"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "error": {
+    "errorId": "AdjustAuthorizationNotSupported",
+    "description": "Adjust Authorization for processor X is not supported.",
+    "diagnosticsId": "1234567898"
+  }
+}

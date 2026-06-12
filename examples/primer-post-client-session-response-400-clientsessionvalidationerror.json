@@ -1,0 +1,8 @@
+{
+  "error": {
+    "errorId": "ClientSessionValidationError",
+    "description": "The client token is invalid.",
+    "recoverySuggestion": "Please provide a valid client token.",
+    "diagnosticsId": "1234567898"
+  }
+}

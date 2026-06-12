@@ -1,0 +1,18 @@
+{
+  "error": {
+    "errorId": "RequestValidationError",
+    "description": "We were unable to validate your request, please check your payload against /docs/api",
+    "diagnosticsId": "1234567898",
+    "validationErrors": [
+      {
+        "model": "PaymentCaptureAPIRequest",
+        "errors": [
+          {
+            "path": "$.amount",
+            "description": "Value must be a valid integer"
+          }
+        ]
+      }
+    ]
+  }
+}

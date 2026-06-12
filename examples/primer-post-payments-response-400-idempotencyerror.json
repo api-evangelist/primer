@@ -1,0 +1,10 @@
+{
+  "error": {
+    "errorId": "TransactionRequestIdempotencyKeyAlreadyExists",
+    "description": "Transaction request already exists with idempotency key 'IDEMPOTENCY_KEY'.",
+    "paymentId": "6gHJtooK6",
+    "paymentStatus": "SETTLED",
+    "diagnosticsId": "1234567898",
+    "validationErrors": []
+  }
+}

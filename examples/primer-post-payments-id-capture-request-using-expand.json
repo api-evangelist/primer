@@ -1,0 +1,6 @@
+{
+  "amount": 42,
+  "expand": [
+    "transactions.events"
+  ]
+}

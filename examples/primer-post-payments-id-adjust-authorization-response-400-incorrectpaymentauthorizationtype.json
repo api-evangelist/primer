@@ -1,0 +1,7 @@
+{
+  "error": {
+    "errorId": "IncorrectPaymentAuthorizationType",
+    "description": "Adjust authorization is only allowed on payments where authorizationType is set to estimated and not final.",
+    "diagnosticsId": "1234567898"
+  }
+}

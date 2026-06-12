@@ -1,0 +1,5229 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PaymentRefundAPIRequest",
+  "$defs": {
+    "AccountFundingTypeEnum": {
+      "title": "AccountFundingTypeEnum",
+      "enum": [
+        "CREDIT",
+        "DEBIT",
+        "PREPAID",
+        "CHARGE",
+        "DEFERRED_DEBIT",
+        "UNKNOWN"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "ApayaCustomerTokenAPISchema": {
+      "title": "ApayaCustomerTokenAPISchema",
+      "required": [
+        "mx"
+      ],
+      "type": "object",
+      "properties": {
+        "mx": {
+          "title": "Mx",
+          "type": "string"
+        },
+        "mnc": {
+          "title": "Mnc",
+          "type": "integer",
+          "format": "int64"
+        },
+        "mcc": {
+          "title": "Mcc",
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "BinDataAPISchema": {
+      "title": "BinDataAPISchema",
+      "required": [
+        "network",
+        "regionalRestriction",
+        "accountNumberType",
+        "accountFundingType",
+        "prepaidReloadableIndicator",
+        "productUsageType",
+        "productCode",
+        "productName"
+      ],
+      "type": "object",
+      "properties": {
+        "network": {
+          "$ref": "#/components/schemas/CardNetworkEnum"
+        },
+        "issuerCountryCode": {
+          "$ref": "#/components/schemas/CountryCodeEnum"
+        },
+        "issuerName": {
+          "title": "Issuername",
+          "type": "string"
+        },
+        "issuerCurrencyCode": {
+          "$ref": "#/components/schemas/Currency"
+        },
+        "regionalRestriction": {
+          "$ref": "#/components/schemas/CardRegionRestrictionEnum"
+        },
+        "accountNumberType": {
+          "$ref": "#/components/schemas/CardAccountNumberTypeEnum"
+        },
+        "accountFundingType": {
+          "$ref": "#/components/schemas/AccountFundingTypeEnum"
+        },
+        "prepaidReloadableIndicator": {
+          "$ref": "#/components/schemas/PrepaidReloadableEnum"
+        },
+        "productUsageType": {
+          "$ref": "#/components/schemas/CardProductTypeEnum"
+        },
+        "productCode": {
+          "title": "Productcode",
+          "type": "string"
+        },
+        "productName": {
+          "title": "Productname",
+          "type": "string"
+        }
+      }
+    },
+    "BlockingPaymentActionTypeEnum": {
+      "title": "BlockingPaymentActionTypeEnum",
+      "enum": [
+        "3DS_AUTHENTICATION",
+        "USE_PRIMER_SDK",
+        "PAYMENT_METHOD_VOUCHER",
+        "PROCESSOR_3DS"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "CardAccountNumberTypeEnum": {
+      "title": "CardAccountNumberTypeEnum",
+      "enum": [
+        "PRIMARY_ACCOUNT_NUMBER",
+        "NETWORK_TOKEN",
+        "DIGITAL_PAN",
+        "UNKNOWN"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "CardNetworkEnum": {
+      "title": "CardNetworkEnum",
+      "enum": [
+        "AMEX",
+        "DANKORT",
+        "DINERS_CLUB",
+        "DISCOVER",
+        "EFTPOS",
+        "ENROUTE",
+        "ELO",
+        "HIPER",
+        "INTERAC",
+        "JCB",
+        "MAESTRO",
+        "MASTERCARD",
+        "MIR",
+        "PRIVATE_LABEL",
+        "UNIONPAY",
+        "VISA",
+        "CARTES_BANCAIRES",
+        "OTHER"
+      ],
+      "type": "string",
+      "description": "The list of available card networks.\n"
+    },
+    "CardProductTypeEnum": {
+      "title": "CardProductTypeEnum",
+      "enum": [
+        "CONSUMER",
+        "BUSINESS",
+        "GOVERNMENT",
+        "UNKNOWN"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "CardRegionRestrictionEnum": {
+      "title": "CardRegionRestrictionEnum",
+      "enum": [
+        "DOMESTIC_USE_ONLY",
+        "NONE",
+        "UNKNOWN"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "ClientSessionUpdateAPIRequest": {
+      "title": "ClientSessionUpdateAPIRequest",
+      "type": "object",
+      "properties": {
+        "clientToken": {
+          "title": "Client token",
+          "type": "string",
+          "description": "Client token for use in the Primer-JS SDK obtained via `POST` /client-session API call."
+        },
+        "customerId": {
+          "title": "The ID of the customer using the checkout.",
+          "type": "string",
+          "description": "A unique identifier for your customer."
+        },
+        "orderId": {
+          "title": "Order ID",
+          "type": "string",
+          "description": "Your reference for the order."
+        },
+        "currencyCode": {
+          "title": "Currency",
+          "type": "string",
+          "description": "The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.\n"
+        },
+        "amount": {
+          "title": "Payment amount",
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "The amount you would like to charge the customer, in minor units. e.g. for $7, use `700`.\n\nSome currencies, such as Japanese Yen, do not have minor units. In this case you should use the value as it is, without any formatting. For example for \u00a5100, use `100`.\n\nIf the amount is provided on this level, it would override any amount calculated from the provided line items, shipping and other amounts."
+        },
+        "metadata": {
+          "title": "Payment Metadata",
+          "type": "object",
+          "description": "Additional data to be used throughout the payment lifecycle.\n\nProvide the entire object to update it. Anything provided previously will be overwritten.\n"
+        },
+        "customer": {
+          "$ref": "#/components/schemas/CheckoutCustomerDetailsAPISchema",
+          "title": "Customer Details",
+          "description": "More information associated with the customer.\n\nEach of the fields in this object must be updated in its entirety, i.e. provide the entire object to update it. Anything provided previously will be overwritten.\n"
+        },
+        "order": {
+          "$ref": "#/components/schemas/OrderDetailsAPISchema",
+          "title": "Order Details",
+          "description": "More information associated with the order.\n\nEach of the fields in this object must be updated in its entirety, i.e. provide the entire object to update it. Anything provided previously will be overwritten.\n"
+        },
+        "paymentMethod": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionsAPISchema",
+          "title": "Payment Method Options",
+          "description": "Enable certain options associated with the payment method. Provide the entire object to update it. Anything provided previously will be overwritten."
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "clientToken": "client-session-token",
+        "customerId": "customer-123",
+        "orderId": "order-abc",
+        "customer": {
+          "emailAddress": "john@primer.io"
+        },
+        "amount": 500,
+        "paymentMethod": {
+          "authorizationType": "FINAL"
+        },
+        "order": {
+          "lineItems": [
+            {
+              "itemId": "shoe-123",
+              "description": "Blue Shoe",
+              "amount": 100,
+              "quantity": 10
+            }
+          ],
+          "countryCode": "FR"
+        }
+      }
+    },
+    "ClientSessionAPIRequest": {
+      "title": "ClientSessionAPIRequest",
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "title": "Order identifier",
+          "type": "string",
+          "description": "Your reference for the payment.",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "currencyCode": {
+          "$ref": "#/components/schemas/Currency",
+          "title": "Currency",
+          "description": "The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.\n"
+        },
+        "amount": {
+          "title": "Payment amount",
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "The amount you would like to charge the customer, in minor units. e.g. for $7, use `700`.\n\nSome currencies, such as Japanese Yen, do not have minor units. In this case you should use the value as it is, without any formatting. For example for \u00a5100, use `100`.\n\nIf the amount is provided on this level, it would override any amount calculated from the provided line items, shipping and other amounts."
+        },
+        "order": {
+          "$ref": "#/components/schemas/OrderDetailsAPISchema",
+          "title": "Order Details",
+          "description": "More information associated with the order."
+        },
+        "customerId": {
+          "title": "The ID of the customer using the checkout",
+          "type": "string",
+          "description": "A unique identifier for your customer.\nCreate a client session token with a `customerId` to enable the client-side SDK to retrieve and manage your customer's saved payment methods. A client session token also enables saving payment methods against this customer id.",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "customer": {
+          "$ref": "#/components/schemas/CheckoutCustomerDetailsAPISchema",
+          "title": "Customer Details",
+          "description": "More information associated with the customer."
+        },
+        "metadata": {
+          "title": "Payment Metadata",
+          "type": "object",
+          "description": "Additional data to be used throughout the payment lifecycle.\n\nA dictionary of key-value pairs where the values can only be strings or\nintegers.\n\ne.g. `{\"productId\": 1001, \"merchantId\": \"a13bsd62s\"}`\n"
+        },
+        "paymentMethod": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionsAPISchema",
+          "title": "Payment Method Options",
+          "description": "Enable certain options associated with the payment method."
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "orderId": "order-abc",
+        "currencyCode": "GBP",
+        "amount": 1000,
+        "order": {
+          "countryCode": "FR,",
+          "lineItems": [
+            {
+              "itemId": "shoe-123",
+              "description": "Blue Shoe",
+              "amount": 100,
+              "quantity": 10
+            }
+          ]
+        },
+        "customerId": "customer-123",
+        "customer": {
+          "emailAddress": "john@primer.io"
+        },
+        "metadata": {
+          "productType": "Shoes"
+        },
+        "paymentMethod": {
+          "descriptor": "Purchase: Shoes",
+          "paymentMethodType": "PAYMENT_CARD",
+          "vaultOnSuccess": true,
+          "vaultOn3DS": false,
+          "options": {
+            "PAYMENT_CARD": {
+              "networks": {
+                "VISA": {
+                  "surcharge": {
+                    "amount": 10
+                  }
+                }
+              }
+            },
+            "GOOGLE_PAY": {
+              "surcharge": {
+                "amount": 20
+              }
+            }
+          },
+          "authorizationType": "ESTIMATED"
+        }
+      }
+    },
+    "OrderDetailsAPISchema": {
+      "title": "OrderDetailsAPISchema",
+      "type": "object",
+      "properties": {
+        "lineItems": {
+          "title": "Line Items",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/OrderLineItemsAPISchema"
+          },
+          "description": "The details of the line items of the order."
+        },
+        "countryCode": {
+          "$ref": "#/components/schemas/CountryCodeEnum",
+          "title": "Country Code",
+          "description": "The country in which the order is created"
+        },
+        "retailerCountryCode": {
+          "$ref": "#/components/schemas/CountryCodeEnum",
+          "title": "Retailer Country Code",
+          "description": "The country code of the retailer"
+        },
+        "fees": {
+          "title": "Fee Details",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/OrderFeesAPISchema"
+          },
+          "description": "The details of fees charged."
+        },
+        "shipping": {
+          "$ref": "#/components/schemas/OrderShippingAPISchema",
+          "title": "Shipping Details",
+          "description": "The details of shipping charged."
+        }
+      }
+    },
+    "OrderFeesAPISchema": {
+      "title": "OrderFeesAPISchema",
+      "type": "object",
+      "required": [
+        "amount"
+      ],
+      "properties": {
+        "amount": {
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "The fee amount charged to the customer, in minor  units. e.g. for $7, use `700`."
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of fee.",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the fee, e.g. \"Currency Conversion Fee\".",
+          "minLength": 1,
+          "maxLength": 255
+        }
+      }
+    },
+    "OrderLineItemsAPISchema": {
+      "title": "OrderLineItemsAPISchema",
+      "description": "The details of the line items of the order.\n\nThe total amount of a line item is calculated like so: \n````\n  totalAmount = (amount * quantity) - discountAmount + taxAmount\n```\n",
+      "type": "object",
+      "required": [
+        "amount"
+      ],
+      "properties": {
+        "itemId": {
+          "title": "Item ID",
+          "type": "string",
+          "description": "A unique identifier for the line item.",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "description": "A name of the item.",
+          "maxLength": 255
+        },
+        "description": {
+          "title": "Item ID",
+          "type": "string",
+          "description": "A description of the item.",
+          "maxLength": 255
+        },
+        "amount": {
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "The amount charged to the customer, in minor units. The minimum amount is 0. The maximum amount is the limit of `int64`."
+        },
+        "quantity": {
+          "type": "integer",
+          "description": "The number of the particular line item that is being ordered.",
+          "default": 1,
+          "format": "int64"
+        },
+        "discountAmount": {
+          "title": "Discount Amount",
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "Any discount applicable to this item, in minor units. This discount is applied for the entire line item, and not per `quantity`."
+        },
+        "taxAmount": {
+          "title": "Tax Amount",
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "The tax charged on this item, in minor units. This tax amount is applied for the entire line item, and not per `quantity`."
+        },
+        "taxCode": {
+          "title": "Tax Code",
+          "type": "string",
+          "description": "The tax code associated with this item, in minor units. This is required for Primer-initiated tax calculations.",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "productType": {
+          "$ref": "#/components/schemas/ProductTypeEnum",
+          "title": "Product Type",
+          "description": "An identifier for the product type."
+        },
+        "productData": {
+          "$ref": "#/components/schemas/OrderLineItemsProductDataAPISchema",
+          "title": "Product Data",
+          "description": "Details related to the product"
+        }
+      }
+    },
+    "OrderLineItemsProductDataAPISchema": {
+      "title": "OrderLineItemsProductDataAPISchema",
+      "description": "Details related to the product",
+      "type": "object",
+      "properties": {
+        "sku": {
+          "title": "SKU",
+          "type": "string",
+          "description": "The product SKU",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "brand": {
+          "title": "Brand",
+          "type": "string",
+          "description": "The product brand",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "color": {
+          "title": "Color",
+          "type": "string",
+          "description": "The product color",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "globalTradeItemNumber": {
+          "title": "Global Trade Item Number",
+          "type": "string",
+          "description": "The product Global Trade Item Number (e.g. ISBN)",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "manufacturerPartNumber": {
+          "title": "Manufacturer Part Number",
+          "type": "string",
+          "description": "The product Manufacturer Part Number",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "weight": {
+          "title": "Weight",
+          "type": "number",
+          "description": "The product weight",
+          "minimum": 0.0
+        },
+        "weightUnit": {
+          "title": "Weight Unit",
+          "type": "string",
+          "description": "The product weight unit (e.g. kg, g)",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "pageUrl": {
+          "title": "Page URL",
+          "type": "string",
+          "description": "The product page URL",
+          "minLength": 1,
+          "maxLength": 1024
+        }
+      }
+    },
+    "OrderShippingAPISchema": {
+      "title": "OrderShippingAPISchema",
+      "type": "object",
+      "properties": {
+        "amount": {
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "The shipping amount charged to the customer, in minor units. e.g. for $7, use `700`."
+        },
+        "methodId": {
+          "type": "string",
+          "description": "Your unique identifier of the shipping method selected by the customer."
+        },
+        "methodName": {
+          "type": "string",
+          "description": "The display label for the selected shipping method (e.g. \"Standard Shipping\")."
+        },
+        "methodDescription": {
+          "type": "string",
+          "description": "The descriptive text that is displayed alongside the shipping method name."
+        }
+      }
+    },
+    "CheckoutPaymentMethodOptionsAPISchema": {
+      "title": "PaymentMethodOptionsAPISchema",
+      "type": "object",
+      "properties": {
+        "vaultOnSuccess": {
+          "type": "boolean",
+          "description": "Whether the payment method should be vaulted on a successful payment or not.",
+          "default": false
+        },
+        "vaultOn3DS": {
+          "type": "boolean",
+          "description": "Whether the payment method should be vaulted after a successful 3DS authentication or not.",
+          "default": false
+        },
+        "vaultOnAgreement": {
+          "type": "boolean",
+          "description": "Whether the payment method should be vaulted right when payment is created or not.",
+          "default": false
+        },
+        "descriptor": {
+          "title": "Payment descriptor",
+          "type": "string",
+          "description": "A description of the payment, as it would typically appear on a bank statement.",
+          "maxLength": 255
+        },
+        "paymentType": {
+          "$ref": "#/components/schemas/RecurringPaymentTypeSchema"
+        },
+        "orderedAllowedCardNetworks": {
+          "title": "Allowed card networks",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/CardNetworkEnum"
+          },
+          "description": "If provided, the checkout will run the validation on the entered card number and raise an error in case the card network is not supported.\n\nThe order sets the default card network that should be used in the case of co-badged cards. \ne.g. in the case of `[\"VISA\", \"CARTES_BANCAIRES\", \"MASTERCARD\"]` - if the user enters a \"Visa\" / \"Cartes Bancaires\" card: the default is Visa.\n\nValues should be unique. \n\nIf `null` or nothing passed in the request, the following list with all card networks will be returned in the response:\n\n`[\"VISA\", \"MASTERCARD\", \"AMEX\", \"MAESTRO\", \"UNIONPAY\", \"CARTES_BANCAIRES\", \"DANKORT\", \"DINERS_CLUB\", \"DISCOVER\", \"EFTPOS\", \"ENROUTE\", \"ELO\", \"HIPER\", \"INTERAC\", \"JCB\", \"MIR\", \"OTHER\"]`\n"
+        },
+        "options": {
+          "title": "Payment Method Options",
+          "type": "object",
+          "description": "Additional options for the payment methods represented as dictionary \nwith key of [available payment methods](/docs/connections/payment-methods/available-payment-methods) and value of corresponding options.\n",
+          "properties": {
+            "<PAYMENT_METHOD_TYPE>": {
+              "type": "object",
+              "$ref": "#/components/schemas/CheckoutPaymentMethodOptionAPISchema"
+            },
+            "APPLE_PAY": {
+              "type": "object",
+              "$ref": "#/components/schemas/CheckoutPaymentMethodApplePayOptionAPISchema"
+            },
+            "PAYMENT_CARD": {
+              "type": "object",
+              "$ref": "#/components/schemas/CheckoutPaymentMethodCardOptionAPISchema"
+            }
+          }
+        },
+        "authorizationType": {
+          "title": "Authorization Type",
+          "$ref": "#/components/schemas/AuthorizationTypeEnum",
+          "description": "Allows to adjust the authorized amount after the authorization, if supported by payment method.\n`FINAL` - the authorized amount is final and can not be adjusted. Adjusting the amount can be only done via canceling the payment and re-authorization with new amount.\n`ESTIMATED` - the amount can be adjusted after the authorization, if supported by payment method.\n"
+        },
+        "firstPaymentReason": {
+          "title": "First Payment Reason",
+          "$ref": "#/components/schemas/FirstPaymentReasonEnum",
+          "description": "The reason for the first payment. This is used for informing payment processors about the specific reason a payment method is being stored.\nDefaults to None if not provided.\n"
+        }
+      }
+    },
+    "CheckoutPaymentMethodOptionAPISchema": {
+      "title": "PaymentMethodOptionAPISchema",
+      "type": "object",
+      "description": "Options for the payment method of type `PAYMENT_METHOD_TYPE`.\n",
+      "required": [
+        "surcharge"
+      ],
+      "properties": {
+        "surcharge": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionSurchargeAPISchema",
+          "title": "Surcharge",
+          "description": "Surcharge information"
+        },
+        "extraMerchantData": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionExtraMerchantDataAPISchema",
+          "title": "Extra Merchant Data",
+          "description": "For payments using the Klarna payment method, depending on the merchant segment and/or \nthe services available to consumers, Klarna may require additional information regarding \nthe customer, the merchant and/or the purchase. This information, referred to as extra merchant \ndata (EMD), consist of data that is typically not available at the checkout, but which enables \nKlarna to complete an assertive risk assessment, enable new promotional products and improve \nconversion rates for a boost in performance.\n"
+        },
+        "merchantName": {
+          "title": "Merchant name",
+          "type": "string",
+          "description": "For payments using the Apple Pay payment method, use this field to override the default merchant \nname for the Primer account from showing on the Apple Pay flow. For example, if your merchant \nname on your account is \"Company X\" but you want to display a specific store name on the Apple Pay \nflow, you can set the `merchantName` to \"Store name A\".\n"
+        }
+      }
+    },
+    "CheckoutPaymentMethodCardOptionAPISchema": {
+      "title": "Payment Method Card Option",
+      "type": "object",
+      "properties": {
+        "networks": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkAPISchema",
+          "title": "Card networks",
+          "description": "Dictionary of available card networks as a key with value of Payment Method Card Network Option."
+        },
+        "captureVaultedCardCvv": {
+          "type": "boolean",
+          "description": "Whether to capture CVV for vaulted card."
+        }
+      }
+    },
+    "CheckoutPaymentMethodOptionCardNetworkAPISchema": {
+      "title": "Payment Method Card Network Option",
+      "type": "object",
+      "properties": {
+        "AMEX": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "CARTES_BANCAIRES": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "DANKORT": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "DINERS_CLUB": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "DISCOVER": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "ENROUTE": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "ELO": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "HIPER": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "INTERAC": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "JCB": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "MAESTRO": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "MASTERCARD": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "MIR": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "PRIVATE_LABEL": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "UNIONPAY": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "VISA": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        },
+        "OTHER": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema"
+        }
+      },
+      "additionalProperties": false
+    },
+    "CheckoutPaymentMethodOptionCardNetworkSurchargeAPISchema": {
+      "type": "object",
+      "properties": {
+        "surcharge": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionSurchargeAPISchema",
+          "title": "Surcharge",
+          "description": "Surcharge information"
+        }
+      }
+    },
+    "CheckoutPaymentMethodOptionSurchargeAPISchema": {
+      "title": "CheckoutPaymentMethodOptionSurchargeAPISchema",
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "minimum": 0.0,
+          "format": "int64",
+          "description": "The surcharge amount, in minor units. Surcharge amount must be used in conjunction with line item amounts, if a top level amount is passed then surcharge will not be calculated."
+        }
+      }
+    },
+    "CheckoutPaymentMethodOptionExtraMerchantDataAPISchema": {
+      "title": "CheckoutPaymentMethodOptionExtraMerchantDataAPISchema",
+      "type": "object",
+      "additionalProperties": true
+    },
+    "PaymentRequestPaymentMethodOptionsAPISchema": {
+      "title": "PaymentRequestPaymentMethodOptionsAPISchema",
+      "type": "object",
+      "properties": {
+        "vaultOnSuccess": {
+          "type": "boolean",
+          "description": "Whether the payment method should be vaulted on a successful payment or not.",
+          "default": false
+        },
+        "vaultOn3DS": {
+          "type": "boolean",
+          "description": "Whether the payment method should be vaulted after a successful 3DS authentication or not.",
+          "default": false
+        },
+        "vaultOnAgreement": {
+          "type": "boolean",
+          "description": "Whether the payment method should be vaulted right when payment is created or not.",
+          "default": false
+        },
+        "descriptor": {
+          "title": "Payment descriptor",
+          "type": "string",
+          "description": "A description of the payment, as it would typically appear on a bank statement.",
+          "maxLength": 255
+        },
+        "paymentType": {
+          "$ref": "#/components/schemas/RecurringPaymentTypeSchema"
+        },
+        "authorizationType": {
+          "$ref": "#/components/schemas/AuthorizationTypeEnum",
+          "title": "Authorization Type",
+          "description": "Allows to adjust the authorized amount after the authorization, if supported by payment method.\n`FINAL` - the authorized amount is final and can not be adjusted. Adjusting the amount can be only done via canceling the payment and re-authorization with new amount.\n`ESTIMATED` - the amount can be adjusted after the authorization, if supported by payment method.\nDefaults to `FINAL`.\n",
+          "default": "FINAL"
+        },
+        "firstPaymentReason": {
+          "title": "First Payment Reason",
+          "$ref": "#/components/schemas/FirstPaymentReasonEnum",
+          "description": "The reason for the first payment. This is used to be passed to the payment processor when creating a first payment.\nNot all payment processors support this field so ignore it if you are not requested to provide it. If not provided defaults to null.\n"
+        }
+      }
+    },
+    "Amount": {
+      "type": "integer",
+      "format": "int64",
+      "minimum": 0,
+      "description": "Charge amount in minor units (e.g., 500 = $5.00). Some currencies, such as Japanese Yen, do not have minor units. In this case, use the value as-is (e.g., \u00a5100 = 100).\n"
+    },
+    "ApplePayLabel": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "description": "Display label shown in the Apple Pay sheet to describe this billing option.\n"
+    },
+    "ApplePayManagementUrl": {
+      "type": "string",
+      "format": "uri",
+      "minLength": 1,
+      "maxLength": 1024,
+      "description": "URL where users can manage or cancel their Apple Pay billing agreements or subscriptions.\n"
+    },
+    "ApplePayPaymentDescription": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "description": "Text shown to the user during Apple Pay authorization.\n"
+    },
+    "ApplePayBillingAgreement": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "description": "Terms and conditions the user agrees to when authorizing Apple Pay billing.\n"
+    },
+    "ApplePayIntervalUnit": {
+      "type": "string",
+      "enum": [
+        "minute",
+        "hour",
+        "day",
+        "month",
+        "year"
+      ],
+      "description": "Calendar unit representing part of a recurring billing interval.\n"
+    },
+    "ApplePayIntervalCount": {
+      "type": "integer",
+      "format": "int64",
+      "minimum": 1,
+      "description": "Number of calendar units that make up the full recurring interval (e.g., 1 = monthly).\n"
+    },
+    "CheckoutPaymentMethodApplePayOptionAPISchema": {
+      "title": "ApplePayOptions",
+      "type": "object",
+      "description": "Apple Pay configuration used in a client session's payment method options.",
+      "properties": {
+        "merchantName": {
+          "type": "string",
+          "description": "Display name for the merchant shown in the Apple Pay sheet.",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "recurringPaymentRequest": {
+          "$ref": "#/components/schemas/ApplePayRecurringRequest"
+        },
+        "deferredPaymentRequest": {
+          "$ref": "#/components/schemas/ApplePayDeferredRequest"
+        },
+        "automaticReloadRequest": {
+          "$ref": "#/components/schemas/ApplePayAutomaticReloadRequest"
+        }
+      },
+      "example": {
+        "merchantName": "My Store",
+        "recurringPaymentRequest": {
+          "paymentDescription": "Monthly Subscription",
+          "billingAgreement": "You agree to pay monthly until you cancel.",
+          "managementUrl": "https://example.com/manage",
+          "regularBilling": {
+            "label": "Monthly Plan",
+            "amount": 999,
+            "recurringStartDate": "2025-06-09T00:00:00Z",
+            "recurringIntervalUnit": "month"
+          }
+        }
+      }
+    },
+    "ApplePayRecurringRequest": {
+      "title": "ApplePayRecurringRequest",
+      "type": "object",
+      "required": [
+        "managementUrl",
+        "regularBilling"
+      ],
+      "properties": {
+        "paymentDescription": {
+          "$ref": "#/components/schemas/ApplePayPaymentDescription"
+        },
+        "billingAgreement": {
+          "$ref": "#/components/schemas/ApplePayBillingAgreement"
+        },
+        "managementUrl": {
+          "$ref": "#/components/schemas/ApplePayManagementUrl"
+        },
+        "regularBilling": {
+          "$ref": "#/components/schemas/ApplePayRegularBilling"
+        },
+        "trialBilling": {
+          "$ref": "#/components/schemas/ApplePayTrialBilling"
+        }
+      },
+      "example": {
+        "paymentDescription": "Subscription Service",
+        "billingAgreement": "You authorize us to charge your payment method monthly. You can cancel anytime.",
+        "managementUrl": "https://example.com/subscription",
+        "regularBilling": {
+          "label": "Premium Plan",
+          "amount": 1999,
+          "recurringStartDate": "2024-06-03T00:00:00Z",
+          "recurringIntervalUnit": "month",
+          "recurringIntervalCount": 1
+        },
+        "trialBilling": {
+          "label": "Free Trial",
+          "amount": 0,
+          "recurringEndDate": "2024-06-09T00:00:00Z"
+        }
+      }
+    },
+    "ApplePayRegularBilling": {
+      "title": "ApplePayRegularBilling",
+      "type": "object",
+      "required": [
+        "label"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/components/schemas/ApplePayLabel"
+        },
+        "amount": {
+          "$ref": "#/components/schemas/Amount"
+        },
+        "recurringStartDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start of billing cycle date and time (UTC) in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601). If not provided, Apple Pay defaults it to now().\n"
+        },
+        "recurringEndDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End of billing cycle date and time (UTC) in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601).\n"
+        },
+        "recurringIntervalUnit": {
+          "$ref": "#/components/schemas/ApplePayIntervalUnit"
+        },
+        "recurringIntervalCount": {
+          "$ref": "#/components/schemas/ApplePayIntervalCount"
+        }
+      },
+      "example": {
+        "label": "Monthly Subscription",
+        "amount": 999,
+        "recurringStartDate": "2024-06-03T00:00:00Z",
+        "recurringIntervalUnit": "month"
+      }
+    },
+    "ApplePayTrialBilling": {
+      "title": "ApplePayTrialBilling",
+      "type": "object",
+      "required": [
+        "label"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/components/schemas/ApplePayLabel"
+        },
+        "amount": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/Amount"
+            }
+          ],
+          "default": 0
+        },
+        "recurringStartDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start of billing cycle date and time (UTC) in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601). If not provided, Apple Pay defaults it to now().\n"
+        },
+        "recurringEndDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End of billing cycle date and time (UTC) in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601).\n"
+        },
+        "recurringIntervalUnit": {
+          "$ref": "#/components/schemas/ApplePayIntervalUnit"
+        },
+        "recurringIntervalCount": {
+          "$ref": "#/components/schemas/ApplePayIntervalCount"
+        }
+      },
+      "example": {
+        "label": "Free Trial",
+        "amount": 0,
+        "recurringEndDate": "2024-06-09T00:00:00Z"
+      }
+    },
+    "ApplePayDeferredRequest": {
+      "title": "ApplePayDeferredRequest",
+      "type": "object",
+      "required": [
+        "managementUrl",
+        "deferredBilling"
+      ],
+      "properties": {
+        "paymentDescription": {
+          "$ref": "#/components/schemas/ApplePayPaymentDescription"
+        },
+        "billingAgreement": {
+          "$ref": "#/components/schemas/ApplePayBillingAgreement"
+        },
+        "managementUrl": {
+          "$ref": "#/components/schemas/ApplePayManagementUrl"
+        },
+        "deferredBilling": {
+          "$ref": "#/components/schemas/ApplePayDeferredBilling"
+        },
+        "freeCancellationDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End of billing cycle date and time (UTC) in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601).\n"
+        },
+        "freeCancellationTimeZone": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 50,
+          "description": "Time zone for interpreting freeCancellationDate."
+        }
+      },
+      "example": {
+        "paymentDescription": "Deferred Payment",
+        "billingAgreement": "You will be charged when the item ships. Free cancellation until shipping.",
+        "managementUrl": "https://example.com/orders",
+        "deferredBilling": {
+          "label": "Order Payment",
+          "amount": 4999,
+          "deferredPaymentDate": "2024-07-03T00:00:00Z"
+        },
+        "freeCancellationDate": "2024-07-02T00:00:00Z",
+        "freeCancellationTimeZone": "UTC"
+      }
+    },
+    "ApplePayDeferredBilling": {
+      "title": "ApplePayDeferredBilling",
+      "type": "object",
+      "required": [
+        "label",
+        "deferredPaymentDate"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/components/schemas/ApplePayLabel"
+        },
+        "amount": {
+          "$ref": "#/components/schemas/Amount"
+        },
+        "deferredPaymentDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start of billing cycle date and time (UTC) in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601).\n"
+        }
+      },
+      "example": {
+        "label": "Product Payment",
+        "amount": 4999,
+        "deferredPaymentDate": "2024-07-03T00:00:00Z"
+      }
+    },
+    "ApplePayAutomaticReloadRequest": {
+      "title": "ApplePayAutomaticReloadRequest",
+      "type": "object",
+      "required": [
+        "managementUrl",
+        "automaticReloadBilling"
+      ],
+      "properties": {
+        "paymentDescription": {
+          "$ref": "#/components/schemas/ApplePayPaymentDescription"
+        },
+        "billingAgreement": {
+          "$ref": "#/components/schemas/ApplePayBillingAgreement"
+        },
+        "managementUrl": {
+          "$ref": "#/components/schemas/ApplePayManagementUrl"
+        },
+        "automaticReloadBilling": {
+          "$ref": "#/components/schemas/ApplePayAutomaticReloadBilling"
+        }
+      },
+      "example": {
+        "paymentDescription": "Account Auto Reload",
+        "billingAgreement": "When your balance drops below the threshold, we'll automatically reload your account.",
+        "managementUrl": "https://example.com/account",
+        "automaticReloadBilling": {
+          "label": "Auto Reload",
+          "amount": 2500,
+          "automaticReloadThresholdAmount": 500
+        }
+      }
+    },
+    "ApplePayAutomaticReloadBilling": {
+      "title": "ApplePayAutomaticReloadBilling",
+      "type": "object",
+      "required": [
+        "label",
+        "automaticReloadThresholdAmount"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/components/schemas/ApplePayLabel"
+        },
+        "amount": {
+          "$ref": "#/components/schemas/Amount"
+        },
+        "automaticReloadThresholdAmount": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 0,
+          "description": "Balance threshold in minor units (e.g., 500 = $5.00) that triggers the reload."
+        }
+      },
+      "example": {
+        "label": "Auto Reload",
+        "amount": 2500,
+        "automaticReloadThresholdAmount": 500
+      }
+    },
+    "PaymentResponsePaymentMethodOptionsAPISchema": {
+      "title": "PaymentResponsePaymentMethodOptionsAPISchema",
+      "type": "object",
+      "properties": {
+        "descriptor": {
+          "title": "Payment descriptor",
+          "type": "string",
+          "description": "The description of the payment, as it would typically appear\non a bank statement.\n",
+          "maxLength": 255
+        },
+        "paymentType": {
+          "$ref": "#/components/schemas/RecurringPaymentTypeSchema"
+        },
+        "paymentMethodToken": {
+          "title": "Payment method token",
+          "type": "string",
+          "description": "The payment method token used to authorize the transaction."
+        },
+        "isVaulted": {
+          "title": "Is Vaulted flag",
+          "type": "boolean",
+          "description": "Whether the payment method token represents a vaulted payment method and can be used for future payments.",
+          "default": false
+        },
+        "analyticsId": {
+          "title": "Unique analytics ID",
+          "type": "string",
+          "description": "Unique analytics identifier corresponding to a payment method",
+          "maxLength": 255
+        },
+        "paymentMethodType": {
+          "$ref": "#/components/schemas/PaymentMethodTypeEnum",
+          "title": "Payment method type",
+          "description": "Payment method type used for payment authorization."
+        },
+        "paymentMethodData": {
+          "title": "Payment method data",
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/PaymentCardTokenAPISchema"
+            },
+            {
+              "$ref": "#/components/schemas/PayPalOrderTokenAPISchema"
+            },
+            {
+              "$ref": "#/components/schemas/PayPalBillingAgreementAPISchema"
+            },
+            {
+              "$ref": "#/components/schemas/GoCardlessMandateAPISchema"
+            },
+            {
+              "$ref": "#/components/schemas/KlarnaPaymentSessionAPISchema"
+            },
+            {
+              "$ref": "#/components/schemas/KlarnaCustomerTokenAPISchema"
+            },
+            {
+              "$ref": "#/components/schemas/IdealPayNLTokenAPISchema"
+            },
+            {
+              "$ref": "#/components/schemas/ApayaCustomerTokenAPISchema"
+            }
+          ],
+          "description": "Payment method data"
+        },
+        "threeDSecureAuthentication": {
+          "$ref": "#/components/schemas/ThreeDSecureAuthenticationAPISchema",
+          "title": "Threedsecureauthentication",
+          "default": {
+            "response_code": "NOT_PERFORMED"
+          }
+        },
+        "authorizationType": {
+          "$ref": "#/components/schemas/AuthorizationTypeEnum",
+          "title": "Authorization Type",
+          "description": "Allows to adjust the authorized amount after the authorization, if supported by payment method. `FINAL` - the authorized amount is final and can not be adjusted. Adjusting the amount can be only done via canceling the payment and re-authorization with new amount. `ESTIMATED` - the amount can be adjusted after the authorization, if supported by payment method."
+        }
+      }
+    },
+    "CheckoutCustomerDetailsAPISchema": {
+      "title": "CustomerDetailsAPISchema",
+      "type": "object",
+      "properties": {
+        "emailAddress": {
+          "title": "Email Address",
+          "type": "string",
+          "description": "Customer email address. <br />Must be a valid email address. Supports internationalized email addresses.\n",
+          "format": "email"
+        },
+        "mobileNumber": {
+          "title": "Mobile Number",
+          "type": "string",
+          "description": "The customer's mobile number",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "firstName": {
+          "title": "First Name",
+          "type": "string",
+          "description": "The customer's first name",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "lastName": {
+          "title": "Last Name",
+          "type": "string",
+          "description": "The customer's last name",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "billingAddress": {
+          "$ref": "#/components/schemas/OptionalAddressAPISchema",
+          "title": "Billing Address",
+          "description": "Customer billing address.\n"
+        },
+        "shippingAddress": {
+          "$ref": "#/components/schemas/OptionalAddressAPISchema",
+          "title": "Shipping Address",
+          "description": "Customer shipping address"
+        },
+        "taxId": {
+          "title": "Tax ID",
+          "type": "string",
+          "description": "The customer's tax id number for tax exemptions",
+          "maxLength": 255
+        },
+        "nationalDocumentId": {
+          "title": "National Document ID",
+          "type": "string",
+          "description": "The customer's national identification number",
+          "maxLength": 255
+        }
+      }
+    },
+    "CustomerDetailsAPISchema": {
+      "title": "CustomerDetailsAPISchema",
+      "type": "object",
+      "properties": {
+        "emailAddress": {
+          "title": "Email Address",
+          "type": "string",
+          "description": "Customer email address.\n\nNote: It is recommended to include this field if a 3DS check will be performed\n",
+          "format": "email"
+        },
+        "mobileNumber": {
+          "title": "Mobile Number",
+          "type": "string",
+          "description": "The customer's mobile number",
+          "maxLength": 255
+        },
+        "firstName": {
+          "title": "First Name",
+          "type": "string",
+          "description": "The customer's first name",
+          "maxLength": 255
+        },
+        "lastName": {
+          "title": "Last Name",
+          "type": "string",
+          "description": "The customer's last name",
+          "maxLength": 255
+        },
+        "billingAddress": {
+          "$ref": "#/components/schemas/OptionalAddressAPISchema",
+          "title": "Billing Address",
+          "description": "Customer billing address.\n\nNote: It is recommended to include this field if a 3DS check will be performed\n"
+        },
+        "shippingAddress": {
+          "$ref": "#/components/schemas/OptionalAddressAPISchema",
+          "title": "Shipping Address",
+          "description": "Customer shipping address"
+        },
+        "taxId": {
+          "title": "Tax ID",
+          "type": "string",
+          "description": "The customer's tax id number for tax exemptions",
+          "maxLength": 255
+        },
+        "nationalDocumentId": {
+          "title": "National Document ID",
+          "type": "string",
+          "description": "The customer's national identification number",
+          "maxLength": 255
+        }
+      }
+    },
+    "ClientSessionWithTokenAPIResponse": {
+      "title": "ClientSessionWithTokenAPIResponse",
+      "type": "object",
+      "required": [
+        "clientToken",
+        "clientTokenExpirationDate"
+      ],
+      "properties": {
+        "clientToken": {
+          "title": "Client token",
+          "type": "string",
+          "description": "Client token used to initialize the SDK on all platforms."
+        },
+        "clientTokenExpirationDate": {
+          "title": "Expiration Date",
+          "type": "string",
+          "description": "Expiration date & time of the client token (UTC with no timezoneinfo).",
+          "format": "date-time"
+        },
+        "orderId": {
+          "title": "Order ID",
+          "type": "string",
+          "description": "Your reference for the payment."
+        },
+        "currencyCode": {
+          "title": "Currency",
+          "type": "string",
+          "description": "The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.\n"
+        },
+        "amount": {
+          "title": "Payment amount",
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "The amount you would like to charge the customer, in minor units. e.g. for $7, use `700`.\n\nSome currencies, such as Japanese Yen, do not have minor units. In this case you should use the value as it is, without any formatting. For example for \u00a5100, use `100`.\n\nIf the amount is provided on this level, it would override any amount calculated from the provided line items, shipping and other amounts."
+        },
+        "order": {
+          "$ref": "#/components/schemas/OrderDetailsAPISchema",
+          "title": "Order Details",
+          "description": "More information associated with the order."
+        },
+        "customerId": {
+          "title": "The ID of the customer using the checkout",
+          "type": "string",
+          "description": "A unique identifier for your customer."
+        },
+        "customer": {
+          "$ref": "#/components/schemas/CustomerDetailsAPISchema",
+          "title": "Customer Details",
+          "description": "More information associated with the customer."
+        },
+        "metadata": {
+          "title": "Payment Metadata",
+          "type": "object",
+          "description": "Additional data to be used throughout the payment lifecycle.\n"
+        },
+        "paymentMethod": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionsAPISchema",
+          "title": "Payment Method Options",
+          "description": "Enable certain options associated with the payment methods."
+        },
+        "warnings": {
+          "$ref": "#/components/schemas/ClientSessionWarningsAPIResponse",
+          "description": "Warning messages to indicate missing information that are required for payment methods, checkout modules and other features; or when third-party services are unavailable."
+        }
+      },
+      "example": {
+        "clientToken": "client-session-token",
+        "clientExpirationDate": "2019-08-24T14:15:22Z",
+        "customerId": "customer-123",
+        "orderId": "order-abc",
+        "currencyCode": "GBP",
+        "metadata": {
+          "productType": "Shoe"
+        },
+        "customer": {
+          "emailAddress": "john@primer.io"
+        },
+        "amount": 20,
+        "order": {
+          "countryCode": "FR",
+          "fees": [
+            {
+              "type": "SURCHARGE",
+              "amount": 20
+            }
+          ]
+        },
+        "paymentMethod": {
+          "vaultOnSuccess": true,
+          "vaultOn3DS": false,
+          "options": {
+            "PAYMENT_CARD": {
+              "networks": {
+                "VISA": {
+                  "surcharge": {
+                    "amount": 10
+                  }
+                }
+              },
+              "captureVaultedCardCvv": true
+            },
+            "GOOGLE_PAY": {
+              "surcharge": {
+                "amount": 20
+              }
+            }
+          },
+          "authorizationType": "ESTIMATED"
+        },
+        "warnings": [
+          {
+            "type": "TAXJAR",
+            "code": "MISSING_DATA",
+            "message": "Shipping details are required for calculating tax."
+          }
+        ]
+      }
+    },
+    "ClientSessionAPIResponse": {
+      "title": "ClientSessionAPIResponse",
+      "type": "object",
+      "properties": {
+        "customerId": {
+          "title": "The ID of the customer using the checkout",
+          "type": "string",
+          "description": "A unique identifier for your customer.",
+          "maxLength": 255
+        },
+        "orderId": {
+          "title": "Order ID",
+          "type": "string",
+          "description": "Your reference for the payment.",
+          "maxLength": 255
+        },
+        "currencyCode": {
+          "$ref": "#/components/schemas/Currency",
+          "title": "Currency",
+          "description": "The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.\n"
+        },
+        "amount": {
+          "title": "Payment amount",
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "The amount you are going to charge the customer, in minor units. This amount is calculated from the line items, shipping and other amounts provided in the `order`. \nIf a top-level amount is provided, it would override any calculated amount."
+        },
+        "metadata": {
+          "title": "Payment Metadata",
+          "type": "object",
+          "description": "Additional data to be used throughout the payment lifecycle.\n"
+        },
+        "customer": {
+          "$ref": "#/components/schemas/CustomerDetailsAPISchema",
+          "title": "Customer Details",
+          "description": "More information associated with the customer."
+        },
+        "order": {
+          "$ref": "#/components/schemas/OrderDetailsAPISchema",
+          "title": "Order Details",
+          "description": "More information associated with the order."
+        },
+        "paymentMethod": {
+          "$ref": "#/components/schemas/CheckoutPaymentMethodOptionsAPISchema",
+          "title": "Payment Method Options",
+          "description": "Enable certain options associated with the payment methods."
+        }
+      },
+      "example": {
+        "customerId": "customer-123",
+        "orderId": "order-abc",
+        "currencyCode": "GBP",
+        "amount": 650,
+        "metadata": {
+          "productType": "Clothing"
+        },
+        "customer": {
+          "emailAddress": "john@primer.io"
+        },
+        "order": {
+          "lineItems": [
+            {
+              "itemId": "t-shirt-1",
+              "description": "White T-Shirt",
+              "amount": 500,
+              "quantity": 1
+            }
+          ],
+          "fees": [
+            {
+              "type": "SURCHARGE",
+              "amount": 100
+            }
+          ],
+          "shipping": {
+            "amount": 50
+          },
+          "paymentMethod": {
+            "vaultOnSuccess": false,
+            "vaultOn3DS": false,
+            "options": {
+              "GOOGLE_PAY": {
+                "surcharge": {
+                  "amount": 100
+                }
+              },
+              "PAYMENT_CARD": {
+                "networks": {
+                  "VISA": {
+                    "surcharge": {
+                      "amount": 10
+                    }
+                  },
+                  "MASTERCARD": {
+                    "surcharge": {
+                      "amount": 20
+                    }
+                  }
+                }
+              },
+              "PAY_NL_IDEAL": {
+                "surcharge": {
+                  "amount": 50
+                }
+              }
+            }
+          },
+          "authorizationType": "ESTIMATED"
+        }
+      }
+    },
+    "ClientSessionWarningsAPIResponse": {
+      "title": "ClientSessionWarningsAPIResponse",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The type of the connection involved",
+          "example": "TAXJAR"
+        },
+        "code": {
+          "type": "string",
+          "description": "A unique code describing the particular issue",
+          "example": "MISSING_DATA"
+        },
+        "message": {
+          "type": "string",
+          "description": "More information as to the reason for the warning"
+        }
+      }
+    },
+    "CountryCodeEnum": {
+      "title": "CountryCodeEnum",
+      "enum": [
+        "AW",
+        "AF",
+        "AO",
+        "AI",
+        "AX",
+        "AL",
+        "AD",
+        "AE",
+        "AR",
+        "AM",
+        "AS",
+        "AQ",
+        "TF",
+        "AG",
+        "AU",
+        "AT",
+        "AZ",
+        "BI",
+        "BE",
+        "BJ",
+        "BQ",
+        "BF",
+        "BD",
+        "BG",
+        "BH",
+        "BS",
+        "BA",
+        "BL",
+        "BY",
+        "BZ",
+        "BM",
+        "BO",
+        "BR",
+        "BB",
+        "BN",
+        "BT",
+        "BV",
+        "BW",
+        "CF",
+        "CA",
+        "CC",
+        "CH",
+        "CL",
+        "CN",
+        "CI",
+        "CM",
+        "CD",
+        "CG",
+        "CK",
+        "CO",
+        "KM",
+        "CV",
+        "CR",
+        "CU",
+        "CW",
+        "CX",
+        "KY",
+        "CY",
+        "CZ",
+        "DE",
+        "DJ",
+        "DM",
+        "DK",
+        "DO",
+        "DZ",
+        "EC",
+        "EG",
+        "ER",
+        "EH",
+        "ES",
+        "EE",
+        "ET",
+        "FI",
+        "FJ",
+        "FK",
+        "FR",
+        "FO",
+        "FM",
+        "GA",
+        "GB",
+        "GE",
+        "GG",
+        "GH",
+        "GI",
+        "GN",
+        "GP",
+        "GM",
+        "GW",
+        "GQ",
+        "GR",
+        "GD",
+        "GL",
+        "GT",
+        "GF",
+        "GU",
+        "GY",
+        "HK",
+        "HM",
+        "HN",
+        "HR",
+        "HT",
+        "HU",
+        "ID",
+        "IM",
+        "IN",
+        "IO",
+        "IE",
+        "IR",
+        "IQ",
+        "IS",
+        "IL",
+        "IT",
+        "JM",
+        "JE",
+        "JO",
+        "JP",
+        "KZ",
+        "KE",
+        "KG",
+        "KH",
+        "KI",
+        "KN",
+        "KR",
+        "KW",
+        "LA",
+        "LB",
+        "LR",
+        "LY",
+        "LC",
+        "LI",
+        "LK",
+        "LS",
+        "LT",
+        "LU",
+        "LV",
+        "MO",
+        "MF",
+        "MA",
+        "MC",
+        "MD",
+        "MG",
+        "MV",
+        "MX",
+        "MH",
+        "MK",
+        "ML",
+        "MT",
+        "MM",
+        "ME",
+        "MN",
+        "MP",
+        "MZ",
+        "MR",
+        "MS",
+        "MQ",
+        "MU",
+        "MW",
+        "MY",
+        "YT",
+        "NA",
+        "NC",
+        "NE",
+        "NF",
+        "NG",
+        "NI",
+        "NU",
+        "NL",
+        "NO",
+        "NP",
+        "NR",
+        "NZ",
+        "OM",
+        "PK",
+        "PA",
+        "PN",
+        "PE",
+        "PH",
+        "PW",
+        "PG",
+        "PL",
+        "PR",
+        "KP",
+        "PT",
+        "PY",
+        "PS",
+        "PF",
+        "QA",
+        "RE",
+        "RO",
+        "RU",
+        "RW",
+        "SA",
+        "SD",
+        "SN",
+        "SG",
+        "GS",
+        "SH",
+        "SJ",
+        "SB",
+        "SL",
+        "SV",
+        "SM",
+        "SO",
+        "PM",
+        "RS",
+        "SS",
+        "ST",
+        "SR",
+        "SK",
+        "SI",
+        "SE",
+        "SZ",
+        "SX",
+        "SC",
+        "SY",
+        "TC",
+        "TD",
+        "TG",
+        "TH",
+        "TJ",
+        "TK",
+        "TM",
+        "TL",
+        "TO",
+        "TT",
+        "TN",
+        "TR",
+        "TV",
+        "TW",
+        "TZ",
+        "UG",
+        "UA",
+        "UM",
+        "UY",
+        "US",
+        "UZ",
+        "VA",
+        "VC",
+        "VE",
+        "VG",
+        "VI",
+        "VN",
+        "VU",
+        "WF",
+        "WS",
+        "YE",
+        "ZA",
+        "ZM",
+        "ZW"
+      ],
+      "description": "2-letter country code in <a href='https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements'>ISO 3166-1 alpha</a> format, \ne.g. <code>FR</code> for France and <code>GB</code> for the United Kingdom.\n"
+    },
+    "Currency": {
+      "title": "Currency",
+      "enum": [
+        "AED",
+        "AFN",
+        "ALL",
+        "AMD",
+        "ANG",
+        "AOA",
+        "ARS",
+        "AUD",
+        "AWG",
+        "AZN",
+        "BAM",
+        "BBD",
+        "BDT",
+        "BGN",
+        "BHD",
+        "BIF",
+        "BMD",
+        "BND",
+        "BOB",
+        "BOV",
+        "BRL",
+        "BSD",
+        "BTN",
+        "BWP",
+        "BYR",
+        "BYN",
+        "BZD",
+        "CAD",
+        "CDF",
+        "CHE",
+        "CHF",
+        "CHW",
+        "CLP",
+        "CNY",
+        "COP",
+        "COU",
+        "CRC",
+        "CUC",
+        "CUP",
+        "CVE",
+        "CZK",
+        "DJF",
+        "DKK",
+        "DOP",
+        "DZD",
+        "EGP",
+        "ERN",
+        "ETB",
+        "EUR",
+        "FJD",
+        "FKP",
+        "GBP",
+        "GEL",
+        "GHS",
+        "GIP",
+        "GMD",
+        "GNF",
+        "GTQ",
+        "GYD",
+        "HKD",
+        "HNL",
+        "HRK",
+        "HTG",
+        "HUF",
+        "IDR",
+        "ILS",
+        "INR",
+        "IQD",
+        "IRR",
+        "ISK",
+        "JMD",
+        "JOD",
+        "JPY",
+        "KES",
+        "KGS",
+        "KHR",
+        "KMF",
+        "KPW",
+        "KRW",
+        "KWD",
+        "KYD",
+        "KZT",
+        "LAK",
+        "LBP",
+        "LKR",
+        "LRD",
+        "LSL",
+        "LYD",
+        "MAD",
+        "MDL",
+        "MKD",
+        "MMK",
+        "MNT",
+        "MOP",
+        "MRO",
+        "MUR",
+        "MVR",
+        "MWK",
+        "MXN",
+        "MXV",
+        "MYR",
+        "MZN",
+        "NAD",
+        "NGN",
+        "NIO",
+        "NOK",
+        "NPR",
+        "NZD",
+        "OMR",
+        "PAB",
+        "PEN",
+        "PGK",
+        "PHP",
+        "PKR",
+        "PLN",
+        "PYG",
+        "QAR",
+        "RON",
+        "RSD",
+        "RUB",
+        "RWF",
+        "SAR",
+        "SBD",
+        "SCR",
+        "SDG",
+        "SEK",
+        "SGD",
+        "SHP",
+        "SOS",
+        "SRD",
+        "SSP",
+        "SVC",
+        "SYP",
+        "SZL",
+        "THB",
+        "TJS",
+        "TMT",
+        "TND",
+        "TOP",
+        "TRY",
+        "TTD",
+        "TWD",
+        "TZS",
+        "UAH",
+        "UGX",
+        "USD",
+        "UYU",
+        "UZS",
+        "VND",
+        "VUV",
+        "WST",
+        "XAF",
+        "XAG",
+        "XAU",
+        "XBA",
+        "XBB",
+        "XBC",
+        "XBD",
+        "XCD",
+        "XDR",
+        "XFU",
+        "XOF",
+        "XPD",
+        "XPF",
+        "XPT",
+        "XSU",
+        "XTS",
+        "XUA",
+        "YER",
+        "ZAR",
+        "ZMW",
+        "ZWL"
+      ],
+      "description": "3-letter currency code in <a href='https://en.wikipedia.org/wiki/ISO_4217#Active_codes'>ISO 4217</a> format, \ne.g. <code>USD</code> for US dollars.\n"
+    },
+    "PaymentResponseProcessorAPISchema": {
+      "title": "PaymentResponseProcessorAPISchema",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Processor Name",
+          "type": "string",
+          "description": "The payment processor used for this payment.",
+          "maxLength": 255
+        },
+        "processorMerchantId": {
+          "title": "Processor Merchant ID",
+          "type": "string",
+          "description": "The merchant ID registered at the payment processor used for this payment.",
+          "maxLength": 255
+        },
+        "amountCaptured": {
+          "title": "Amount captured",
+          "type": "integer",
+          "minimum": 0.0,
+          "format": "int64",
+          "description": "If no capture was performed, this value will be set to `0`.\n\nIf one or more partial captures were performed, this value will be a sum\nof all partial capture amounts.\n"
+        },
+        "amountRefunded": {
+          "title": "Amount refunded",
+          "type": "integer",
+          "minimum": 0.0,
+          "format": "int64",
+          "description": "If no refund was performed, this value will be set to `0`.\n\nIf one or more partial refunds were performed, this value will be a sum\nof all partial refund amounts.\n"
+        }
+      }
+    },
+    "GoCardlessMandateAPISchema": {
+      "title": "GoCardlessMandateAPISchema",
+      "required": [
+        "gocardlessMandateId"
+      ],
+      "type": "object",
+      "properties": {
+        "gocardlessMandateId": {
+          "title": "Mandate agreement ID",
+          "type": "string",
+          "description": "Unique identifier of a GoCardless mandate agreement"
+        }
+      }
+    },
+    "IdealPayNLTokenAPISchema": {
+      "title": "IdealPayNLTokenAPISchema",
+      "required": [
+        "paymentMethodConfigId"
+      ],
+      "type": "object",
+      "properties": {
+        "paymentMethodConfigId": {
+          "title": "Paymentmethodconfigid",
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "KlarnaAddressAPISchema": {
+      "title": "KlarnaAddressAPISchema",
+      "type": "object",
+      "properties": {
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "firstName": {
+          "title": "Firstname",
+          "type": "string"
+        },
+        "lastName": {
+          "title": "Lastname",
+          "type": "string"
+        },
+        "email": {
+          "title": "Email",
+          "type": "string"
+        },
+        "phoneNumber": {
+          "title": "Phonenumber",
+          "type": "string"
+        },
+        "addressLine1": {
+          "title": "Addressline1",
+          "type": "string"
+        },
+        "addressLine2": {
+          "title": "Addressline2",
+          "type": "string"
+        },
+        "addressLine3": {
+          "title": "Addressline3",
+          "type": "string"
+        },
+        "city": {
+          "title": "City",
+          "type": "string"
+        },
+        "state": {
+          "title": "State",
+          "type": "string"
+        },
+        "countryCode": {
+          "$ref": "#/components/schemas/CountryCodeEnum"
+        },
+        "postalCode": {
+          "title": "Postalcode",
+          "type": "string"
+        }
+      }
+    },
+    "KlarnaCustomerTokenAPISchema": {
+      "title": "KlarnaCustomerTokenAPISchema",
+      "required": [
+        "klarnaCustomerToken",
+        "sessionData"
+      ],
+      "type": "object",
+      "properties": {
+        "klarnaCustomerToken": {
+          "title": "Klarnacustomertoken",
+          "type": "string"
+        },
+        "sessionData": {
+          "$ref": "#/components/schemas/KlarnaSessionDetailsAPISchema"
+        }
+      }
+    },
+    "KlarnaPaymentSessionAPISchema": {
+      "title": "KlarnaPaymentSessionAPISchema",
+      "required": [
+        "klarnaAuthorizationToken",
+        "sessionData"
+      ],
+      "type": "object",
+      "properties": {
+        "klarnaAuthorizationToken": {
+          "title": "Klarnaauthorizationtoken",
+          "type": "string"
+        },
+        "sessionData": {
+          "$ref": "#/components/schemas/KlarnaSessionDetailsAPISchema"
+        }
+      }
+    },
+    "KlarnaSessionDetailsAPISchema": {
+      "title": "KlarnaSessionDetailsAPISchema",
+      "required": [
+        "billingAddress",
+        "purchaseCountry",
+        "purchaseCurrency",
+        "locale",
+        "orderLines"
+      ],
+      "type": "object",
+      "properties": {
+        "recurringDescription": {
+          "title": "Recurringdescription",
+          "type": "string"
+        },
+        "billingAddress": {
+          "$ref": "#/components/schemas/KlarnaAddressAPISchema"
+        },
+        "shippingAddress": {
+          "$ref": "#/components/schemas/KlarnaAddressAPISchema"
+        },
+        "purchaseCountry": {
+          "title": "Purchasecountry",
+          "type": "string"
+        },
+        "purchaseCurrency": {
+          "title": "Purchasecurrency",
+          "type": "string"
+        },
+        "locale": {
+          "title": "Locale",
+          "type": "string"
+        },
+        "orderLines": {
+          "title": "Orderlines",
+          "type": "array",
+          "items": {}
+        },
+        "tokenDetails": {
+          "$ref": "#/components/schemas/KlarnaTokenDetails"
+        }
+      }
+    },
+    "KlarnaTokenDetails": {
+      "title": "KlarnaTokenDetails",
+      "required": [
+        "type"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "title": "Type",
+          "type": "string"
+        },
+        "brand": {
+          "title": "Brand",
+          "type": "string"
+        },
+        "masked_number": {
+          "title": "Masked Number",
+          "type": "string"
+        },
+        "expiry_date": {
+          "title": "Expiry Date",
+          "type": "string"
+        }
+      }
+    },
+    "PayPalBillingAgreementAPISchema": {
+      "title": "PayPalBillingAgreementAPISchema",
+      "required": [
+        "paypalBillingAgreementId"
+      ],
+      "type": "object",
+      "properties": {
+        "paypalBillingAgreementId": {
+          "title": "Paypalbillingagreementid",
+          "type": "string"
+        },
+        "externalPayerInfo": {
+          "$ref": "#/components/schemas/PayPalExternalPayerInfoAPISchema",
+          "title": "Payer Info",
+          "description": "Information about the PayPal customer"
+        },
+        "shippingAddress": {
+          "$ref": "#/components/schemas/AddressAPISchema",
+          "title": "Shipping address",
+          "description": "The PayPal customer's shipping address"
+        },
+        "paypalStatus": {
+          "title": "PayPal order status",
+          "type": "string"
+        }
+      }
+    },
+    "PayPalExternalPayerInfoAPISchema": {
+      "title": "PayPalExternalPayerInfoAPISchema",
+      "type": "object",
+      "properties": {
+        "externalPayerId": {
+          "title": "Externalpayerid",
+          "type": "string"
+        },
+        "email": {
+          "title": "Email",
+          "type": "string"
+        },
+        "firstName": {
+          "title": "Firstname",
+          "type": "string"
+        },
+        "lastName": {
+          "title": "Lastname",
+          "type": "string"
+        }
+      }
+    },
+    "PayPalOrderTokenAPISchema": {
+      "title": "PayPalOrderTokenAPISchema",
+      "required": [
+        "paypalOrderId"
+      ],
+      "type": "object",
+      "properties": {
+        "paypalOrderId": {
+          "title": "PayPal order identifier",
+          "type": "string"
+        },
+        "externalPayerInfo": {
+          "$ref": "#/components/schemas/PayPalExternalPayerInfoAPISchema",
+          "title": "Payer Info",
+          "description": "Information about the PayPal customer"
+        },
+        "paypalStatus": {
+          "title": "PayPal order status",
+          "type": "string"
+        }
+      }
+    },
+    "PaymentAPIResponse": {
+      "title": "PaymentAPIResponse",
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Payment identifier",
+          "type": "string",
+          "description": "The unique payment ID.\n\nYou can use this ID to retrieve the payment details, or perform downstream\noperations.\n"
+        },
+        "date": {
+          "title": "Payment date",
+          "type": "string",
+          "description": "The date and time at which the payment was created in UTC format.",
+          "format": "date-time"
+        },
+        "dateUpdated": {
+          "title": "Payment updated date",
+          "type": "string",
+          "description": "The date and time of the last payment update in UTC format.",
+          "format": "date-time"
+        },
+        "status": {
+          "$ref": "#/components/schemas/PaymentStatus",
+          "title": "Current status",
+          "description": "See the payment [status table](../docs#payment-status) for more information."
+        },
+        "cardTokenType": {
+          "title": "Card token type used",
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/CardTokenTypeEnum"
+            }
+          ],
+          "description": "The type of card token used for the payment.\n\nOnly applies for card payments.\n",
+          "example": "CARD_PAN"
+        },
+        "orderId": {
+          "title": "Order ID",
+          "type": "string",
+          "description": "Your reference for the payment.",
+          "maxLength": 255
+        },
+        "currencyCode": {
+          "$ref": "#/components/schemas/Currency",
+          "title": "Currency",
+          "description": "The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.\n"
+        },
+        "amount": {
+          "title": "Payment amount",
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "The amount you charged the customer, in minor units."
+        },
+        "order": {
+          "$ref": "#/components/schemas/OrderDetailsAPISchema",
+          "title": "Order Details",
+          "description": "More information associated with the order."
+        },
+        "customerId": {
+          "title": "The ID of the customer using the checkout",
+          "type": "string",
+          "description": "The unique identifier for your customer.",
+          "maxLength": 255
+        },
+        "customer": {
+          "$ref": "#/components/schemas/CustomerDetailsAPISchema",
+          "title": "Customer Details",
+          "description": "More information associated with the customer."
+        },
+        "metadata": {
+          "title": "Payment Metadata",
+          "type": "object",
+          "description": "Additional data to be used throughout the payment lifecycle.\n"
+        },
+        "paymentMethod": {
+          "$ref": "#/components/schemas/PaymentResponsePaymentMethodOptionsAPISchema",
+          "title": "Payment Method Options",
+          "description": "The payment method options provided in the request, as well as the token used to process the payment."
+        },
+        "processor": {
+          "$ref": "#/components/schemas/PaymentResponseProcessorAPISchema",
+          "title": "Processor Information",
+          "description": "More information associated with the payment processor, including the processor name."
+        },
+        "requiredAction": {
+          "$ref": "#/components/schemas/PaymentRequiredActionAPISchema",
+          "title": "Required action",
+          "description": "Required action to perform in order to resume the payment workflow. This can be requiring a 3DS check from the customer for instance."
+        },
+        "statusReason": {
+          "$ref": "#/components/schemas/StatusReasonAPISchema",
+          "title": "Status Reason",
+          "description": "Check this field for more information regarding the payment's status. This is especially useful when the status is `DECLINED` or `FAILED`.\n"
+        },
+        "transactions": {
+          "title": "Transactions",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/TransactionOverviewAPISchema"
+          },
+          "description": "A list summarizing the transactions that occurred while processing the payment.\n\nNote: a refund is a separate transaction and so will appear in this `transactions` list if a refund was performed."
+        },
+        "riskData": {
+          "$ref": "#/components/schemas/RiskDataAPISchema",
+          "title": "Risk Data"
+        }
+      }
+    },
+    "PaymentCancelAPIRequest": {
+      "title": "PaymentCancelAPIRequest",
+      "type": "object",
+      "properties": {
+        "reason": {
+          "title": "Cancellation reason",
+          "type": "string",
+          "description": "You can optionally specify a reason for the cancellation. This is for your own records."
+        },
+        "expand": {
+          "$ref": "#/components/schemas/Expand"
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "reason": "Customer cancelled order #1234."
+      }
+    },
+    "PaymentAuthorizationAPIRequest": {
+      "title": "PaymentAuthorizationAPIRequest",
+      "type": "object",
+      "required": [
+        "processor"
+      ],
+      "properties": {
+        "processor": {
+          "$ref": "#/components/schemas/PaymentAuthorizationRequestProcessorAPISchema",
+          "title": "Processor",
+          "description": "The payment processor to use for this payment."
+        },
+        "expand": {
+          "$ref": "#/components/schemas/Expand"
+        }
+      }
+    },
+    "PaymentCaptureAPIRequest": {
+      "title": "PaymentCaptureAPIRequest",
+      "type": "object",
+      "properties": {
+        "amount": {
+          "title": "Amount to capture",
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "The amount you would like to capture, in minor units. The currency used on authorization is assumed.\n\nIf no amount is specified it defaults to the full amount."
+        },
+        "final": {
+          "title": "Final capture",
+          "type": "boolean",
+          "description": "Indicates whether the capture request is the final capture request.\n\nAfter a final capture, no subsequent captures are allowed.",
+          "default": true
+        },
+        "order": {
+          "title": "Order",
+          "description": "More information associated with the order.",
+          "type": "object",
+          "properties": {
+            "retailerCountryCode": {
+              "$ref": "#/components/schemas/CountryCodeEnum",
+              "title": "Retailer Country Code",
+              "description": "The country code of the retailer.\nThis field is passed to the processor and overwrites the retailer country code set in order details."
+            }
+          }
+        },
+        "metadata": {
+          "title": "Payment Metadata",
+          "description": "Additional payment metadata.\nA dictionary of key-value pairs where the values can only be strings or integers. Keys which already exist in the payment metadata will be overwritten.",
+          "type": "object"
+        },
+        "expand": {
+          "$ref": "#/components/schemas/Expand"
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "amount": 42
+      }
+    },
+    "PaymentCardTokenAPISchema": {
+      "title": "PaymentCardTokenAPISchema",
+      "required": [
+        "last4Digits",
+        "expirationMonth",
+        "expirationYear"
+      ],
+      "type": "object",
+      "properties": {
+        "first6Digits": {
+          "title": "Payment card's first six digits",
+          "maxLength": 6,
+          "minLength": 6,
+          "type": "string"
+        },
+        "last4Digits": {
+          "title": "Payment card's last four digits",
+          "maxLength": 4,
+          "minLength": 4,
+          "type": "string"
+        },
+        "expirationMonth": {
+          "title": "Expiration month",
+          "maxLength": 2,
+          "minLength": 2,
+          "type": "string"
+        },
+        "expirationYear": {
+          "title": "Expiration year",
+          "maxLength": 4,
+          "minLength": 4,
+          "type": "string"
+        },
+        "cardholderName": {
+          "title": "Cardholder's name",
+          "type": "string"
+        },
+        "network": {
+          "title": "Card network",
+          "type": "string"
+        },
+        "isNetworkTokenized": {
+          "title": "Is represented by a digital PAN",
+          "type": "boolean",
+          "default": false
+        },
+        "binData": {
+          "$ref": "#/components/schemas/BinDataAPISchema"
+        }
+      }
+    },
+    "PaymentCreationAPIRequest": {
+      "title": "PaymentCreationAPIRequest",
+      "required": [
+        "paymentMethodToken"
+      ],
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "title": "Order ID",
+          "type": "string",
+          "description": "Your reference for the payment.",
+          "maxLength": 255
+        },
+        "currencyCode": {
+          "$ref": "#/components/schemas/Currency",
+          "title": "Currency",
+          "description": "The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.\n"
+        },
+        "amount": {
+          "title": "Payment amount",
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "The amount you would like to charge the customer, in minor units. e.g. for $7, use `700`.\n\nSome currencies, such as Japanese Yen, do not have minor units. In this case you should use the value as it is, without any formatting. For example for \u00a5100, use `100`. The minimum amount is 0. The maximum amount is the limit of `int64`."
+        },
+        "order": {
+          "$ref": "#/components/schemas/OrderDetailsAPISchema",
+          "title": "Order Details",
+          "description": "More information associated with the order."
+        },
+        "paymentMethodToken": {
+          "title": "Payment method token",
+          "type": "string",
+          "description": "The payment method token used to authorize the payment.\n"
+        },
+        "customerId": {
+          "title": "The ID of the customer using the checkout",
+          "type": "string",
+          "description": "A unique identifier for your customer.\nThis attribute is required if `paymentMethod.vaultOnSuccess` is set to `True`.",
+          "maxLength": 255
+        },
+        "customer": {
+          "$ref": "#/components/schemas/CustomerDetailsAPISchema",
+          "title": "Customer Details",
+          "description": "More information associated with the customer.\n"
+        },
+        "metadata": {
+          "title": "Payment Metadata",
+          "type": "object",
+          "description": "Additional data to be used throughout the payment lifecycle.\n\nA dictionary of key-value pairs where the values can only be strings or\nintegers.\n\ne.g. `{\"productId\": 1001, \"merchantId\": \"a13bsd62s\"}`\n"
+        },
+        "paymentMethod": {
+          "$ref": "#/components/schemas/PaymentRequestPaymentMethodOptionsAPISchema",
+          "title": "Payment Method Options",
+          "description": "Enable certain options associated with the payment method."
+        },
+        "expand": {
+          "$ref": "#/components/schemas/Expand"
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "orderId": "order-abc",
+        "currencyCode": "EUR",
+        "amount": 42,
+        "paymentMethodToken": "heNwnqaeRiqvY1UcslfQc3wxNjEzOTIxNjc4",
+        "customerId": "customer-123",
+        "customer": {
+          "emailAddress": "customer123@gmail.com"
+        },
+        "metadata": {
+          "productId": 123,
+          "merchantId": "a13bsd62s"
+        },
+        "paymentMethod": {
+          "paymentType": "SUBSCRIPTION",
+          "vaultOnSuccess": true,
+          "authorizationType": "ESTIMATED"
+        }
+      }
+    },
+    "StatusReasonAPISchema": {
+      "title": "StatusReasonAPISchema",
+      "required": [
+        "type"
+      ],
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/components/schemas/PaymentStatusTypeEnum",
+          "title": "Payment status type"
+        },
+        "declineType": {
+          "$ref": "#/components/schemas/DeclineTypeEnum",
+          "title": "Decline Type",
+          "description": "If the error is of type `ISSUER_DECLINED` this will be returned.\n\nDeclines of type `SOFT_DECLINE` may be retried,\nwhereas declines of type `HARD_DECLINE` should not be retried.\n"
+        },
+        "code": {
+          "$ref": "#/components/schemas/TransactionDeclineReasonV2Enum",
+          "title": "Payment status code",
+          "description": "If the error is of type `ISSUER_DECLINED`, this will be returned."
+        },
+        "message": {
+          "title": "Processor message",
+          "type": "string",
+          "description": "In case of an error on the processor's part, we will return the message returned by the processor. This is usually a human readable error."
+        },
+        "paymentMethodResultCode": {
+          "title": "Payment Method Result Code",
+          "type": "string",
+          "description": "The result code returned by the payment method or card network. This code is unified across all supported processors.\n\n_e.g. Code `46` refers to the message \"Closed account\" for Visa across all supported processors._\n"
+        },
+        "paymentMethodResultMessage": {
+          "title": "Payment Method Result Message",
+          "type": "string",
+          "description": "Human-readable version of the Payment Method Result Code. This message is unified across all supported processors.\n\n_e.g. Code `46` refers to the message \"Closed account\" for Visa across all supported processors._\n"
+        },
+        "paymentMethodAdviceCode": {
+          "title": "Payment Method Advice Code",
+          "type": "string",
+          "description": "The advice code returned by the payment method or card network. This code is unified across all supported processors.\n\n_For payments made with Mastercard, this represents the Merchant Advice Code (MAC)._\n\n_e.g. Code `24` refers to the message \"Retry after 1 hour\" for Mastercard across all supported processors._\n"
+        },
+        "paymentMethodAdviceMessage": {
+          "title": "Payment Method Advice Message",
+          "type": "string",
+          "description": "Human-readable version of the Payment Method Advice Code. This message is unified across all supported processors.\n\n_For payments made with Mastercard, this represents the message of the Merchant Advice Code (MAC)._\n\n_e.g. Code `24` refers to the message \"Retry after 1 hour\" for Mastercard across all supported processors._\n"
+        },
+        "advisedAction": {
+          "title": "Advised Action",
+          "$ref": "#/components/schemas/AdvisedActionEnum"
+        }
+      }
+    },
+    "RiskDataAPISchema": {
+      "title": "RiskDataAPISchema",
+      "description": "Risk data associated with this payment.\n",
+      "type": "object",
+      "properties": {
+        "fraudChecks": {
+          "title": "Fraud Checks",
+          "$ref": "#/components/schemas/FraudCheckAPISchema"
+        },
+        "cvvCheck": {
+          "title": "CVV Check",
+          "$ref": "#/components/schemas/CVVCheckAPISchema"
+        },
+        "avsCheck": {
+          "title": "AVS Check",
+          "$ref": "#/components/schemas/AVSCheckAPISchema"
+        }
+      }
+    },
+    "FraudCheckAPISchema": {
+      "title": "FraudCheckAPISchema",
+      "description": "Results of the pre-authorization and post-authorization fraud checks.\n",
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "example": "FRAUD_PROVIDER"
+        },
+        "preAuthorizationResult": {
+          "$ref": "#/components/schemas/PreAuthFraudDecisionTypeEnum",
+          "example": "THREE_DS"
+        },
+        "preAuthorizationRecommendation": {
+          "$ref": "#/components/schemas/PreAuthorizationRecommendationEnum",
+          "example": "TRANSACTION_RISK_ANALYSIS"
+        },
+        "postAuthorizationResult": {
+          "$ref": "#/components/schemas/PostAuthFraudDecisionTypeEnum",
+          "example": "ACCEPT"
+        }
+      }
+    },
+    "FraudDecisionTypeEnum": {
+      "title": "FraudDecisionTypeEnum",
+      "enum": [
+        "ACCEPT",
+        "REFUSE",
+        "FAILED",
+        "THREE_DS",
+        "THREE_DS_EXEMPTION"
+      ],
+      "type": "string",
+      "description": "Possible fraud check outcomes."
+    },
+    "PreAuthFraudDecisionTypeEnum": {
+      "title": "PreAuthFraudDecisionTypeEnum",
+      "enum": [
+        "ACCEPT",
+        "REFUSE",
+        "FAILED",
+        "THREE_DS",
+        "THREE_DS_EXEMPTION"
+      ],
+      "type": "string",
+      "description": "Possible pre-authorization fraud check outcomes."
+    },
+    "PostAuthFraudDecisionTypeEnum": {
+      "title": "PostAuthFraudDecisionTypeEnum",
+      "enum": [
+        "ACCEPT",
+        "REFUSE",
+        "FAILED",
+        "THREE_DS"
+      ],
+      "type": "string",
+      "description": "Possible post-authorization fraud check outcomes."
+    },
+    "PreAuthorizationRecommendationEnum": {
+      "title": "PreAuthorizationRecommendationEnum",
+      "enum": [
+        "TRANSACTION_RISK_ANALYSIS"
+      ],
+      "type": "string",
+      "description": "Pre-authorization recommendation indicating the SCA exemption or risk assessment path taken. Only present when `preAuthorizationResult` is `THREE_DS_EXEMPTION`.\n\nValues:\n- `TRANSACTION_RISK_ANALYSIS`: Indicates that the fraud check deemed the transaction low risk and recommends applying a Transaction Risk Analysis (TRA) exemption to bypass Strong Customer Authentication (SCA) under PSD2, reducing friction for users.\n"
+    },
+    "CVVCheckAPISchema": {
+      "title": "CVVCheckAPISchema",
+      "description": "Results of any external CVV check performed on this payment.\n",
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "example": "PROCESSOR"
+        },
+        "result": {
+          "$ref": "#/components/schemas/RiskAssessmentStatusEnum",
+          "example": "MATCHED"
+        }
+      }
+    },
+    "AVSCheckAPISchema": {
+      "title": "AVSCheckAPISchema",
+      "description": "Results of any external AVS check performed on this payment.\n",
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "example": "PROCESSOR"
+        },
+        "result": {
+          "$ref": "#/components/schemas/AVSRiskAssessmentValues"
+        }
+      }
+    },
+    "AVSRiskAssessmentValues": {
+      "title": "AVSRiskAssessmentValues",
+      "type": "object",
+      "properties": {
+        "streetAddress": {
+          "$ref": "#/components/schemas/RiskAssessmentStatusEnum",
+          "example": "NOT_MATCHED"
+        },
+        "postalCode": {
+          "$ref": "#/components/schemas/RiskAssessmentStatusEnum",
+          "example": "NOT_VERIFIED"
+        }
+      }
+    },
+    "RiskAssessmentStatusEnum": {
+      "title": "RiskAssessmentStatusEnum",
+      "enum": [
+        "MATCHED",
+        "NOT_MATCHED",
+        "NOT_VERIFIED",
+        "NOT_PROVIDED",
+        "NOT_APPLICABLE",
+        "SKIPPED"
+      ],
+      "type": "string",
+      "description": "Possible risk assessment values for CVV and AVS checks."
+    },
+    "PaymentMethodTypeEnum": {
+      "title": "PaymentMethodTypeEnum",
+      "enum": [
+        "PAYMENT_CARD",
+        "GOOGLE_PAY",
+        "APPLE_PAY",
+        "PAYPAL",
+        "BANK_ACCOUNT",
+        "KLARNA",
+        "APAYA",
+        "OPENNODE",
+        "HOOLAH",
+        "ATOME",
+        "COINBASE",
+        "NETS",
+        "TWOC2P",
+        "CLEARPAY",
+        "SHOPEEPAY",
+        "TRIPLE_A",
+        "AFTERPAY",
+        "NOL_PAY",
+        "PAY_NL_IDEAL",
+        "PAY_NL_BANCONTACT",
+        "PAY_NL_DIRECT_DEBIT",
+        "PAY_NL_SOFORT_BANKING",
+        "PAY_NL_PAYPAL",
+        "PAY_NL_PAYCONIQ",
+        "PAY_NL_GIROPAY",
+        "PAY_NL_P24",
+        "PAY_NL_EPS",
+        "PAY_NL_KAARTDIRECT",
+        "ADYEN_SOFORT",
+        "ADYEN_TWINT",
+        "ADYEN_GIROPAY",
+        "ADYEN_TRUSTLY",
+        "ADYEN_ALIPAY",
+        "ADYEN_MOBILEPAY",
+        "ADYEN_MULTIBANCO",
+        "ADYEN_VIPPS",
+        "ADYEN_DOTPAY",
+        "ADYEN_IDEAL",
+        "ADYEN_BLIK",
+        "ADYEN_PAYTRAIL",
+        "ADYEN_INTERAC",
+        "ADYEN_PAYSHOP",
+        "ADYEN_MBWAY",
+        "ADYEN_AFFIRM",
+        "ADYEN_KLARNA",
+        "ADYEN_BANCONTACT_PAYCONIQ",
+        "ADYEN_EPS",
+        "ADYEN_BANCONTACT_CARD",
+        "ADYEN_SWISH",
+        "MOLLIE_IDEAL",
+        "MOLLIE_BANCONTACT",
+        "MOLLIE_P24",
+        "MOLLIE_GIROPAY",
+        "MOLLIE_EPS",
+        "MOLLIE_GIFTCARD",
+        "MOLLIE_SOFORT",
+        "NETAXEPT_PAYTRAIL",
+        "BUCKAROO_IDEAL",
+        "BUCKAROO_BANCONTACT",
+        "BUCKAROO_SOFORT",
+        "BUCKAROO_GIROPAY",
+        "BUCKAROO_EPS",
+        "RAPYD_GCASH",
+        "RAPYD_PROMPTPAY",
+        "RAPYD_GRABPAY",
+        "RAPYD_POLI",
+        "RAPYD_FAST",
+        "XFERS_PAYNOW",
+        "STRIPE_GIROPAY",
+        "STRIPE_IDEAL",
+        "ALIPAY_CN",
+        "CHAI_KAKAOPAY",
+        "CHAI_NAVER",
+        "CHAI_TOSS",
+        "XENDIT_DANA",
+        "XENDIT_OVO",
+        "XENDIT_SHOPEEPAY",
+        "XENDIT_RETAIL_OUTLETS",
+        "OMISE_PROMPTPAY",
+        "OMISE_TRUEMONEY",
+        "EBANX_PAGOFACIL",
+        "PACYPAY_WECHAT",
+        "PACYPAY_ALIPAY",
+        "PACYPAY_ALIPAY_PLUS",
+        "WORLDPAY_IDEAL",
+        "IPAY88_CARD",
+        "INGENICO_PAYPAL",
+        "VOLT_PIX",
+        "VOLT_BANK_TRANSFER",
+        "BRAINTREE_VENMO",
+        "THUNES_SPIRIT_OF_CADEAU",
+        "THUNES_ILLICADO",
+        "THUNES_CARTE_CADEAU_CONFORAMA",
+        "THUNES_CHEQUE_FIDELITE_CONFORAMA",
+        "SIPS_CPAY",
+        "SIPS_CPAYCONFORAMA",
+        "MONEXT_CETELEM",
+        "MONEXT_CPAY"
+      ],
+      "type": "string",
+      "description": "Payment method type, where `OFF_SESSION_PAYMENT` is used for APM (Alternative Payment Method) payments and `PAYMENT_CARD` for traditional debit or credit cards. Please note that this list is different from one indicated on [available payment methods](/docs/connections/payment-methods/available-payment-methods) page and values of this field will be changed in the future versions of the API."
+    },
+    "PaymentListAPIResponse": {
+      "title": "PaymentListAPIResponse",
+      "type": "object",
+      "properties": {
+        "data": {
+          "title": "Data",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/PaymentSummaryAPISchema"
+          }
+        },
+        "nextCursor": {
+          "title": "Nextcursor",
+          "type": "string"
+        },
+        "prevCursor": {
+          "title": "Prevcursor",
+          "type": "string"
+        }
+      }
+    },
+    "PaymentRefundAPIRequest": {
+      "title": "PaymentRefundAPIRequest",
+      "type": "object",
+      "properties": {
+        "amount": {
+          "title": "Amount to refund",
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "The amount you would like to refund the customer, in minor units. e.g. for $7, use `700`.\n\nDefaults to remaining non-refunded amount."
+        },
+        "orderId": {
+          "title": "Order ID",
+          "type": "string",
+          "description": "Optionally you can pass a specific order ID for the refund.\n\nBy default this will be set to the original `orderId` given on payment creation."
+        },
+        "reason": {
+          "title": "Refund reason",
+          "type": "string",
+          "description": "You can optionally specify a reason for the refund, for your own records. This will be returned in the refund transaction of payment responses."
+        },
+        "transactionEventId": {
+          "title": "Transaction Event ID",
+          "type": "string",
+          "format": "uuid",
+          "description": "Specific capture ID to target for the refund. Use this to specify which transaction event the refund should apply to.",
+          "example": "57a2027d-36a6-494f-ad07-a6e1d0c77772"
+        },
+        "expand": {
+          "$ref": "#/components/schemas/Expand"
+        }
+      },
+      "additionalProperties": false,
+      "example": {
+        "amount": 42,
+        "orderId": "order-1234-refund",
+        "reason": "Customer returned order #1234."
+      }
+    },
+    "PaymentRequiredActionAPISchema": {
+      "title": "PaymentRequiredActionAPISchema",
+      "required": [
+        "name",
+        "description"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/components/schemas/BlockingPaymentActionTypeEnum",
+          "title": "Name",
+          "description": "Action name"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string",
+          "description": "Human description of the required action to perform."
+        },
+        "clientToken": {
+          "title": "Client token",
+          "type": "string",
+          "description": "The client token to be returned to the SDK if a required action is returned."
+        }
+      }
+    },
+    "PaymentResumeAPIRequest": {
+      "title": "PaymentResumeAPIRequest",
+      "required": [
+        "resumeToken"
+      ],
+      "type": "object",
+      "properties": {
+        "resumeToken": {
+          "title": "Resume token",
+          "type": "string",
+          "description": "A token containing any information that is sent back from the checkout to complete a blocked payment flow.",
+          "format": "uuid"
+        }
+      },
+      "additionalProperties": false
+    },
+    "PaymentSummaryAPISchema": {
+      "title": "PaymentSummaryAPISchema",
+      "required": [
+        "id",
+        "date",
+        "dateUpdated",
+        "status",
+        "orderId",
+        "currencyCode",
+        "amount"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Payment identifier",
+          "type": "string",
+          "description": "The unique payment ID.\n\nYou can use this ID to retrieve the payment details, or perform downstream\noperations.\n"
+        },
+        "date": {
+          "title": "Payment date",
+          "type": "string",
+          "description": "The date and time at which the payment was created in UTC format.",
+          "format": "date-time"
+        },
+        "dateUpdated": {
+          "title": "Payment updated date",
+          "type": "string",
+          "description": "The date and time of the last payment update in UTC format.",
+          "format": "date-time"
+        },
+        "status": {
+          "$ref": "#/components/schemas/PaymentStatus",
+          "title": "Current status",
+          "description": "See the payment [status table](../docs#payment-status) for more information."
+        },
+        "orderId": {
+          "title": "Order ID",
+          "type": "string",
+          "description": "Your reference for the payment."
+        },
+        "processor": {
+          "$ref": "#/components/schemas/PaymentSummaryProcessorAPISchema",
+          "title": "Processor",
+          "description": "The payment processor used for this payment."
+        },
+        "currencyCode": {
+          "title": "Currency",
+          "type": "string",
+          "description": "The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.\n"
+        },
+        "amount": {
+          "title": "Payment amount",
+          "type": "integer",
+          "format": "int64",
+          "description": "The payment amount, in minor units. e.g. $7 would show as `700`."
+        },
+        "metadata": {
+          "title": "Payment Metadata",
+          "type": "object",
+          "description": "Additional data to be used throughout the payment lifecycle.\n\nA dictionary of key-value pairs where the values can only be strings or\nintegers.\n\ne.g. `{\"productId\": 1001, \"merchantId\": \"a13bsd62s\"}`\n"
+        }
+      },
+      "example": {
+        "id": "IHQlakKC",
+        "date": "2021-03-24T14:56:56.869248",
+        "status": "SETTLED",
+        "orderId": "my-order-123",
+        "currencyCode": "EUR",
+        "amount": 700,
+        "processor": {
+          "name": "STRIPE",
+          "processorMerchantId": "acct_stripe_1234"
+        },
+        "metadata": {
+          "productId": 123,
+          "merchantId": "a13bsd62s"
+        }
+      }
+    },
+    "PaymentAdjustAuthorizationAPIRequest": {
+      "title": "PaymentAdjustAuthorizationAPIRequest",
+      "required": [
+        "amount"
+      ],
+      "type": "object",
+      "properties": {
+        "amount": {
+          "title": "Payment amount",
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "The **final** amount you would like to charge the customer, in minor units. e.g. for $7, use `700`.\n\nSome currencies, such as Japanese Yen, do not have minor units. In this case you should use the value as it is, without any formatting. For example for \u00a5100, use `100`.\n\nIf the amount is provided on this level, it would override any amount calculated from the provided line items, shipping and other amounts."
+        },
+        "expand": {
+          "$ref": "#/components/schemas/Expand"
+        }
+      }
+    },
+    "PaymentAuthorizationRequestProcessorAPISchema": {
+      "title": "PaymentAuthorizationRequestProcessorAPISchema",
+      "type": "object",
+      "required": [
+        "processorMerchantId"
+      ],
+      "properties": {
+        "processorMerchantId": {
+          "type": "string",
+          "title": "Processor Merchant ID",
+          "description": "The processor's merchant ID used to authorize the payment."
+        },
+        "name": {
+          "type": "string",
+          "title": "Processor Name",
+          "description": "The processor name should be provided if the processorMerchantId is not unique across all of your integrations."
+        }
+      }
+    },
+    "PaymentSummaryProcessorAPISchema": {
+      "title": "PaymentSummaryProcessorAPISchema",
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Processor Name",
+          "type": "string",
+          "description": "The payment processor used for this payment."
+        },
+        "processorMerchantId": {
+          "title": "Processor Merchant ID",
+          "type": "string",
+          "description": "The merchant ID registered at the payment processor used for this payment."
+        }
+      }
+    },
+    "PrepaidReloadableEnum": {
+      "title": "PrepaidReloadableEnum",
+      "enum": [
+        "RELOADABLE",
+        "NON_RELOADABLE",
+        "NOT_APPLICABLE",
+        "UNKNOWN"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "RecurringTransactionTypeEnum": {
+      "title": "RecurringTransactionTypeEnum",
+      "enum": [
+        "FIRST_PAYMENT",
+        "ECOMMERCE",
+        "SUBSCRIPTION",
+        "UNSCHEDULED"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "RecurringPaymentTypeSchema": {
+      "$ref": "#/components/schemas/RecurringTransactionTypeEnum",
+      "title": "Recurring Payment Type",
+      "description": "Payment types, primarily to be used for recurring payments.\nSee the table below for all possible values. \n\nNote: if no field is set, we will return a blank value and make a best effort\nto calculate the downstream fields required for processing the payment.\n\n| paymentType | Use case |\n| --- | --- |\n| `FIRST_PAYMENT` | a customer-initiated payment which is the first in a series of recurring payments or subscription, or a card on file scenario. |\n| `ECOMMERCE` | a customer-initiated payment using stored payment details where the cardholder is present. |\n| `SUBSCRIPTION` | a merchant-initiated payment as part of a series of payments on a fixed schedule and a set amount. |\n| `UNSCHEDULED` | a merchant-initiated payment using stored payment details with no fixed schedule or amount. |\n"
+    },
+    "ProductTypeEnum": {
+      "title": "ProductTypeEnum",
+      "enum": [
+        "PHYSICAL",
+        "DIGITAL"
+      ],
+      "type": "string",
+      "description": "An enumeration"
+    },
+    "ThreeDSecureAuthResponseCodeEnum": {
+      "title": "ThreeDSecureAuthResponseCodeEnum",
+      "enum": [
+        "NOT_PERFORMED",
+        "SKIPPED",
+        "AUTH_SUCCESS",
+        "AUTH_FAILED",
+        "CHALLENGE",
+        "METHOD"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "ThreeDSecureAuthenticationAPISchema": {
+      "title": "ThreeDSecureAuthenticationAPISchema",
+      "required": [
+        "responseCode"
+      ],
+      "type": "object",
+      "properties": {
+        "responseCode": {
+          "$ref": "#/components/schemas/ThreeDSecureAuthResponseCodeEnum"
+        },
+        "reasonCode": {
+          "title": "Reasoncode",
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/ThreeDSecureSkippedReasonCodeEnum"
+            },
+            {
+              "$ref": "#/components/schemas/ThreeDSecureFailedReasonCodeEnum"
+            }
+          ]
+        },
+        "reasonText": {
+          "title": "Reasontext",
+          "type": "string"
+        },
+        "protocolVersion": {
+          "title": "Protocolversion",
+          "type": "string"
+        },
+        "challengeIssued": {
+          "title": "Challengeissued",
+          "type": "boolean"
+        }
+      }
+    },
+    "ThreeDSecureFailedReasonCodeEnum": {
+      "title": "ThreeDSecureFailedReasonCodeEnum",
+      "enum": [
+        "UNKNOWN",
+        "REJECTED_BY_ISSUER",
+        "CARD_AUTHENTICATION_FAILED",
+        "UNKNOWN_DEVICE",
+        "UNSUPPORTED_DEVICE",
+        "EXCEEDS_AUTHENTICATION_FREQUENCY_LIMIT",
+        "EXPIRED_CARD",
+        "INVALID_CARD_NUMBER",
+        "INVALID_TRANSACTION",
+        "NO_CARD_RECORD",
+        "SECURITY_FAILURE",
+        "STOLEN_CARD",
+        "SUSPECTED_FRAUD",
+        "TRANSACTION_NOT_PERMITTED_TO_CARDHOLDER",
+        "CARDHOLDER_NOT_ENROLLED_IN_SERVICE",
+        "TRANSACTION_TIMED_OUT_AT_THE_ACS",
+        "LOW_CONFIDENCE",
+        "MEDIUM_CONFIDENCE",
+        "HIGH_CONFIDENCE",
+        "VERY_HIGH_CONFIDENCE",
+        "EXCEEDS_ACS_MAXIMUM_CHALLENGES",
+        "NON_PAYMENT_NOT_SUPPORTED",
+        "THREE_RI_NOT_SUPPORTED",
+        "ACS_TECHNICAL_ISSUE",
+        "DECOUPLED_REQUIRED_BY_ACS",
+        "DECOUPLED_MAX_EXPIRY_EXCEEDED",
+        "DECOUPLED_AUTHENTICATION_INSUFFICIENT_TIME",
+        "AUTHENTICATION_ATTEMPTED_BUT_NOT_PERFORMED_BY_CARDHOLDER",
+        "ACS_TIMED_OUT",
+        "INVALID_ACS_RESPONSE",
+        "ACS_SYSTEM_ERROR_RESPONSE",
+        "ERROR_GENERATING_CAVV",
+        "PROTOCOL_VERSION_NOT_SUPPORTED",
+        "TRANSACTION_EXCLUDED_FROM_ATTEMPTS_PROCESSING",
+        "REQUESTED_PROGRAM_NOT_SUPPORTED"
+      ],
+      "type": "string",
+      "description": "This enum is derived from the `transStatusReason` on page 218 of the\n[EMV Co 3DS protocol specification](https://www.emvco.com/terms-of-use/?u=/wp-content/uploads/documents/EMVCo_3DS_Spec_v220_122018.pdf)\n\n| Code | Description                             |\n|------|-----------------------------------------|\n| 01   | Card authentication failed              |\n| 02   | Unknown Device                          |\n| 03   | Unsupported Device                      |\n| 04   | Exceeds authentication frequency limit  |\n| 05   | Expired card                            |\n| 06   | Invalid card number                     |\n| 07   | Invalid transaction                     |\n| 08   | No Card record                          |\n| 09   | Security failure                        |\n| 10   | Stolen card                             |\n| 11   | Suspected fraud                         |\n| 12   | Transaction not permitted to cardholder |\n| 13   | Cardholder not enrolled in service      |\n| 14   | Transaction timed out at the ACS        |\n| 15   | Low confidence                          |\n| 16   | Medium confidence                       |"
+    },
+    "ThreeDSecureSkippedReasonCodeEnum": {
+      "title": "ThreeDSecureSkippedReasonCodeEnum",
+      "enum": [
+        "GATEWAY_UNAVAILABLE",
+        "DISABLED_BY_MERCHANT",
+        "NOT_SUPPORTED_BY_ISSUER",
+        "FAILED_TO_NEGOTIATE",
+        "UNKNOWN_ACS_RESPONSE",
+        "3DS_SERVER_ERROR",
+        "ACQUIRER_NOT_CONFIGURED",
+        "ACQUIRER_NOT_PARTICIPATING",
+        "EXEMPTION_ACCEPTED"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "TokenTypeEnum": {
+      "title": "TokenTypeEnum",
+      "enum": [
+        "MULTI_USE",
+        "SINGLE_USE"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "DeclineTypeEnum": {
+      "title": "DeclineTypeEnum",
+      "enum": [
+        "SOFT_DECLINE",
+        "HARD_DECLINE"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "TransactionDeclineReasonV2Enum": {
+      "title": "TransactionDeclineReasonV2Enum",
+      "enum": [
+        "ERROR",
+        "INVALID_CARD_NUMBER",
+        "EXPIRED_CARD",
+        "LOST_OR_STOLEN_CARD",
+        "SUSPECTED_FRAUD",
+        "UNKNOWN",
+        "DECLINED",
+        "REFER_TO_CARD_ISSUER",
+        "DO_NOT_HONOR",
+        "INSUFFICIENT_FUNDS",
+        "WITHDRAWAL_LIMIT_EXCEEDED",
+        "ISSUER_TEMPORARILY_UNAVAILABLE",
+        "AUTHENTICATION_REQUIRED"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "AdvisedActionEnum": {
+      "title": "AdvisedActionEnum",
+      "enum": [
+        "RETRY_LATER",
+        "UPDATE_DATA",
+        "DO_NOT_RETRY",
+        "STOP_ALL_PAYMENTS"
+      ],
+      "type": "string",
+      "description": "The Primer-recommended action to take based on the underlying decline reason and advice code. This advised action is unified across all supported processors and payment methods.\n\n- `RETRY_LATER`: The payment was likely declined due to a temporary issue (e.g. Insufficient funds). The payment can be retried immediately or at a later date. \n- `UPDATE_DATA`: The payment was likely declined because critical data was missing or out-of-date. Please ensure you use the most up-to-date payment information and customer details before retrying the payment.\n- `DO_NOT_RETRY`: The payment was declined and should not be retried. You can still charge this payment method for future orders or installments.\n- `STOP_ALL_PAYMENTS`: The processor or payment method explicitly informs you to stop making any payment requests with this payment method. Please use another payment method to charge this customer.\n- `null`: Primer is unable to determine a recommended action. \n"
+    },
+    "TransactionEventApiResponse": {
+      "type": "object",
+      "required": [
+        "id",
+        "date",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The id of the event.",
+          "format": "uuid",
+          "example": "46d25279-9d36-4237-8f45-2dc4e4e262d6"
+        },
+        "processorEventId": {
+          "type": "string",
+          "description": "The ID of the event from the payment processor (e.g. PayPal).",
+          "example": "30B258847H402782C"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of when the event occurred.",
+          "example": "2025-01-22T13:39:18.992928"
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of the event.",
+          "enum": [
+            "AUTHORIZATION_SUCCEEDED",
+            "AUTHORIZATION_ADJUSTMENT_SUCCEEDED",
+            "CAPTURE_SUCCEEDED",
+            "CANCELLATION_SUCCEEDED"
+          ],
+          "example": "CAPTURE_SUCCEEDED"
+        },
+        "amount": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The amount associated with the event in minor units.",
+          "example": 1234
+        },
+        "final": {
+          "type": "boolean",
+          "description": "Indicates whether the event is final.\nFor example, in the case of a capture event this would indicate whether it was a final capture or not, but in the case of a cancellation request this field will not be present.",
+          "example": false
+        }
+      }
+    },
+    "TransactionOverviewAPISchema": {
+      "title": "TransactionOverviewAPISchema",
+      "required": [
+        "id",
+        "processor",
+        "processorMerchantId",
+        "type",
+        "status",
+        "date",
+        "amount",
+        "currencyCode"
+      ],
+      "type": "object",
+      "properties": {
+        "date": {
+          "title": "Creation date",
+          "type": "string",
+          "description": "Date & time of the transaction (UTC)"
+        },
+        "amount": {
+          "minimum": 0.0,
+          "type": "integer",
+          "format": "int64",
+          "description": "Transaction amount in minor units"
+        },
+        "currencyCode": {
+          "$ref": "#/components/schemas/Currency",
+          "title": "Currency",
+          "description": "The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.\n"
+        },
+        "orderId": {
+          "title": "Order ID",
+          "type": "string",
+          "description": "The reference submitted on payment creation or refund."
+        },
+        "transactionType": {
+          "$ref": "#/components/schemas/TransactionTypeEnum",
+          "title": "Transaction type"
+        },
+        "processorTransactionId": {
+          "title": "Processor's transaction ID",
+          "type": "string",
+          "description": "Processor's unique identifier for the transaction"
+        },
+        "processorName": {
+          "title": "Processor Name",
+          "type": "string",
+          "description": "An identifier of a processor."
+        },
+        "processorMerchantId": {
+          "title": "Processor master account identifier",
+          "type": "string",
+          "description": "Processor's main account identifier.\n\n* Adyen: Account code\n* Braintree: Merchant ID\n* Stripe: Account ID\"\n"
+        },
+        "processorStatus": {
+          "$ref": "#/components/schemas/PaymentStatus",
+          "title": "Processor Transaction status",
+          "description": "Transaction status, please refer to the [Transaction Status Codes](#section/API-Usage-Guide/Payment-Status) table for more information"
+        },
+        "processorStatusReason": {
+          "$ref": "#/components/schemas/StatusReasonAPISchema",
+          "title": "Payment error",
+          "description": "If the transaction has a declined or failed status.\n\nOnly if the status is `DECLINED` or `FAILED`, otherwise `null`.\n"
+        },
+        "cardTokenType": {
+          "title": "Card token type used",
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/CardTokenTypeEnum"
+            }
+          ],
+          "description": "The type of card token used for the payment.\n\nOnly applies for card payments.\n",
+          "example": "CARD_PAN"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string",
+          "description": "The reason for a cancel or refund request on this transaction, if any.\n",
+          "example": "Item returned."
+        },
+        "events": {
+          "title": "Events",
+          "type": "array",
+          "description": "A list of events related to the transaction, included when the `expand` parameter is passed.",
+          "items": {
+            "$ref": "#/components/schemas/TransactionEventApiResponse"
+          }
+        }
+      }
+    },
+    "PaymentStatus": {
+      "title": "PaymentStatus",
+      "enum": [
+        "PENDING",
+        "FAILED",
+        "AUTHORIZED",
+        "SETTLING",
+        "PARTIALLY_SETTLED",
+        "SETTLED",
+        "DECLINED",
+        "CANCELLED"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "PaymentStatusTypeEnum": {
+      "title": "PaymentStatusTypeEnum",
+      "enum": [
+        "APPLICATION_ERROR",
+        "GATEWAY_REJECTED",
+        "GATEWAY_TIMEOUT",
+        "ISSUER_DECLINED"
+      ],
+      "type": "string",
+      "description": "The status reason type for the payment, providing more information on the error. \n`APPLICATION_ERROR` indicates something went wrong internally within primer's system. \n`GATEWAY_REJECTED` indicates that request was rejected on the third-party. \n`GATEWAY_TIMEOUT` indicates the timeout limit on the third party request was exceeded. \n`ISSUER_DECLINED` indicates a legitimate decline that is not due to a timeout.\n"
+    },
+    "TransactionTypeEnum": {
+      "title": "TransactionTypeEnum",
+      "enum": [
+        "SALE",
+        "REFUND"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "OptionalAddressAPISchema": {
+      "title": "OptionalAddressAPISchema",
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "title": "First Name",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "lastName": {
+          "title": "Last Name",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "addressLine1": {
+          "title": "Address Line 1",
+          "type": "string",
+          "description": "Street name, Company name or PO Box",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "addressLine2": {
+          "title": "Address Line 2",
+          "type": "string",
+          "description": "Apartment, Unit or Building number",
+          "maxLength": 255
+        },
+        "city": {
+          "title": "City",
+          "type": "string",
+          "description": "Name of the city, district, town or village",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "state": {
+          "title": "State",
+          "type": "string",
+          "description": "State, County or Province",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "countryCode": {
+          "$ref": "#/components/schemas/CountryCodeEnum",
+          "title": "Country Code",
+          "description": "Two letter ISO country code"
+        },
+        "postalCode": {
+          "title": "Postal Code",
+          "type": "string",
+          "description": "Postal or ZIP code",
+          "minLength": 1,
+          "maxLength": 255
+        }
+      }
+    },
+    "AddressAPISchema": {
+      "title": "AddressAPISchema",
+      "required": [
+        "addressLine1",
+        "city",
+        "countryCode"
+      ],
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "title": "First Name",
+          "type": "string"
+        },
+        "lastName": {
+          "title": "Last Name",
+          "type": "string"
+        },
+        "addressLine1": {
+          "title": "Address Line 1",
+          "type": "string",
+          "description": "Street name, Company name or PO Box"
+        },
+        "addressLine2": {
+          "title": "Address Line 2",
+          "type": "string",
+          "description": "Apartment, Unit or Building number"
+        },
+        "city": {
+          "title": "City",
+          "type": "string",
+          "description": "Name of the city, district, town or village"
+        },
+        "state": {
+          "title": "State",
+          "type": "string",
+          "description": "State, County or Province"
+        },
+        "countryCode": {
+          "$ref": "#/components/schemas/CountryCodeEnum",
+          "title": "Country Code",
+          "description": "Two letter ISO country code"
+        },
+        "postalCode": {
+          "title": "Postal Code",
+          "type": "string",
+          "description": "Postal or ZIP code"
+        }
+      }
+    },
+    "MerchantPaymentMethodTokenAPIResponse": {
+      "title": "MerchantPaymentMethodTokenAPIResponse",
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "title": "Creation date",
+          "type": "string",
+          "description": "Creation date & time of the object (UTC)",
+          "format": "date-time"
+        },
+        "deletedAt": {
+          "title": "Revocation date",
+          "type": "string",
+          "description": "Date & time when this object was revoked. (UTC)",
+          "format": "date-time"
+        },
+        "deleted": {
+          "title": "Revoked",
+          "type": "boolean",
+          "description": "Whether or not this object has been revoked."
+        },
+        "token": {
+          "title": "Token",
+          "type": "string",
+          "description": "The vaulted payment method token."
+        },
+        "tokenType": {
+          "title": "Token type",
+          "type": "string",
+          "description": "* `MULTI_USE` a vaulted token that can be re-used with subsequent payments"
+        },
+        "analyticsId": {
+          "title": "Unique analytics ID",
+          "type": "string",
+          "description": "Unique analytics identifier corresponding to a payment method"
+        },
+        "paymentMethodType": {
+          "$ref": "#/components/schemas/PaymentMethodTypeEnum",
+          "title": "Payment method type",
+          "description": "Payment method type associated with a token."
+        },
+        "paymentMethodData": {
+          "title": "Payment method data",
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/PaymentCardTokenAPISchema"
+            },
+            {
+              "$ref": "#/components/schemas/PayPalBillingAgreementAPISchema"
+            },
+            {
+              "$ref": "#/components/schemas/GoCardlessMandateAPISchema"
+            },
+            {
+              "$ref": "#/components/schemas/KlarnaCustomerTokenAPISchema"
+            },
+            {
+              "$ref": "#/components/schemas/ApayaCustomerTokenAPISchema"
+            }
+          ],
+          "description": "Payment method data"
+        },
+        "customerId": {
+          "title": "Customer ID",
+          "type": "string",
+          "description": "The ID representing the customer"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string",
+          "description": "A friendly description given by the user"
+        },
+        "default": {
+          "title": "Default",
+          "type": "boolean",
+          "description": "Whether or not this payment method is the default",
+          "default": false
+        }
+      },
+      "example": {
+        "createdAt": "2021-03-01T12:00:00.123456",
+        "token": "_xlXlmBcTnuFxc2N3HAI73wxNjE1NTU5ODY5",
+        "tokenType": "MULTI_USE",
+        "analyticsId": "vuXhpZouWxaZpRZ-x_brZmtT",
+        "paymentMethodType": "PAYMENT_CARD",
+        "payment_method_data": {
+          "last4Digits": "1111",
+          "expirationMonth": "12",
+          "expirationYear": "2030",
+          "cardholderName": "John Biggins",
+          "network": "Visa",
+          "networkTransactionId": "020210628190752",
+          "accountFundingType": "DEBIT"
+        },
+        "customerId": "customer-123",
+        "description": "My first card",
+        "deleted": false,
+        "default": true
+      }
+    },
+    "MerchantPaymentMethodTokenListAPIResponse": {
+      "title": "MerchantPaymentMethodTokenListAPIResponse",
+      "type": "object",
+      "properties": {
+        "data": {
+          "title": "Data",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/MerchantPaymentMethodTokenAPIResponse"
+          }
+        }
+      }
+    },
+    "VaultPaymentMethodAPIRequest": {
+      "title": "VaultPaymentMethodAPIRequest",
+      "required": [
+        "customerId"
+      ],
+      "type": "object",
+      "properties": {
+        "customerId": {
+          "title": "Customer ID",
+          "minLength": 1,
+          "type": "string",
+          "description": "The ID representing the customer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "PaymentsInsightsBinData": {
+      "type": "object",
+      "properties": {
+        "network": {
+          "$ref": "#/components/schemas/CardNetworkEnum"
+        },
+        "issuerCountryCode": {
+          "enum": [
+            "AW",
+            "AF",
+            "AO",
+            "AI",
+            "AX",
+            "AL",
+            "AD",
+            "AE",
+            "AR",
+            "AM",
+            "AS",
+            "AQ",
+            "TF",
+            "AG",
+            "AU",
+            "AT",
+            "AZ",
+            "BI",
+            "BE",
+            "BJ",
+            "BQ",
+            "BF",
+            "BD",
+            "BG",
+            "BH",
+            "BS",
+            "BA",
+            "BL",
+            "BY",
+            "BZ",
+            "BM",
+            "BO",
+            "BR",
+            "BB",
+            "BN",
+            "BT",
+            "BV",
+            "BW",
+            "CF",
+            "CA",
+            "CC",
+            "CH",
+            "CL",
+            "CN",
+            "CI",
+            "CM",
+            "CD",
+            "CG",
+            "CK",
+            "CO",
+            "KM",
+            "CV",
+            "CR",
+            "CU",
+            "CW",
+            "CX",
+            "KY",
+            "CY",
+            "CZ",
+            "DE",
+            "DJ",
+            "DM",
+            "DK",
+            "DO",
+            "DZ",
+            "EC",
+            "EG",
+            "ER",
+            "EH",
+            "ES",
+            "EE",
+            "ET",
+            "FI",
+            "FJ",
+            "FK",
+            "FR",
+            "FO",
+            "FM",
+            "GA",
+            "GB",
+            "GE",
+            "GG",
+            "GH",
+            "GI",
+            "GN",
+            "GP",
+            "GM",
+            "GW",
+            "GQ",
+            "GR",
+            "GD",
+            "GL",
+            "GT",
+            "GF",
+            "GU",
+            "GY",
+            "HK",
+            "HM",
+            "HN",
+            "HR",
+            "HT",
+            "HU",
+            "ID",
+            "IM",
+            "IN",
+            "IO",
+            "IE",
+            "IR",
+            "IQ",
+            "IS",
+            "IL",
+            "IT",
+            "JM",
+            "JE",
+            "JO",
+            "JP",
+            "KZ",
+            "KE",
+            "KG",
+            "KH",
+            "KI",
+            "KN",
+            "KR",
+            "KW",
+            "LA",
+            "LB",
+            "LR",
+            "LY",
+            "LC",
+            "LI",
+            "LK",
+            "LS",
+            "LT",
+            "LU",
+            "LV",
+            "MO",
+            "MF",
+            "MA",
+            "MC",
+            "MD",
+            "MG",
+            "MV",
+            "MX",
+            "MH",
+            "MK",
+            "ML",
+            "MT",
+            "MM",
+            "ME",
+            "MN",
+            "MP",
+            "MZ",
+            "MR",
+            "MS",
+            "MQ",
+            "MU",
+            "MW",
+            "MY",
+            "YT",
+            "NA",
+            "NC",
+            "NE",
+            "NF",
+            "NG",
+            "NI",
+            "NU",
+            "NL",
+            "NO",
+            "NP",
+            "NR",
+            "NZ",
+            "OM",
+            "PK",
+            "PA",
+            "PN",
+            "PE",
+            "PH",
+            "PW",
+            "PG",
+            "PL",
+            "PR",
+            "KP",
+            "PT",
+            "PY",
+            "PS",
+            "PF",
+            "QA",
+            "RE",
+            "RO",
+            "RU",
+            "RW",
+            "SA",
+            "SD",
+            "SN",
+            "SG",
+            "GS",
+            "SH",
+            "SJ",
+            "SB",
+            "SL",
+            "SV",
+            "SM",
+            "SO",
+            "PM",
+            "RS",
+            "SS",
+            "ST",
+            "SR",
+            "SK",
+            "SI",
+            "SE",
+            "SZ",
+            "SX",
+            "SC",
+            "SY",
+            "TC",
+            "TD",
+            "TG",
+            "TH",
+            "TJ",
+            "TK",
+            "TM",
+            "TL",
+            "TO",
+            "TT",
+            "TN",
+            "TR",
+            "TV",
+            "TW",
+            "TZ",
+            "UG",
+            "UA",
+            "UM",
+            "UY",
+            "US",
+            "UZ",
+            "VA",
+            "VC",
+            "VE",
+            "VG",
+            "VI",
+            "VN",
+            "VU",
+            "WF",
+            "WS",
+            "YE",
+            "ZA",
+            "ZM",
+            "ZW"
+          ],
+          "type": "string",
+          "description": "2-letter country code in [ISO 3166-1](\nhttps://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) alpha format,\ne.g. FR for France and GB for the United Kingdom."
+        },
+        "issuerName": {
+          "type": "string",
+          "description": "The name of the issuing bank.",
+          "maxLength": 250
+        },
+        "productUsageType": {
+          "type": "string",
+          "description": "The usage type of the payment card e.g. commercial, consumer.",
+          "maxLength": 250
+        },
+        "accountFundingType": {
+          "type": "string",
+          "description": "The funding type of the payment card e.g. credit, debit, prepaid.",
+          "maxLength": 250
+        }
+      }
+    },
+    "PaymentsInsightsOrder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The order reference for the payment.",
+          "maxLength": 250
+        },
+        "countryCode": {
+          "enum": [
+            "AW",
+            "AF",
+            "AO",
+            "AI",
+            "AX",
+            "AL",
+            "AD",
+            "AE",
+            "AR",
+            "AM",
+            "AS",
+            "AQ",
+            "TF",
+            "AG",
+            "AU",
+            "AT",
+            "AZ",
+            "BI",
+            "BE",
+            "BJ",
+            "BQ",
+            "BF",
+            "BD",
+            "BG",
+            "BH",
+            "BS",
+            "BA",
+            "BL",
+            "BY",
+            "BZ",
+            "BM",
+            "BO",
+            "BR",
+            "BB",
+            "BN",
+            "BT",
+            "BV",
+            "BW",
+            "CF",
+            "CA",
+            "CC",
+            "CH",
+            "CL",
+            "CN",
+            "CI",
+            "CM",
+            "CD",
+            "CG",
+            "CK",
+            "CO",
+            "KM",
+            "CV",
+            "CR",
+            "CU",
+            "CW",
+            "CX",
+            "KY",
+            "CY",
+            "CZ",
+            "DE",
+            "DJ",
+            "DM",
+            "DK",
+            "DO",
+            "DZ",
+            "EC",
+            "EG",
+            "ER",
+            "EH",
+            "ES",
+            "EE",
+            "ET",
+            "FI",
+            "FJ",
+            "FK",
+            "FR",
+            "FO",
+            "FM",
+            "GA",
+            "GB",
+            "GE",
+            "GG",
+            "GH",
+            "GI",
+            "GN",
+            "GP",
+            "GM",
+            "GW",
+            "GQ",
+            "GR",
+            "GD",
+            "GL",
+            "GT",
+            "GF",
+            "GU",
+            "GY",
+            "HK",
+            "HM",
+            "HN",
+            "HR",
+            "HT",
+            "HU",
+            "ID",
+            "IM",
+            "IN",
+            "IO",
+            "IE",
+            "IR",
+            "IQ",
+            "IS",
+            "IL",
+            "IT",
+            "JM",
+            "JE",
+            "JO",
+            "JP",
+            "KZ",
+            "KE",
+            "KG",
+            "KH",
+            "KI",
+            "KN",
+            "KR",
+            "KW",
+            "LA",
+            "LB",
+            "LR",
+            "LY",
+            "LC",
+            "LI",
+            "LK",
+            "LS",
+            "LT",
+            "LU",
+            "LV",
+            "MO",
+            "MF",
+            "MA",
+            "MC",
+            "MD",
+            "MG",
+            "MV",
+            "MX",
+            "MH",
+            "MK",
+            "ML",
+            "MT",
+            "MM",
+            "ME",
+            "MN",
+            "MP",
+            "MZ",
+            "MR",
+            "MS",
+            "MQ",
+            "MU",
+            "MW",
+            "MY",
+            "YT",
+            "NA",
+            "NC",
+            "NE",
+            "NF",
+            "NG",
+            "NI",
+            "NU",
+            "NL",
+            "NO",
+            "NP",
+            "NR",
+            "NZ",
+            "OM",
+            "PK",
+            "PA",
+            "PN",
+            "PE",
+            "PH",
+            "PW",
+            "PG",
+            "PL",
+            "PR",
+            "KP",
+            "PT",
+            "PY",
+            "PS",
+            "PF",
+            "QA",
+            "RE",
+            "RO",
+            "RU",
+            "RW",
+            "SA",
+            "SD",
+            "SN",
+            "SG",
+            "GS",
+            "SH",
+            "SJ",
+            "SB",
+            "SL",
+            "SV",
+            "SM",
+            "SO",
+            "PM",
+            "RS",
+            "SS",
+            "ST",
+            "SR",
+            "SK",
+            "SI",
+            "SE",
+            "SZ",
+            "SX",
+            "SC",
+            "SY",
+            "TC",
+            "TD",
+            "TG",
+            "TH",
+            "TJ",
+            "TK",
+            "TM",
+            "TL",
+            "TO",
+            "TT",
+            "TN",
+            "TR",
+            "TV",
+            "TW",
+            "TZ",
+            "UG",
+            "UA",
+            "UM",
+            "UY",
+            "US",
+            "UZ",
+            "VA",
+            "VC",
+            "VE",
+            "VG",
+            "VI",
+            "VN",
+            "VU",
+            "WF",
+            "WS",
+            "YE",
+            "ZA",
+            "ZM",
+            "ZW"
+          ],
+          "type": "string",
+          "description": "2-letter country code in [ISO 3166-1](\nhttps://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) alpha format,\ne.g. FR for France and GB for the United Kingdom."
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "PaymentsInsightsPatchedPayment": {
+      "type": "object",
+      "properties": {
+        "paymentId": {
+          "type": "string",
+          "description": "The payment ID.\n\nThe payment ID must be unique. You can use this unique payment ID to update payment details.",
+          "maxLength": 250
+        },
+        "currencyCode": {
+          "enum": [
+            "AED",
+            "AFN",
+            "ALL",
+            "AMD",
+            "ANG",
+            "AOA",
+            "ARS",
+            "AUD",
+            "AWG",
+            "AZN",
+            "BAM",
+            "BBD",
+            "BDT",
+            "BGN",
+            "BHD",
+            "BIF",
+            "BMD",
+            "BND",
+            "BOB",
+            "BOV",
+            "BRL",
+            "BSD",
+            "BTN",
+            "BWP",
+            "BYR",
+            "BYN",
+            "BZD",
+            "CAD",
+            "CDF",
+            "CHE",
+            "CHF",
+            "CHW",
+            "CLP",
+            "CNY",
+            "COP",
+            "COU",
+            "CRC",
+            "CUC",
+            "CUP",
+            "CVE",
+            "CZK",
+            "DJF",
+            "DKK",
+            "DOP",
+            "DZD",
+            "EGP",
+            "ERN",
+            "ETB",
+            "EUR",
+            "FJD",
+            "FKP",
+            "GBP",
+            "GEL",
+            "GHS",
+            "GIP",
+            "GMD",
+            "GNF",
+            "GTQ",
+            "GYD",
+            "HKD",
+            "HNL",
+            "HRK",
+            "HTG",
+            "HUF",
+            "IDR",
+            "ILS",
+            "INR",
+            "IQD",
+            "IRR",
+            "ISK",
+            "JMD",
+            "JOD",
+            "JPY",
+            "KES",
+            "KGS",
+            "KHR",
+            "KMF",
+            "KPW",
+            "KRW",
+            "KWD",
+            "KYD",
+            "KZT",
+            "LAK",
+            "LBP",
+            "LKR",
+            "LRD",
+            "LSL",
+            "LYD",
+            "MAD",
+            "MDL",
+            "MKD",
+            "MMK",
+            "MNT",
+            "MOP",
+            "MRO",
+            "MUR",
+            "MVR",
+            "MWK",
+            "MXN",
+            "MXV",
+            "MYR",
+            "MZN",
+            "NAD",
+            "NGN",
+            "NIO",
+            "NOK",
+            "NPR",
+            "NZD",
+            "OMR",
+            "PAB",
+            "PEN",
+            "PGK",
+            "PHP",
+            "PKR",
+            "PLN",
+            "PYG",
+            "QAR",
+            "RON",
+            "RSD",
+            "RUB",
+            "RWF",
+            "SAR",
+            "SBD",
+            "SCR",
+            "SDG",
+            "SEK",
+            "SGD",
+            "SHP",
+            "SOS",
+            "SRD",
+            "SSP",
+            "SVC",
+            "SYP",
+            "SZL",
+            "THB",
+            "TJS",
+            "TMT",
+            "TND",
+            "TOP",
+            "TRY",
+            "TTD",
+            "TWD",
+            "TZS",
+            "UAH",
+            "UGX",
+            "USD",
+            "UYU",
+            "UZS",
+            "VND",
+            "VUV",
+            "WST",
+            "XAF",
+            "XAG",
+            "XAU",
+            "XBA",
+            "XBB",
+            "XBC",
+            "XBD",
+            "XCD",
+            "XDR",
+            "XFU",
+            "XOF",
+            "XPD",
+            "XPF",
+            "XPT",
+            "XSU",
+            "XTS",
+            "XUA",
+            "YER",
+            "ZAR",
+            "ZMW",
+            "ZWL"
+          ],
+          "type": "string",
+          "description": "The 3-letter currency code in\n[ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes).\n\ne.g. use `USD` for US dollars."
+        },
+        "processor": {
+          "$ref": "#/components/schemas/PaymentsInsightsProcessor"
+        },
+        "amount": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 0,
+          "description": "The amount you would like to charge the customer,\nin minor units. e.g. for $7, use `700`.\n\nSome currencies, such as Japanese Yen, do not have minor units.\nIn this case you should use the value as it is, without any formatting.\nFor example for \u00a5100, use `100`.\nThe minimum amount is 0. The maximum amount is the limit of `int64`."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The payment creation date and time (UTC) in [ISO 8601 format](\nhttps://en.wikipedia.org/wiki/ISO_8601).\n\nCannot be updated in partial updates PATCH."
+        },
+        "order": {
+          "$ref": "#/components/schemas/PaymentsInsightsOrder"
+        },
+        "status": {
+          "enum": [
+            "DECLINED",
+            "CANCELLED",
+            "FAILED",
+            "SETTLING",
+            "PARTIALLY_SETTLED",
+            "AUTHORIZED",
+            "SETTLED",
+            "PENDING"
+          ],
+          "type": "string",
+          "description": "See the payment [lifecycle](\n/docs/payments/primer-concepts#payment-lifecycle) for more information."
+        },
+        "statusReason": {
+          "$ref": "#/components/schemas/PaymentsInsightsStatusReason",
+          "description": "Pass more information regarding the payment's status in this field.\n\nThis is especially useful when the status is `DECLINED` or `FAILED`."
+        },
+        "paymentMethod": {
+          "$ref": "#/components/schemas/PaymentsInsightsPaymentMethod"
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Additional data to be used throughout the payment lifecycle.\n\nAd dictionary of key-value pairs where the values can only be strings or integers.\n\ne.g. `{\"productId\": 1001, \"merchantId\": \"88278a\"}`"
+        },
+        "paymentType": {
+          "enum": [
+            "FIRST_PAYMENT",
+            "ECOMMERCE",
+            "SUBSCRIPTION",
+            "UNSCHEDULED"
+          ],
+          "type": "string",
+          "description": "Payment types, primarily to be used for recurring payments.\nSee the table below for all possible values. \n\nNote: if no field is set, we will return a blank value and make a best effort\nto calculate the downstream fields required for processing the payment.\n\n| paymentType | Use case |\n| --- | --- |\n| `FIRST_PAYMENT` | a customer-initiated payment which is the first in a series of recurring payments or subscription, or a card on file scenario. |\n| `ECOMMERCE` | a customer-initiated payment using stored payment details where the cardholder is present. |\n| `SUBSCRIPTION` | a merchant-initiated payment as part of a series of payments on a fixed schedule and a set amount. |\n| `UNSCHEDULED` | a merchant-initiated payment using stored payment details with no fixed schedule or amount. |"
+        },
+        "descriptor": {
+          "type": "string",
+          "description": "A description of the payment,\nas it would typically appear on a bank statement.",
+          "maxLength": 250
+        }
+      }
+    },
+    "PaymentsInsightsPayment": {
+      "type": "object",
+      "properties": {
+        "paymentId": {
+          "type": "string",
+          "description": "The payment ID.\n\nThe payment ID must be unique. You can use this unique payment ID to update payment details.",
+          "maxLength": 250
+        },
+        "currencyCode": {
+          "enum": [
+            "AED",
+            "AFN",
+            "ALL",
+            "AMD",
+            "ANG",
+            "AOA",
+            "ARS",
+            "AUD",
+            "AWG",
+            "AZN",
+            "BAM",
+            "BBD",
+            "BDT",
+            "BGN",
+            "BHD",
+            "BIF",
+            "BMD",
+            "BND",
+            "BOB",
+            "BOV",
+            "BRL",
+            "BSD",
+            "BTN",
+            "BWP",
+            "BYR",
+            "BYN",
+            "BZD",
+            "CAD",
+            "CDF",
+            "CHE",
+            "CHF",
+            "CHW",
+            "CLP",
+            "CNY",
+            "COP",
+            "COU",
+            "CRC",
+            "CUC",
+            "CUP",
+            "CVE",
+            "CZK",
+            "DJF",
+            "DKK",
+            "DOP",
+            "DZD",
+            "EGP",
+            "ERN",
+            "ETB",
+            "EUR",
+            "FJD",
+            "FKP",
+            "GBP",
+            "GEL",
+            "GHS",
+            "GIP",
+            "GMD",
+            "GNF",
+            "GTQ",
+            "GYD",
+            "HKD",
+            "HNL",
+            "HRK",
+            "HTG",
+            "HUF",
+            "IDR",
+            "ILS",
+            "INR",
+            "IQD",
+            "IRR",
+            "ISK",
+            "JMD",
+            "JOD",
+            "JPY",
+            "KES",
+            "KGS",
+            "KHR",
+            "KMF",
+            "KPW",
+            "KRW",
+            "KWD",
+            "KYD",
+            "KZT",
+            "LAK",
+            "LBP",
+            "LKR",
+            "LRD",
+            "LSL",
+            "LYD",
+            "MAD",
+            "MDL",
+            "MKD",
+            "MMK",
+            "MNT",
+            "MOP",
+            "MRO",
+            "MUR",
+            "MVR",
+            "MWK",
+            "MXN",
+            "MXV",
+            "MYR",
+            "MZN",
+            "NAD",
+            "NGN",
+            "NIO",
+            "NOK",
+            "NPR",
+            "NZD",
+            "OMR",
+            "PAB",
+            "PEN",
+            "PGK",
+            "PHP",
+            "PKR",
+            "PLN",
+            "PYG",
+            "QAR",
+            "RON",
+            "RSD",
+            "RUB",
+            "RWF",
+            "SAR",
+            "SBD",
+            "SCR",
+            "SDG",
+            "SEK",
+            "SGD",
+            "SHP",
+            "SOS",
+            "SRD",
+            "SSP",
+            "SVC",
+            "SYP",
+            "SZL",
+            "THB",
+            "TJS",
+            "TMT",
+            "TND",
+            "TOP",
+            "TRY",
+            "TTD",
+            "TWD",
+            "TZS",
+            "UAH",
+            "UGX",
+            "USD",
+            "UYU",
+            "UZS",
+            "VND",
+            "VUV",
+            "WST",
+            "XAF",
+            "XAG",
+            "XAU",
+            "XBA",
+            "XBB",
+            "XBC",
+            "XBD",
+            "XCD",
+            "XDR",
+            "XFU",
+            "XOF",
+            "XPD",
+            "XPF",
+            "XPT",
+            "XSU",
+            "XTS",
+            "XUA",
+            "YER",
+            "ZAR",
+            "ZMW",
+            "ZWL"
+          ],
+          "type": "string",
+          "description": "The 3-letter currency code in\n[ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes).\n\ne.g. use `USD` for US dollars."
+        },
+        "processor": {
+          "$ref": "#/components/schemas/PaymentsInsightsProcessor"
+        },
+        "amount": {
+          "type": "integer",
+          "minimum": 0,
+          "format": "int64",
+          "description": "The amount you would like to charge the customer,\nin minor units. e.g. for $7, use `700`.\n\nSome currencies, such as Japanese Yen, do not have minor units.\nIn this case you should use the value as it is, without any formatting.\nFor example for \u00a5100, use `100`.\nThe minimum amount is 0. The maximum amount is the limit of `int64`."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The payment creation date and time (UTC) in [ISO 8601 format](\nhttps://en.wikipedia.org/wiki/ISO_8601).\n\nCannot be updated in partial updates PATCH."
+        },
+        "order": {
+          "$ref": "#/components/schemas/PaymentsInsightsOrder"
+        },
+        "status": {
+          "enum": [
+            "DECLINED",
+            "CANCELLED",
+            "FAILED",
+            "SETTLING",
+            "PARTIALLY_SETTLED",
+            "AUTHORIZED",
+            "SETTLED",
+            "PENDING"
+          ],
+          "type": "string",
+          "description": "See the payment [lifecycle](\n/docs/payments/primer-concepts#payment-lifecycle) for more information."
+        },
+        "statusReason": {
+          "$ref": "#/components/schemas/PaymentsInsightsStatusReason",
+          "description": "Pass more information regarding the payment's status in this field.\n\nThis is especially useful when the status is `DECLINED` or `FAILED`."
+        },
+        "paymentMethod": {
+          "$ref": "#/components/schemas/PaymentsInsightsPaymentMethod"
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Additional data to be used throughout the payment lifecycle.\n\nAd dictionary of key-value pairs where the values can only be strings or integers.\n\ne.g. `{\"productId\": 1001, \"merchantId\": \"88278a\"}`"
+        },
+        "paymentType": {
+          "enum": [
+            "FIRST_PAYMENT",
+            "ECOMMERCE",
+            "SUBSCRIPTION",
+            "UNSCHEDULED"
+          ],
+          "type": "string",
+          "description": "Payment types, primarily to be used for recurring payments.\nSee the table below for all possible values. \n\nNote: if no field is set, we will return a blank value and make a best effort\nto calculate the downstream fields required for processing the payment.\n\n\n| paymentType | Use case |\n| --- | --- |\n| `FIRST_PAYMENT` | a customer-initiated payment which is the first in a series of recurring payments or subscription, or a card on file scenario. |\n| `ECOMMERCE` | a customer-initiated payment using stored payment details where the cardholder is present. |\n| `SUBSCRIPTION` | a merchant-initiated payment as part of a series of payments on a fixed schedule and a set amount. |\n| `UNSCHEDULED` | a merchant-initiated payment using stored payment details with no fixed schedule or amount. |\n"
+        },
+        "descriptor": {
+          "type": "string",
+          "description": "A description of the payment,\nas it would typically appear on a bank statement.",
+          "maxLength": 250
+        }
+      },
+      "required": [
+        "amount",
+        "createdAt",
+        "currencyCode",
+        "order",
+        "paymentId",
+        "paymentMethod",
+        "processor"
+      ]
+    },
+    "PaymentsInsightsPaymentMethod": {
+      "type": "object",
+      "properties": {
+        "paymentMethodType": {
+          "$ref": "#/components/schemas/PaymentMethodTypeEnum",
+          "description": "Payment method type used for payment authorization."
+        },
+        "data": {
+          "$ref": "#/components/schemas/PaymentsInsightsPaymentMethodData"
+        },
+        "threeDSecureAuthentication": {
+          "$ref": "#/components/schemas/PaymentsInsightsThreeDSecureAuthentication"
+        }
+      },
+      "required": [
+        "paymentMethodType"
+      ]
+    },
+    "PaymentsInsightsPaymentMethodData": {
+      "type": "object",
+      "properties": {
+        "binData": {
+          "$ref": "#/components/schemas/PaymentsInsightsBinData"
+        },
+        "first6Digits": {
+          "type": "string",
+          "description": "The first six digits of the card used for payment,\nalso known as the Bank Identification Number (BIN).",
+          "maxLength": 250
+        }
+      }
+    },
+    "PaymentsInsightsProcessor": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "enum": [
+            "APAYA",
+            "ADYEN",
+            "AFTERPAY",
+            "AIRWALLEX",
+            "ALIANT",
+            "ALIPAY",
+            "ATOME",
+            "BANKED",
+            "BARCLAYCARD",
+            "BRAINTREE",
+            "BUCKAROO",
+            "BRIDGE",
+            "CHAI",
+            "CHECKOUT",
+            "CLEARPAY",
+            "COINBASE",
+            "CYBERSOURCE",
+            "DLOCAL",
+            "EBANX",
+            "ECOSPEND",
+            "FINTECTURE",
+            "GLOBAL_PAYMENTS",
+            "HOOLAH",
+            "INGENICO",
+            "INGENICO-CONNECT",
+            "KLARNA",
+            "LAYBUY",
+            "MPGS",
+            "MOLLIE",
+            "NEONOMICS",
+            "NEXI",
+            "NUVEI",
+            "OMISE",
+            "OPENNODE",
+            "PAY_NL",
+            "PAY-NL",
+            "PAYGENT",
+            "PAYPAL",
+            "PRIMER_TEST",
+            "STRIPE",
+            "TRILO",
+            "TRUELAYER",
+            "VOLT",
+            "VYNE",
+            "WORLDPAY",
+            "EMERCHANTPAY",
+            "XFERS",
+            "RAPYD",
+            "AUTHNET",
+            "NETS",
+            "NETAXEPT",
+            "PRIMER_PROCESSOR",
+            "REACH",
+            "TRUST_PAYMENTS",
+            "TWOC2P",
+            "MERCADO_PAGO",
+            "PAYU",
+            "XENDIT",
+            "FISERV",
+            "PACYPAY",
+            "SHOPEEPAY",
+            "TRIPLE_A",
+            "IPAY88",
+            "APPLE_PAY",
+            "GOOGLE_PAY",
+            "RISKIFIED",
+            "TAXJAR",
+            "STITCH",
+            "SIGNIFYD"
+          ],
+          "type": "string",
+          "description": "The payment processor used for this payment.\nPrimer supports the above processors through the Payments API,\nhowever any value can be passed here.",
+          "maxLength": 250
+        },
+        "merchantId": {
+          "type": "string",
+          "description": "The merchant ID registered at the payment processor used for this payment.",
+          "maxLength": 250
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "PaymentsInsightsStatusReason": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "APPLICATION_ERROR",
+            "GATEWAY_REJECTED",
+            "GATEWAY_TIMEOUT",
+            "ISSUER_DECLINED"
+          ],
+          "type": "string",
+          "description": "The status of the transaction, providing more information on the error. \n`APPLICATION_ERROR` indicates something went wrong internally within primer's system. \n`GATEWAY_REJECTED` indicates that request was rejected on the third-party. \n`GATEWAY_TIMEOUT` indicates the timeout limit on the third party request was exceeded. \n`ISSUER_DECLINED` indicates a legitimate decline that is not due to a timeout.\n"
+        },
+        "declineType": {
+          "enum": [
+            "SOFT_DECLINE",
+            "HARD_DECLINE"
+          ],
+          "type": "string",
+          "description": "Declines of type `SOFT_DECLINE` may have been retried.\nWhereas declines of type `HARD_DECLINE` should have not been retried.\n"
+        },
+        "code": {
+          "enum": [
+            "ERROR",
+            "INVALID_CARD_NUMBER",
+            "EXPIRED_CARD",
+            "LOST_OR_STOLEN_CARD",
+            "SUSPECTED_FRAUD",
+            "UNKNOWN",
+            "DECLINED",
+            "REFER_TO_CARD_ISSUER",
+            "DO_NOT_HONOR",
+            "INSUFFICIENT_FUNDS",
+            "WITHDRAWAL_LIMIT_EXCEEDED",
+            "ISSUER_TEMPORARILY_UNAVAILABLE",
+            "AUTHENTICATION_REQUIRED"
+          ],
+          "type": "string",
+          "description": "Payment status code with the error code when\nthe issuer declined the payment."
+        },
+        "message": {
+          "type": "string",
+          "description": "Message detail returned by the processor when\nthe error on appeared on their part.",
+          "maxLength": 250
+        }
+      }
+    },
+    "PaymentsInsightsThreeDSecureAuthentication": {
+      "type": "object",
+      "properties": {
+        "transStatus": {
+          "type": "string",
+          "maxLength": 250
+        },
+        "transStatusReason": {
+          "type": "string",
+          "maxLength": 250
+        },
+        "responseCode": {
+          "enum": [
+            "NOT_PERFORMED",
+            "SKIPPED",
+            "AUTH_SUCCESS",
+            "AUTH_FAILED",
+            "CHALLENGE",
+            "METHOD"
+          ],
+          "type": "string",
+          "description": "The response returned during the 3D Secure authentication call."
+        },
+        "challengeIssued": {
+          "type": "boolean",
+          "description": "The challenge status of the 3D Secure authentication.\nSet to false for frictionless 3D Secure authentication."
+        },
+        "protocolVersion": {
+          "type": "string",
+          "description": "The protocol version used during 3D Secure authentication.",
+          "maxLength": 250
+        },
+        "reasonCode": {
+          "type": "string",
+          "description": "The reason code for unsuccessful 3D Secure authentication attempts.",
+          "maxLength": 250
+        },
+        "reasonText": {
+          "type": "string",
+          "description": "The human readable reason text for unsuccessful\n3D Secure authentication attempts.",
+          "maxLength": 250
+        },
+        "eci": {
+          "type": "string",
+          "description": "E-commerce Indicator (ECI)",
+          "maxLength": 250
+        }
+      }
+    },
+    "ErrorObject": {
+      "title": "Error",
+      "type": "object",
+      "description": "An object containing information about the error that occurred.",
+      "required": [
+        "errorId",
+        "description"
+      ],
+      "properties": {
+        "errorId": {
+          "title": "Error ID",
+          "type": "string",
+          "description": "An error ID"
+        },
+        "description": {
+          "title": "Error description",
+          "type": "string",
+          "description": "A human readable description of the error"
+        },
+        "recoverySuggestion": {
+          "title": "Recovery Suggestion",
+          "type": "string",
+          "description": "A suggestion on how to recover from the error."
+        },
+        "diagnosticsId": {
+          "title": "Error diagnostics ID",
+          "type": "string",
+          "description": "An ID that you can quote when contacting the Primer support team via our [Support Portal](https://primerapi.atlassian.net/servicedesk/customer/portal/11)."
+        },
+        "validationErrors": {
+          "title": "Validation Errors",
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "Returned in case of a badly formed request"
+        }
+      }
+    },
+    "202AcceptedResponse": {
+      "title": "202AcceptedResponse",
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "description": "A human readable description of the error"
+            },
+            "diagnosticsId": {
+              "type": "string",
+              "description": "An ID that you can quote when contacting the Primer support team via our [Support Portal](https://primerapi.atlassian.net/servicedesk/customer/portal/11)."
+            },
+            "errorId": {
+              "type": "string",
+              "description": "An error ID"
+            },
+            "recoverySuggestion": {
+              "type": "string",
+              "description": "A suggestion on how to recover from the error."
+            }
+          }
+        }
+      }
+    },
+    "400ErrorResponse": {
+      "title": "400ErrorResponse",
+      "type": "object",
+      "required": [
+        "error"
+      ],
+      "properties": {
+        "error": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/ErrorObject"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "paymentId": {
+                  "title": "Payment ID",
+                  "type": "string",
+                  "description": "Payment ID of the related pay"
+                },
+                "paymentStatus": {
+                  "title": "Status",
+                  "type": "string",
+                  "description": "Status of the related payment"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "404ErrorResponse": {
+      "title": "404ErrorResponse",
+      "type": "object",
+      "required": [
+        "error"
+      ],
+      "properties": {
+        "error": {
+          "$ref": "#/components/schemas/ErrorObject"
+        }
+      }
+    },
+    "409ErrorResponse": {
+      "title": "409ErrorResponse",
+      "type": "object",
+      "required": [
+        "error"
+      ],
+      "properties": {
+        "error": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/ErrorObject"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "paymentId": {
+                  "title": "Payment ID",
+                  "type": "string",
+                  "description": "Payment ID of the related payment"
+                },
+                "paymentStatus": {
+                  "title": "Status",
+                  "type": "string",
+                  "description": "Status of the related payment"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "422ErrorResponse": {
+      "title": "422ErrorResponse",
+      "type": "object",
+      "required": [
+        "error"
+      ],
+      "properties": {
+        "error": {
+          "$ref": "#/components/schemas/ErrorObject"
+        }
+      }
+    },
+    "AuthorizationTypeEnum": {
+      "title": "AuthorizationTypeEnum",
+      "enum": [
+        "ESTIMATED",
+        "FINAL"
+      ],
+      "type": "string",
+      "description": "Type of authorization for the payment."
+    },
+    "CardTokenTypeEnum": {
+      "title": "CardTokenTypeEnum",
+      "enum": [
+        "CARD_PAN",
+        "NETWORK_TOKEN",
+        "PROCESSOR_TOKEN"
+      ],
+      "type": "string",
+      "description": "An enumeration."
+    },
+    "FirstPaymentReasonEnum": {
+      "title": "FirstPaymentReasonEnum",
+      "enum": [
+        "CardOnFile",
+        "Recurring",
+        "Unscheduled"
+      ],
+      "type": "string",
+      "description": "The reason for the first payment. This is used for informing payment processors about the specific reason a payment method is being stored.\nDefaults to None if not provided.\n"
+    },
+    "Expand": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "transactions.events"
+        ],
+        "example": [
+          "transactions.events"
+        ]
+      },
+      "description": "A list of fields to expand, such as transactions.events."
+    }
+  },
+  "type": "object",
+  "properties": {
+    "amount": {
+      "title": "Amount to refund",
+      "minimum": 0.0,
+      "type": "integer",
+      "format": "int64",
+      "description": "The amount you would like to refund the customer, in minor units. e.g. for $7, use `700`.\n\nDefaults to remaining non-refunded amount."
+    },
+    "orderId": {
+      "title": "Order ID",
+      "type": "string",
+      "description": "Optionally you can pass a specific order ID for the refund.\n\nBy default this will be set to the original `orderId` given on payment creation."
+    },
+    "reason": {
+      "title": "Refund reason",
+      "type": "string",
+      "description": "You can optionally specify a reason for the refund, for your own records. This will be returned in the refund transaction of payment responses."
+    },
+    "transactionEventId": {
+      "title": "Transaction Event ID",
+      "type": "string",
+      "format": "uuid",
+      "description": "Specific capture ID to target for the refund. Use this to specify which transaction event the refund should apply to.",
+      "example": "57a2027d-36a6-494f-ad07-a6e1d0c77772"
+    },
+    "expand": {
+      "$ref": "#/components/schemas/Expand"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "amount": 42,
+    "orderId": "order-1234-refund",
+    "reason": "Customer returned order #1234."
+  }
+}

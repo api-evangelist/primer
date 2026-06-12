@@ -1,0 +1,7 @@
+{
+  "error": {
+    "errorId": "MerchantAccountConflict",
+    "description": "More than one merchant account was found for the provided processor merchant ID",
+    "diagnosticsId": "1234567898"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "error": {
+    "errorId": "PaymentError",
+    "description": "The payment could not be created.",
+    "diagnosticsId": "1234567898"
+  }
+}
