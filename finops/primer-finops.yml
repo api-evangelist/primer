@@ -1,0 +1,73 @@
+name: Primer FinOps Framework
+description: >
+  FinOps Framework 1.0 FOCUS-aligned cost and usage profile for Primer's
+  payment orchestration platform. Primer enables merchants to reduce total
+  cost of payments by optimizing routing across processors, improving
+  authorization rates, and reducing operational overhead through automation.
+specificationVersion: "1.0"
+focus:
+  provider: Primer
+  serviceCategory: Payment Orchestration
+  billingModel: Custom Enterprise (volume-based, contact sales)
+  currency: USD
+costDimensions:
+  - dimension: Platform Fee
+    description: >
+      Monthly platform fee negotiated based on transaction volume and features
+      enabled. Not publicly disclosed; agreed via commercial contract.
+    unit: Monthly flat fee or percentage of GMV
+    visibility: Private (contract-based)
+  - dimension: Transaction Processing
+    description: >
+      Primer itself is not a payment processor; per-transaction costs are
+      determined by the underlying processors connected via Primer (e.g.,
+      Stripe, Adyen, Braintree). Primer's routing optimizes which processor
+      handles each transaction to minimize blended processing cost.
+    unit: Per transaction (processor-dependent)
+    visibility: Varies by processor
+  - dimension: Network Tokenization
+    description: >
+      Reduces card-not-present fraud and improves authorization rates by
+      replacing raw card data with network tokens. May reduce interchange
+      fees for eligible transactions.
+    unit: Per tokenized payment method
+    visibility: Bundled or add-on (contract-specific)
+  - dimension: 3D Secure
+    description: >
+      Primer manages 3DS exemptions and challenges. Costs associated with
+      3DS authentication may be embedded in platform pricing or pass-through
+      from ACS/directory server providers.
+    unit: Per authentication request
+    visibility: Contract-specific
+  - dimension: Global Accounts
+    description: >
+      Multi-currency and multi-region account management. FX and settlement
+      costs depend on currency pair and volume.
+    unit: Per settlement or FX conversion
+    visibility: Contract-specific
+optimizationOpportunities:
+  - name: Smart Routing
+    description: >
+      Primer's Workflows engine routes transactions to the lowest-cost or
+      highest-authorization processor in real time, reducing blended
+      processing fees across the payment stack.
+  - name: Authorization Rate Improvement
+    description: >
+      Network tokenization and automatic fallbacks improve authorization rates,
+      reducing revenue lost to unnecessary declines and retry costs.
+  - name: Reconciliation Automation
+    description: >
+      Unified reconciliation across all connected processors reduces manual
+      labor costs for finance and operations teams.
+  - name: Fraud Cost Reduction
+    description: >
+      Integrations with Forter, Riskified, Sift, and Signifyd allow
+      merchants to tune fraud rules and reduce chargeback-related costs
+      without building custom tooling.
+notes: >
+  Primer does not publish a public pricing page. All cost structures are
+  negotiated as part of the enterprise sales process. The platform is
+  positioned as a cost-reduction tool: merchants typically assess ROI through
+  reduced processor fees, lower engineering overhead, and improved payment
+  performance rather than direct Primer fees.
+contact: https://primer.io/

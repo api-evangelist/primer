@@ -1,0 +1,43 @@
+name: Primer Plans and Pricing
+description: >
+  Primer uses a custom enterprise pricing model. Pricing is not publicly listed
+  and is based on transaction volume and business requirements. Merchants contact
+  Primer's sales team for a tailored quote. Primer for Growth is an initiative
+  offering qualifying startups complimentary access to the platform for up to
+  one year.
+specificationVersion: "0.1"
+plans:
+  - name: Primer for Growth
+    description: >
+      Complimentary one-year access for qualifying early-stage startups. Includes
+      the full intelligent suite with Monitors and Observability tools. Contact
+      Primer to apply.
+    rate: Free (qualifying startups, one year)
+    features:
+      - Monitors
+      - Observability
+      - Unified payment acceptance
+    contact: https://primer.io/blog/primer-launches-primer-for-growth
+  - name: Enterprise
+    description: >
+      Custom pricing based on transaction volume and required features. Covers
+      the full Primer platform including Accept, Optimize, and Manage suites.
+      Pricing negotiated directly with Primer's sales team.
+    rate: Custom (contact sales)
+    features:
+      - Universal Checkout
+      - Centralized Vault
+      - Workflows (no-code automation)
+      - Network Tokenization
+      - Fallbacks and smart routing
+      - 3D Secure management
+      - AI Companion
+      - Observability and Monitors
+      - Reconciliation
+      - Costs Overview
+      - Global Accounts
+    contact: https://primer.io/
+notes: >
+  Primer does not publish a public pricing page. All plans are subject to custom
+  negotiation based on payment volume, geography, and integration requirements.
+  PCI-1, SOC2 Type-2, and GDPR compliance are included across all tiers.

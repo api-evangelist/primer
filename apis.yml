@@ -1,0 +1,78 @@
+aid: primer
+name: Primer
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/primer/refs/heads/main/apis.yml
+created: 2026-06-12
+modified: 2026-06-12
+specificationVersion: "0.19"
+description: >
+  Primer is a payment orchestration platform that enables merchants to build
+  flexible payment flows across multiple processors through a single REST API
+  integration. The platform provides intelligent routing, automatic fallback
+  logic, fraud detection integrations, and a no-code Workflows builder for
+  managing payment rules without engineering effort. Primer supports 60+ payment
+  methods including cards, digital wallets, and regional alternatives such as
+  iDEAL, Klarna, and Alipay. The platform delivers unified observability,
+  reconciliation, and analytics across all connected payment providers, and
+  processes billions of dollars monthly with 99.99% uptime.
+tags:
+  - payments
+  - payment orchestration
+  - payment processing
+  - fintech
+  - fraud detection
+  - smart routing
+  - checkout
+  - payment methods
+  - reconciliation
+  - webhooks
+apis:
+  - name: Primer Payments API
+    description: >
+      REST API for creating and managing payments, client sessions, and saved
+      payment methods. Supports the full payment lifecycle including
+      authorization, capture, refund, cancellation, and dispute management.
+      Versioned via X-Api-Version header with current GA version 2.4.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://primer.io/docs/api-reference/get-started/overview
+    baseURL: https://api.primer.io
+    tags:
+      - payments
+      - client sessions
+      - payment methods
+      - refunds
+      - disputes
+    properties:
+      - type: Documentation
+        url: https://primer.io/docs/api-reference/get-started/overview
+      - type: Sandbox
+        url: https://api.sandbox.primer.io
+common:
+  - type: Website
+    url: https://primer.io/
+  - type: Documentation
+    url: https://primer.io/docs/api-reference/get-started/overview
+  - type: GitHubOrganization
+    url: https://github.com/primer-io
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/primerapi/
+  - type: X
+    url: https://x.com/primer_io
+  - type: Blog
+    url: https://primer.io/blog
+  - type: Pricing
+    url: https://primer.io/blog/primer-launches-primer-for-growth
+  - type: StatusPage
+    url: https://status.primer.io/
+  - type: Changelog
+    url: https://primer.io/docs/changelogs/android-sdk
+  - type: Plans
+    url: plans/primer-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/primer-rate-limits.yml
+  - type: FinOps
+    url: finops/primer-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

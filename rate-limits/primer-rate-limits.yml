@@ -1,0 +1,34 @@
+name: Primer API Rate Limits
+description: >
+  Primer does not publish specific rate limit thresholds in its public
+  documentation. The API is versioned via the X-Api-Version header, with
+  current GA version 2.4. Primer's platform is designed for high-volume
+  enterprise use, processing billions of dollars monthly with 99.99% uptime.
+  Contact Primer support for rate limit guidance specific to your integration.
+specificationVersion: "0.1"
+limits:
+  - scope: API Versioning
+    description: >
+      All API requests should include the X-Api-Version header to pin to a
+      specific version. Omitting the header defaults to the earliest supported
+      version. Current GA version is 2.4; versions 2.0–2.3 are in Supported
+      stage with deprecation scheduled for 2026-07-01.
+    header: X-Api-Version
+    currentVersion: "2.4"
+  - scope: Sandbox Environment
+    description: >
+      A dedicated sandbox environment is available for integration testing at
+      api.sandbox.primer.io. Sandbox limits may differ from production; contact
+      Primer for specifics.
+    url: https://api.sandbox.primer.io
+  - scope: Production Environment
+    description: >
+      Production API base URL is api.primer.io. Rate limit details are not
+      publicly documented; enterprise customers should contact their Primer
+      account manager for production rate limit agreements.
+    url: https://api.primer.io
+notes: >
+  Primer's API rate limit policy is not disclosed publicly. For enterprise
+  integrations, rate limits and SLA guarantees are typically defined within
+  the customer's commercial agreement. Contact support@primer.io for details.
+contact: support@primer.io
