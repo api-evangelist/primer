@@ -69,7 +69,7 @@ common:
     url: https://primer.io/blog/primer-launches-primer-for-growth
   - type: StatusPage
     url: https://status.primer.io/
-  - type: Changelog
+  - type: ChangeLog
     url: https://primer.io/docs/changelogs/android-sdk
   - type: Plans
     url: plans/primer-plans-pricing.yml
