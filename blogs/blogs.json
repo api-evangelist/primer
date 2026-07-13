@@ -2,18 +2,14 @@
   "repo": "primer",
   "feeds": [
     {
-      "source": "https://primer.io/blog",
-      "feed_url": "",
-      "saved": 0,
-      "method": "agent-scrape"
-    },
-    {
       "source": "https://x.com/primer_io",
+      "feed_url": "https://x.com/primer_io",
+      "title": "",
       "saved": 0,
-      "error": "social url, not scraped"
+      "method": "none"
     }
   ],
-  "post_count": 9,
-  "fetched": "2026-06-27T13:03:13Z",
+  "post_count": 10,
+  "fetched": "2026-07-11T11:50:51Z",
   "agent_pulled": "2026-06-27"
 }
