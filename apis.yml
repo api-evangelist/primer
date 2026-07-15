@@ -53,6 +53,8 @@ apis:
       - type: OpenAPI
         url: openapi/primer-webhooks-openapi.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/primer-agentic-access.yml
   - type: TrustCenter
     url: security/primer-trust-center.yml
   - type: VulnerabilityDisclosure
