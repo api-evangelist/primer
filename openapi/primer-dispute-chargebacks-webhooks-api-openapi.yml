@@ -1,0 +1,306 @@
+openapi: 3.0.2
+info:
+  x-logo:
+    url: https://apidocs.primer.io/docs/assets/images/primer-logo.svg
+  title: Primer Client Session API Dispute & Chargebacks Webhooks API
+  version: '2.4'
+  description: This API enforces a timeout of 90 seconds for all requests. A 504 response indicates a timeout occurred.
+servers:
+- url: https://api.sandbox.primer.io
+- url: https://api.primer.io
+security:
+- ApiKeyAuth: []
+tags:
+- name: Dispute & Chargebacks Webhooks
+paths:
+  /dispute-opened:
+    post:
+      tags:
+      - Dispute & Chargebacks Webhooks
+      summary: Dispute Open
+      description: 'Primer notifies you with a `DISPUTE.OPENED` webhook on newly opened disputes or chargebacks. This notification is unified across all processors.
+
+
+        Learn more about [how Primer handles webhooks](/docs/api-reference/get-started/configure-webhooks).
+
+        '
+      operationId: dispute_open_webhook_event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Request
+              allOf:
+              - $ref: '#/components/schemas/DisputeOpenWebhookPayload'
+      parameters:
+      - in: header
+        name: X-Signature-Primary
+        schema:
+          type: string
+        required: true
+        description: An [HMAC signature](https://en.wikipedia.org/wiki/HMAC) generated using the webhook payload and a shared signing secret. This is then converted to a base64 encoded string.
+      - in: header
+        name: X-Signature-Secondary
+        schema:
+          type: string
+        required: true
+        description: A secondary signature that is added when you have rotated your secret within the past 24 hours.
+      responses:
+        '200':
+          description: Return a 200 status to indicate that the data was received successfully
+  /dispute-status:
+    post:
+      tags:
+      - Dispute & Chargebacks Webhooks
+      summary: Dispute Status
+      description: 'Primer notifies you with a `DISPUTE.STATUS` webhook that will provide information on retrievals, disputes (also known as chargebacks), and preabritration filings.
+
+
+        This notification is supported for processors Adyen, Braintree, Checkout.com & PayPal.
+
+
+        The `DISPUTE.STATUS` event can be used to proactively communicate with customers, issue refunds, send disputes to risk tools, or to proactively defend disputes.
+
+
+        The `DISPUTE.STATUS` event is currently in an open beta stage, as we continue to add more processors.
+
+
+        Learn more about [managing disputes at Primer](/docs/disputes/manage-disputes).
+
+        '
+      operationId: dispute_status_webhook_event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Request
+              allOf:
+              - $ref: '#/components/schemas/DisputeStatusWebhookPayload'
+      parameters:
+      - in: header
+        name: X-Signature-Primary
+        schema:
+          type: string
+        required: true
+        description: An [HMAC signature](https://en.wikipedia.org/wiki/HMAC) generated using the webhook payload and a shared signing secret. This is then converted to a base64 encoded string.
+      - in: header
+        name: X-Signature-Secondary
+        schema:
+          type: string
+        required: true
+        description: A secondary signature that is added when you have rotated your secret within the past 24 hours.
+      responses:
+        '200':
+          description: Return a 200 status to indicate that the data was received successfully
+components:
+  schemas:
+    DisputeOpenWebhookPayload:
+      title: DisputeOpenWebhookPayload
+      type: object
+      properties:
+        eventType:
+          title: Event Type
+          type: string
+          description: The type of the webhook raised. `DISPUTE.OPENED` in this case.
+        processorId:
+          title: Processor ID
+          type: string
+          description: The name of the processor that generated the dispute.
+        processorDisputeId:
+          title: Processor Dispute ID
+          type: string
+          description: A unique identifier for the corresponding connection dispute.
+        paymentId:
+          title: Payment ID
+          type: string
+          description: A unique identifier for the Primer payment corresponding to this dispute.
+        transactionId:
+          title: Transaction ID
+          type: string
+          description: A unique identifier for the Primer transaction corresponding to this dispute.
+        orderId:
+          title: Order ID
+          type: string
+          description: Your reference for the sale transaction that the dispute relates to.
+        primerAccountId:
+          title: Primer Account ID
+          type: string
+          description: A unique identifier for your Primer merchant account.
+    DisputeStatusWebhookPayload:
+      title: DisputeStatusWebhookPayload
+      type: object
+      properties:
+        eventType:
+          title: Event Type
+          type: string
+          description: 'The type of event that triggered the webhook. This will have the value `DISPUTE.STATUS`. This indicates that a dispute notification was issued through a configured connection.
+
+
+            Use these notifications to proactively communicate with your customer, issue refunds, or submit evidence to challenge disputes.
+
+            '
+        version:
+          title: Version
+          type: string
+          description: The payload version
+          example: '2.4'
+        type:
+          title: Type
+          type: string
+          enum:
+          - RETRIEVAL
+          - DISPUTE
+          - PREARBITRATION
+          description: 'The type of dispute event. More information on what the `type` field represents can be found in [Manage disputes](/docs/disputes/manage-disputes)
+
+            '
+        status:
+          title: Status
+          type: string
+          enum:
+          - OPEN
+          - ACCEPTED
+          - CHALLENGED
+          - EXPIRED
+          - CANCELLED
+          - WON
+          - LOST
+          description: 'To see which statuses are applicable for a dispute `type`, and how we map `status`, please see [Manage disputes](/docs/disputes/manage-disputes).
+
+            '
+        primerAccountId:
+          title: Primer Account ID
+          type: string
+          description: A unique identifier for your Primer merchant account.
+        transactionId:
+          title: Transaction ID
+          type: string
+          description: A unique identifier for the Primer transaction corresponding to this dispute.
+        orderId:
+          title: Order ID
+          type: string
+          description: Your reference for the sale transaction that the dispute relates to.
+        paymentId:
+          title: Payment ID
+          type: string
+          description: A unique identifier for the Primer payment corresponding to this dispute.
+        paymentMethod:
+          title: Payment Method Information
+          description: The payment method information for the payment that is now disputed.
+          type: object
+          properties:
+            paymentMethodType:
+              $ref: '#/components/schemas/PaymentMethodTypeEnum'
+            paymentMethodData:
+              title: Payment method data
+              type: object
+              properties:
+                network:
+                  $ref: '#/components/schemas/CardNetworkEnum'
+        processor:
+          title: Processor
+          type: string
+          enum:
+          - ADYEN
+          - BRAINTREE
+          description: The payment processor that you submitted a payment to, and received a dispute notification from.
+        processorDisputeId:
+          title: Processor Dispute ID
+          type: string
+          description: 'An identifier for this dispute provided by the processor. This is shared across multiple dispute `type` and `status` relating to the same payment.
+
+
+            e.g. as an `open` dispute that is later challenged will share a `proccessorDisputeId`.
+
+            '
+        receivedAt:
+          title: Received date
+          type: string
+          format: date-time
+          description: Date and time at which Primer received the processor's dispute event. Provided as an ISO timestamp in UTC.
+        challengeRequiredBy:
+          title: Challenge Required date
+          type: string
+          format: date-time
+          description: Time by which the merchant must challenge a dispute. This is provided by the processor, where available.
+        reason:
+          title: Reason
+          type: string
+          description: Primer’s unified reason that explains why the dispute was raised. This should not vary across processors for the same dispute `reasonCode`, unlike the `processorReason`.
+        reasonCode:
+          title: Reason Code
+          type: string
+          description: The dispute reason code for a dispute. This will be the same code provided by the card schemes.
+        processorReason:
+          title: Processor Reason
+          type: string
+          description: The dispute reason provided by the processor. This can vary across processors for the same dispute `reasonCode`, which is why we provide a unified field - `reason`.
+        amount:
+          title: Amount
+          type: integer
+          format: int64
+          description: 'The disputed amount. Note: this is not always the same as the payment amount.
+
+
+            This will be displayed in minor units.
+
+
+            e.g. for $7, use `700`. Some currencies, such as Japanese Yen, do not have minor units. In this case you should use the value as it is, without any formatting. For example for ¥100, use `100`.
+
+            '
+        currency:
+          title: Currency
+          type: string
+          description: 'The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.
+
+            '
+        merchantId:
+          title: Merchant ID
+          type: string
+          description: The merchant ID registered at the payment processor used for this dispute.
+    CardNetworkEnum:
+      title: CardNetworkEnum
+      type: string
+      enum:
+      - AMEX
+      - DANKORT
+      - DINERS_CLUB
+      - DISCOVER
+      - ENROUTE
+      - ELO
+      - HIPER
+      - INTERAC
+      - JCB
+      - MAESTRO
+      - MASTERCARD
+      - MIR
+      - PRIVATE_LABEL
+      - UNIONPAY
+      - VISA
+      - CARTES_BANCAIRES
+      - OTHER
+      description: 'The list of available card networks.
+
+        '
+    PaymentMethodTypeEnum:
+      title: PaymentMethodTypeEnum
+      type: string
+      description: '[The list of available payment methods and their `PAYMENT_METHOD_TYPE` can be found here.](https://primer.io/docs/connections/payment-methods/available-payment-methods)
+
+        '
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+x-readme:
+  explorer-enabled: true
+  samples-languages:
+  - curl
+  - javascript
+  - python
+  - kotlin
+  - swift
+  headers:
+  - key: X-API-VERSION
+    value: '2.4'

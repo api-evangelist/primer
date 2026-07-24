@@ -1,0 +1,1239 @@
+openapi: 3.0.2
+info:
+  x-logo:
+    url: https://apidocs.primer.io/docs/assets/images/primer-logo.svg
+  title: Primer Client Session API Payment Methods API API
+  version: '2.4'
+  description: This API enforces a timeout of 90 seconds for all requests. A 504 response indicates a timeout occurred.
+servers:
+- url: https://api.sandbox.primer.io
+- url: https://api.primer.io
+security:
+- ApiKeyAuth: []
+tags:
+- name: Payment Methods API
+paths:
+  /payment-instruments/{paymentMethodToken}/vault:
+    post:
+      tags:
+      - Payment Methods API
+      summary: Save a payment method token
+      description: '<p/>
+
+
+        Save a `SINGLE_USE` payment method token so it can be used
+
+        again later.
+
+
+        If you try to vault an already vaulted token, you will get the existing vaulted token back.
+
+        '
+      operationId: vault_payment_method_payment_methods__token__vault_post
+      parameters:
+      - description: Payment method token to store.
+        required: true
+        schema:
+          title: Payment Method Token
+          type: string
+          description: Payment method token
+        name: paymentMethodToken
+        in: path
+      - $ref: '#/components/parameters/ApiVersionHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VaultPaymentMethodAPIRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantPaymentMethodTokenAPIResponse'
+        '400':
+          description: Error Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400ErrorResponse'
+              example:
+                error:
+                  errorId: FailedVerification
+                  description: Payment method could not be verified
+                  diagnosticsId: '1234567898'
+        '422':
+          description: Error Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/422ErrorResponse'
+              example:
+                error:
+                  errorId: RequestValidationError
+                  description: We were unable to validate your request, please check your payload against /docs/api
+                  diagnosticsId: '1234567898'
+                  validationErrors:
+                  - model: VaultPaymentInstrumentAPIRequest
+                    errors:
+                    - path: $.customerId
+                      description: Ensure this value has at least 1 characters
+  /payment-instruments:
+    get:
+      tags:
+      - Payment Methods API
+      summary: List saved payment methods
+      description: Retrieve a list of stored payment methods for a customer.
+      operationId: get_payment_methods_payment_methods_get
+      parameters:
+      - description: Return payment methods for this customer ID.
+        required: true
+        schema:
+          title: Customer ID
+          type: string
+          description: Return payment methods for this customer ID.
+        name: customer_id
+        in: query
+      - $ref: '#/components/parameters/ApiVersionHeader'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantPaymentMethodTokenListAPIResponse'
+  /payment-instruments/{paymentMethodToken}:
+    delete:
+      tags:
+      - Payment Methods API
+      summary: Delete a saved payment method
+      description: Delete a saved payment method.
+      operationId: delete_payment_method_payment_methods__token__delete
+      parameters:
+      - description: Saved payment method token to delete.
+        required: true
+        schema:
+          title: Payment Method Token
+          type: string
+          description: Payment method token
+        name: paymentMethodToken
+        in: path
+      - $ref: '#/components/parameters/ApiVersionHeader'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantPaymentMethodTokenAPIResponse'
+        '400':
+          description: Error Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400ErrorResponse'
+              example:
+                error:
+                  errorId: InvalidPaymentInstrumentToken
+                  description: Invalid payment instrument.
+                  diagnosticsId: '1234567898'
+  /payment-instruments/{paymentMethodToken}/default:
+    post:
+      tags:
+      - Payment Methods API
+      summary: Update the default saved payment method
+      description: Update a saved payment method to be the default stored payment method for a customer.
+      operationId: set_payment_method_default_payment_methods__token__default_post
+      parameters:
+      - description: Saved payment method token to set to default.
+        required: true
+        schema:
+          title: Token
+          type: string
+          description: Payment method token
+        name: paymentMethodToken
+        in: path
+      - $ref: '#/components/parameters/ApiVersionHeader'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantPaymentMethodTokenAPIResponse'
+        '400':
+          description: Error Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400ErrorResponse'
+              example:
+                error:
+                  errorId: InvalidPaymentInstrumentToken
+                  description: Invalid payment instrument.
+                  diagnosticsId: '1234567898'
+components:
+  schemas:
+    PaymentCardTokenAPISchema:
+      title: PaymentCardTokenAPISchema
+      required:
+      - last4Digits
+      - expirationMonth
+      - expirationYear
+      type: object
+      properties:
+        first6Digits:
+          title: Payment card's first six digits
+          maxLength: 6
+          minLength: 6
+          type: string
+        last4Digits:
+          title: Payment card's last four digits
+          maxLength: 4
+          minLength: 4
+          type: string
+        expirationMonth:
+          title: Expiration month
+          maxLength: 2
+          minLength: 2
+          type: string
+        expirationYear:
+          title: Expiration year
+          maxLength: 4
+          minLength: 4
+          type: string
+        cardholderName:
+          title: Cardholder's name
+          type: string
+        network:
+          title: Card network
+          type: string
+        isNetworkTokenized:
+          title: Is represented by a digital PAN
+          type: boolean
+          default: false
+        binData:
+          $ref: '#/components/schemas/BinDataAPISchema'
+    PayPalBillingAgreementAPISchema:
+      title: PayPalBillingAgreementAPISchema
+      required:
+      - paypalBillingAgreementId
+      type: object
+      properties:
+        paypalBillingAgreementId:
+          title: Paypalbillingagreementid
+          type: string
+        externalPayerInfo:
+          $ref: '#/components/schemas/PayPalExternalPayerInfoAPISchema'
+          title: Payer Info
+          description: Information about the PayPal customer
+        shippingAddress:
+          $ref: '#/components/schemas/AddressAPISchema'
+          title: Shipping address
+          description: The PayPal customer's shipping address
+        paypalStatus:
+          title: PayPal order status
+          type: string
+    CardAccountNumberTypeEnum:
+      title: CardAccountNumberTypeEnum
+      enum:
+      - PRIMARY_ACCOUNT_NUMBER
+      - NETWORK_TOKEN
+      - DIGITAL_PAN
+      - UNKNOWN
+      type: string
+      description: An enumeration.
+    AddressAPISchema:
+      title: AddressAPISchema
+      required:
+      - addressLine1
+      - city
+      - countryCode
+      type: object
+      properties:
+        firstName:
+          title: First Name
+          type: string
+        lastName:
+          title: Last Name
+          type: string
+        addressLine1:
+          title: Address Line 1
+          type: string
+          description: Street name, Company name or PO Box
+        addressLine2:
+          title: Address Line 2
+          type: string
+          description: Apartment, Unit or Building number
+        city:
+          title: City
+          type: string
+          description: Name of the city, district, town or village
+        state:
+          title: State
+          type: string
+          description: State, County or Province
+        countryCode:
+          $ref: '#/components/schemas/CountryCodeEnum'
+          title: Country Code
+          description: Two letter ISO country code
+        postalCode:
+          title: Postal Code
+          type: string
+          description: Postal or ZIP code
+    KlarnaCustomerTokenAPISchema:
+      title: KlarnaCustomerTokenAPISchema
+      required:
+      - klarnaCustomerToken
+      - sessionData
+      type: object
+      properties:
+        klarnaCustomerToken:
+          title: Klarnacustomertoken
+          type: string
+        sessionData:
+          $ref: '#/components/schemas/KlarnaSessionDetailsAPISchema'
+    Currency:
+      title: Currency
+      enum:
+      - AED
+      - AFN
+      - ALL
+      - AMD
+      - ANG
+      - AOA
+      - ARS
+      - AUD
+      - AWG
+      - AZN
+      - BAM
+      - BBD
+      - BDT
+      - BGN
+      - BHD
+      - BIF
+      - BMD
+      - BND
+      - BOB
+      - BOV
+      - BRL
+      - BSD
+      - BTN
+      - BWP
+      - BYR
+      - BYN
+      - BZD
+      - CAD
+      - CDF
+      - CHE
+      - CHF
+      - CHW
+      - CLP
+      - CNY
+      - COP
+      - COU
+      - CRC
+      - CUC
+      - CUP
+      - CVE
+      - CZK
+      - DJF
+      - DKK
+      - DOP
+      - DZD
+      - EGP
+      - ERN
+      - ETB
+      - EUR
+      - FJD
+      - FKP
+      - GBP
+      - GEL
+      - GHS
+      - GIP
+      - GMD
+      - GNF
+      - GTQ
+      - GYD
+      - HKD
+      - HNL
+      - HRK
+      - HTG
+      - HUF
+      - IDR
+      - ILS
+      - INR
+      - IQD
+      - IRR
+      - ISK
+      - JMD
+      - JOD
+      - JPY
+      - KES
+      - KGS
+      - KHR
+      - KMF
+      - KPW
+      - KRW
+      - KWD
+      - KYD
+      - KZT
+      - LAK
+      - LBP
+      - LKR
+      - LRD
+      - LSL
+      - LYD
+      - MAD
+      - MDL
+      - MKD
+      - MMK
+      - MNT
+      - MOP
+      - MRO
+      - MUR
+      - MVR
+      - MWK
+      - MXN
+      - MXV
+      - MYR
+      - MZN
+      - NAD
+      - NGN
+      - NIO
+      - NOK
+      - NPR
+      - NZD
+      - OMR
+      - PAB
+      - PEN
+      - PGK
+      - PHP
+      - PKR
+      - PLN
+      - PYG
+      - QAR
+      - RON
+      - RSD
+      - RUB
+      - RWF
+      - SAR
+      - SBD
+      - SCR
+      - SDG
+      - SEK
+      - SGD
+      - SHP
+      - SOS
+      - SRD
+      - SSP
+      - SVC
+      - SYP
+      - SZL
+      - THB
+      - TJS
+      - TMT
+      - TND
+      - TOP
+      - TRY
+      - TTD
+      - TWD
+      - TZS
+      - UAH
+      - UGX
+      - USD
+      - UYU
+      - UZS
+      - VND
+      - VUV
+      - WST
+      - XAF
+      - XAG
+      - XAU
+      - XBA
+      - XBB
+      - XBC
+      - XBD
+      - XCD
+      - XDR
+      - XFU
+      - XOF
+      - XPD
+      - XPF
+      - XPT
+      - XSU
+      - XTS
+      - XUA
+      - YER
+      - ZAR
+      - ZMW
+      - ZWL
+      description: "3-letter currency code in <a href='https://en.wikipedia.org/wiki/ISO_4217#Active_codes'>ISO 4217</a> format, \ne.g. <code>USD</code> for US dollars.\n"
+    VaultPaymentMethodAPIRequest:
+      title: VaultPaymentMethodAPIRequest
+      required:
+      - customerId
+      type: object
+      properties:
+        customerId:
+          title: Customer ID
+          minLength: 1
+          type: string
+          description: The ID representing the customer
+      additionalProperties: false
+    PayPalExternalPayerInfoAPISchema:
+      title: PayPalExternalPayerInfoAPISchema
+      type: object
+      properties:
+        externalPayerId:
+          title: Externalpayerid
+          type: string
+        email:
+          title: Email
+          type: string
+        firstName:
+          title: Firstname
+          type: string
+        lastName:
+          title: Lastname
+          type: string
+    CardProductTypeEnum:
+      title: CardProductTypeEnum
+      enum:
+      - CONSUMER
+      - BUSINESS
+      - GOVERNMENT
+      - UNKNOWN
+      type: string
+      description: An enumeration.
+    ErrorObject:
+      title: Error
+      type: object
+      description: An object containing information about the error that occurred.
+      required:
+      - errorId
+      - description
+      properties:
+        errorId:
+          title: Error ID
+          type: string
+          description: An error ID
+        description:
+          title: Error description
+          type: string
+          description: A human readable description of the error
+        recoverySuggestion:
+          title: Recovery Suggestion
+          type: string
+          description: A suggestion on how to recover from the error.
+        diagnosticsId:
+          title: Error diagnostics ID
+          type: string
+          description: An ID that you can quote when contacting the Primer support team via our [Support Portal](https://primerapi.atlassian.net/servicedesk/customer/portal/11).
+        validationErrors:
+          title: Validation Errors
+          type: array
+          items:
+            type: object
+          description: Returned in case of a badly formed request
+    GoCardlessMandateAPISchema:
+      title: GoCardlessMandateAPISchema
+      required:
+      - gocardlessMandateId
+      type: object
+      properties:
+        gocardlessMandateId:
+          title: Mandate agreement ID
+          type: string
+          description: Unique identifier of a GoCardless mandate agreement
+    422ErrorResponse:
+      title: 422ErrorResponse
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorObject'
+    PrepaidReloadableEnum:
+      title: PrepaidReloadableEnum
+      enum:
+      - RELOADABLE
+      - NON_RELOADABLE
+      - NOT_APPLICABLE
+      - UNKNOWN
+      type: string
+      description: An enumeration.
+    KlarnaAddressAPISchema:
+      title: KlarnaAddressAPISchema
+      type: object
+      properties:
+        title:
+          title: Title
+          type: string
+        firstName:
+          title: Firstname
+          type: string
+        lastName:
+          title: Lastname
+          type: string
+        email:
+          title: Email
+          type: string
+        phoneNumber:
+          title: Phonenumber
+          type: string
+        addressLine1:
+          title: Addressline1
+          type: string
+        addressLine2:
+          title: Addressline2
+          type: string
+        addressLine3:
+          title: Addressline3
+          type: string
+        city:
+          title: City
+          type: string
+        state:
+          title: State
+          type: string
+        countryCode:
+          $ref: '#/components/schemas/CountryCodeEnum'
+        postalCode:
+          title: Postalcode
+          type: string
+    CardNetworkEnum:
+      title: CardNetworkEnum
+      enum:
+      - AMEX
+      - DANKORT
+      - DINERS_CLUB
+      - DISCOVER
+      - EFTPOS
+      - ENROUTE
+      - ELO
+      - HIPER
+      - INTERAC
+      - JCB
+      - MAESTRO
+      - MASTERCARD
+      - MIR
+      - PRIVATE_LABEL
+      - UNIONPAY
+      - VISA
+      - CARTES_BANCAIRES
+      - OTHER
+      type: string
+      description: 'The list of available card networks.
+
+        '
+    KlarnaSessionDetailsAPISchema:
+      title: KlarnaSessionDetailsAPISchema
+      required:
+      - billingAddress
+      - purchaseCountry
+      - purchaseCurrency
+      - locale
+      - orderLines
+      type: object
+      properties:
+        recurringDescription:
+          title: Recurringdescription
+          type: string
+        billingAddress:
+          $ref: '#/components/schemas/KlarnaAddressAPISchema'
+        shippingAddress:
+          $ref: '#/components/schemas/KlarnaAddressAPISchema'
+        purchaseCountry:
+          title: Purchasecountry
+          type: string
+        purchaseCurrency:
+          title: Purchasecurrency
+          type: string
+        locale:
+          title: Locale
+          type: string
+        orderLines:
+          title: Orderlines
+          type: array
+          items: {}
+        tokenDetails:
+          $ref: '#/components/schemas/KlarnaTokenDetails'
+    KlarnaTokenDetails:
+      title: KlarnaTokenDetails
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          title: Type
+          type: string
+        brand:
+          title: Brand
+          type: string
+        masked_number:
+          title: Masked Number
+          type: string
+        expiry_date:
+          title: Expiry Date
+          type: string
+    CountryCodeEnum:
+      title: CountryCodeEnum
+      enum:
+      - AW
+      - AF
+      - AO
+      - AI
+      - AX
+      - AL
+      - AD
+      - AE
+      - AR
+      - AM
+      - AS
+      - AQ
+      - TF
+      - AG
+      - AU
+      - AT
+      - AZ
+      - BI
+      - BE
+      - BJ
+      - BQ
+      - BF
+      - BD
+      - BG
+      - BH
+      - BS
+      - BA
+      - BL
+      - BY
+      - BZ
+      - BM
+      - BO
+      - BR
+      - BB
+      - BN
+      - BT
+      - BV
+      - BW
+      - CF
+      - CA
+      - CC
+      - CH
+      - CL
+      - CN
+      - CI
+      - CM
+      - CD
+      - CG
+      - CK
+      - CO
+      - KM
+      - CV
+      - CR
+      - CU
+      - CW
+      - CX
+      - KY
+      - CY
+      - CZ
+      - DE
+      - DJ
+      - DM
+      - DK
+      - DO
+      - DZ
+      - EC
+      - EG
+      - ER
+      - EH
+      - ES
+      - EE
+      - ET
+      - FI
+      - FJ
+      - FK
+      - FR
+      - FO
+      - FM
+      - GA
+      - GB
+      - GE
+      - GG
+      - GH
+      - GI
+      - GN
+      - GP
+      - GM
+      - GW
+      - GQ
+      - GR
+      - GD
+      - GL
+      - GT
+      - GF
+      - GU
+      - GY
+      - HK
+      - HM
+      - HN
+      - HR
+      - HT
+      - HU
+      - ID
+      - IM
+      - IN
+      - IO
+      - IE
+      - IR
+      - IQ
+      - IS
+      - IL
+      - IT
+      - JM
+      - JE
+      - JO
+      - JP
+      - KZ
+      - KE
+      - KG
+      - KH
+      - KI
+      - KN
+      - KR
+      - KW
+      - LA
+      - LB
+      - LR
+      - LY
+      - LC
+      - LI
+      - LK
+      - LS
+      - LT
+      - LU
+      - LV
+      - MO
+      - MF
+      - MA
+      - MC
+      - MD
+      - MG
+      - MV
+      - MX
+      - MH
+      - MK
+      - ML
+      - MT
+      - MM
+      - ME
+      - MN
+      - MP
+      - MZ
+      - MR
+      - MS
+      - MQ
+      - MU
+      - MW
+      - MY
+      - YT
+      - NA
+      - NC
+      - NE
+      - NF
+      - NG
+      - NI
+      - NU
+      - NL
+      - 'NO'
+      - NP
+      - NR
+      - NZ
+      - OM
+      - PK
+      - PA
+      - PN
+      - PE
+      - PH
+      - PW
+      - PG
+      - PL
+      - PR
+      - KP
+      - PT
+      - PY
+      - PS
+      - PF
+      - QA
+      - RE
+      - RO
+      - RU
+      - RW
+      - SA
+      - SD
+      - SN
+      - SG
+      - GS
+      - SH
+      - SJ
+      - SB
+      - SL
+      - SV
+      - SM
+      - SO
+      - PM
+      - RS
+      - SS
+      - ST
+      - SR
+      - SK
+      - SI
+      - SE
+      - SZ
+      - SX
+      - SC
+      - SY
+      - TC
+      - TD
+      - TG
+      - TH
+      - TJ
+      - TK
+      - TM
+      - TL
+      - TO
+      - TT
+      - TN
+      - TR
+      - TV
+      - TW
+      - TZ
+      - UG
+      - UA
+      - UM
+      - UY
+      - US
+      - UZ
+      - VA
+      - VC
+      - VE
+      - VG
+      - VI
+      - VN
+      - VU
+      - WF
+      - WS
+      - YE
+      - ZA
+      - ZM
+      - ZW
+      description: "2-letter country code in <a href='https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements'>ISO 3166-1 alpha</a> format, \ne.g. <code>FR</code> for France and <code>GB</code> for the United Kingdom.\n"
+    MerchantPaymentMethodTokenListAPIResponse:
+      title: MerchantPaymentMethodTokenListAPIResponse
+      type: object
+      properties:
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/MerchantPaymentMethodTokenAPIResponse'
+    400ErrorResponse:
+      title: 400ErrorResponse
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          allOf:
+          - $ref: '#/components/schemas/ErrorObject'
+          - type: object
+            properties:
+              paymentId:
+                title: Payment ID
+                type: string
+                description: Payment ID of the related pay
+              paymentStatus:
+                title: Status
+                type: string
+                description: Status of the related payment
+    ApayaCustomerTokenAPISchema:
+      title: ApayaCustomerTokenAPISchema
+      required:
+      - mx
+      type: object
+      properties:
+        mx:
+          title: Mx
+          type: string
+        mnc:
+          title: Mnc
+          type: integer
+          format: int64
+        mcc:
+          title: Mcc
+          type: integer
+          format: int64
+    CardRegionRestrictionEnum:
+      title: CardRegionRestrictionEnum
+      enum:
+      - DOMESTIC_USE_ONLY
+      - NONE
+      - UNKNOWN
+      type: string
+      description: An enumeration.
+    AccountFundingTypeEnum:
+      title: AccountFundingTypeEnum
+      enum:
+      - CREDIT
+      - DEBIT
+      - PREPAID
+      - CHARGE
+      - DEFERRED_DEBIT
+      - UNKNOWN
+      type: string
+      description: An enumeration.
+    BinDataAPISchema:
+      title: BinDataAPISchema
+      required:
+      - network
+      - regionalRestriction
+      - accountNumberType
+      - accountFundingType
+      - prepaidReloadableIndicator
+      - productUsageType
+      - productCode
+      - productName
+      type: object
+      properties:
+        network:
+          $ref: '#/components/schemas/CardNetworkEnum'
+        issuerCountryCode:
+          $ref: '#/components/schemas/CountryCodeEnum'
+        issuerName:
+          title: Issuername
+          type: string
+        issuerCurrencyCode:
+          $ref: '#/components/schemas/Currency'
+        regionalRestriction:
+          $ref: '#/components/schemas/CardRegionRestrictionEnum'
+        accountNumberType:
+          $ref: '#/components/schemas/CardAccountNumberTypeEnum'
+        accountFundingType:
+          $ref: '#/components/schemas/AccountFundingTypeEnum'
+        prepaidReloadableIndicator:
+          $ref: '#/components/schemas/PrepaidReloadableEnum'
+        productUsageType:
+          $ref: '#/components/schemas/CardProductTypeEnum'
+        productCode:
+          title: Productcode
+          type: string
+        productName:
+          title: Productname
+          type: string
+    MerchantPaymentMethodTokenAPIResponse:
+      title: MerchantPaymentMethodTokenAPIResponse
+      type: object
+      properties:
+        createdAt:
+          title: Creation date
+          type: string
+          description: Creation date & time of the object (UTC)
+          format: date-time
+        deletedAt:
+          title: Revocation date
+          type: string
+          description: Date & time when this object was revoked. (UTC)
+          format: date-time
+        deleted:
+          title: Revoked
+          type: boolean
+          description: Whether or not this object has been revoked.
+        token:
+          title: Token
+          type: string
+          description: The vaulted payment method token.
+        tokenType:
+          title: Token type
+          type: string
+          description: '* `MULTI_USE` a vaulted token that can be re-used with subsequent payments'
+        analyticsId:
+          title: Unique analytics ID
+          type: string
+          description: Unique analytics identifier corresponding to a payment method
+        paymentMethodType:
+          $ref: '#/components/schemas/PaymentMethodTypeEnum'
+          title: Payment method type
+          description: Payment method type associated with a token.
+        paymentMethodData:
+          title: Payment method data
+          anyOf:
+          - $ref: '#/components/schemas/PaymentCardTokenAPISchema'
+          - $ref: '#/components/schemas/PayPalBillingAgreementAPISchema'
+          - $ref: '#/components/schemas/GoCardlessMandateAPISchema'
+          - $ref: '#/components/schemas/KlarnaCustomerTokenAPISchema'
+          - $ref: '#/components/schemas/ApayaCustomerTokenAPISchema'
+          description: Payment method data
+        customerId:
+          title: Customer ID
+          type: string
+          description: The ID representing the customer
+        description:
+          title: Description
+          type: string
+          description: A friendly description given by the user
+        default:
+          title: Default
+          type: boolean
+          description: Whether or not this payment method is the default
+          default: false
+      example:
+        createdAt: '2021-03-01T12:00:00.123456'
+        token: _xlXlmBcTnuFxc2N3HAI73wxNjE1NTU5ODY5
+        tokenType: MULTI_USE
+        analyticsId: vuXhpZouWxaZpRZ-x_brZmtT
+        paymentMethodType: PAYMENT_CARD
+        payment_method_data:
+          last4Digits: '1111'
+          expirationMonth: '12'
+          expirationYear: '2030'
+          cardholderName: John Biggins
+          network: Visa
+          networkTransactionId: 020210628190752
+          accountFundingType: DEBIT
+        customerId: customer-123
+        description: My first card
+        deleted: false
+        default: true
+    PaymentMethodTypeEnum:
+      title: PaymentMethodTypeEnum
+      enum:
+      - PAYMENT_CARD
+      - GOOGLE_PAY
+      - APPLE_PAY
+      - PAYPAL
+      - BANK_ACCOUNT
+      - KLARNA
+      - APAYA
+      - OPENNODE
+      - HOOLAH
+      - ATOME
+      - COINBASE
+      - NETS
+      - TWOC2P
+      - CLEARPAY
+      - SHOPEEPAY
+      - TRIPLE_A
+      - AFTERPAY
+      - NOL_PAY
+      - PAY_NL_IDEAL
+      - PAY_NL_BANCONTACT
+      - PAY_NL_DIRECT_DEBIT
+      - PAY_NL_SOFORT_BANKING
+      - PAY_NL_PAYPAL
+      - PAY_NL_PAYCONIQ
+      - PAY_NL_GIROPAY
+      - PAY_NL_P24
+      - PAY_NL_EPS
+      - PAY_NL_KAARTDIRECT
+      - ADYEN_SOFORT
+      - ADYEN_TWINT
+      - ADYEN_GIROPAY
+      - ADYEN_TRUSTLY
+      - ADYEN_ALIPAY
+      - ADYEN_MOBILEPAY
+      - ADYEN_MULTIBANCO
+      - ADYEN_VIPPS
+      - ADYEN_DOTPAY
+      - ADYEN_IDEAL
+      - ADYEN_BLIK
+      - ADYEN_PAYTRAIL
+      - ADYEN_INTERAC
+      - ADYEN_PAYSHOP
+      - ADYEN_MBWAY
+      - ADYEN_AFFIRM
+      - ADYEN_KLARNA
+      - ADYEN_BANCONTACT_PAYCONIQ
+      - ADYEN_EPS
+      - ADYEN_BANCONTACT_CARD
+      - ADYEN_SWISH
+      - MOLLIE_IDEAL
+      - MOLLIE_BANCONTACT
+      - MOLLIE_P24
+      - MOLLIE_GIROPAY
+      - MOLLIE_EPS
+      - MOLLIE_GIFTCARD
+      - MOLLIE_SOFORT
+      - NETAXEPT_PAYTRAIL
+      - BUCKAROO_IDEAL
+      - BUCKAROO_BANCONTACT
+      - BUCKAROO_SOFORT
+      - BUCKAROO_GIROPAY
+      - BUCKAROO_EPS
+      - RAPYD_GCASH
+      - RAPYD_PROMPTPAY
+      - RAPYD_GRABPAY
+      - RAPYD_POLI
+      - RAPYD_FAST
+      - XFERS_PAYNOW
+      - STRIPE_GIROPAY
+      - STRIPE_IDEAL
+      - ALIPAY_CN
+      - CHAI_KAKAOPAY
+      - CHAI_NAVER
+      - CHAI_TOSS
+      - XENDIT_DANA
+      - XENDIT_OVO
+      - XENDIT_SHOPEEPAY
+      - XENDIT_RETAIL_OUTLETS
+      - OMISE_PROMPTPAY
+      - OMISE_TRUEMONEY
+      - EBANX_PAGOFACIL
+      - PACYPAY_WECHAT
+      - PACYPAY_ALIPAY
+      - PACYPAY_ALIPAY_PLUS
+      - WORLDPAY_IDEAL
+      - IPAY88_CARD
+      - INGENICO_PAYPAL
+      - VOLT_PIX
+      - VOLT_BANK_TRANSFER
+      - BRAINTREE_VENMO
+      - THUNES_SPIRIT_OF_CADEAU
+      - THUNES_ILLICADO
+      - THUNES_CARTE_CADEAU_CONFORAMA
+      - THUNES_CHEQUE_FIDELITE_CONFORAMA
+      - SIPS_CPAY
+      - SIPS_CPAYCONFORAMA
+      - MONEXT_CETELEM
+      - MONEXT_CPAY
+      type: string
+      description: Payment method type, where `OFF_SESSION_PAYMENT` is used for APM (Alternative Payment Method) payments and `PAYMENT_CARD` for traditional debit or credit cards. Please note that this list is different from one indicated on [available payment methods](/docs/connections/payment-methods/available-payment-methods) page and values of this field will be changed in the future versions of the API.
+  parameters:
+    ApiVersionHeader:
+      required: true
+      schema:
+        title: X-API-VERSION
+        type: string
+        example: '2.4'
+      name: X-API-VERSION
+      description: Specifies the version of the API to use. This must be set to `2.4`.
+      in: header
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+x-readme:
+  explorer-enabled: true
+  samples-languages:
+  - curl
+  - javascript
+  - python
+  - kotlin
+  - swift
+  headers:
+  - key: X-API-VERSION
+    value: '2.4'
