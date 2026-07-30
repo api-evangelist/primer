@@ -1,7 +1,20 @@
 aid: primer
 name: Primer
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/primer.png
 url: https://raw.githubusercontent.com/api-evangelist/primer/refs/heads/main/apis.yml
 created: 2026-06-12
 modified: 2026-06-12
@@ -28,30 +41,77 @@ tags:
   - reconciliation
   - webhooks
 apis:
-  - name: Primer Payments API
-    description: >
-      REST API for creating and managing payments, client sessions, and saved
-      payment methods. Supports the full payment lifecycle including
-      authorization, capture, refund, cancellation, and dispute management.
-      Versioned via X-Api-Version header with current GA version 2.4.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://primer.io/docs/api-reference/get-started/overview
-    baseURL: https://api.primer.io
-    tags:
-      - payments
-      - client sessions
-      - payment methods
-      - refunds
-      - disputes
-    properties:
-      - type: Documentation
-        url: https://primer.io/docs/api-reference/get-started/overview
-      - type: Sandbox
-        url: https://api.sandbox.primer.io
-      - type: OpenAPI
-        url: openapi/primer-payments-openapi.yml
-      - type: OpenAPI
-        url: openapi/primer-webhooks-openapi.yml
+- aid: primer:primer-client-session-api-api
+  name: Primer Client Session API API
+  description: The Client Session API API from Primer — 1 operation(s) for client session api.
+  humanURL: https://primer.io/docs/api-reference/get-started/overview
+  baseURL: https://api.primer.io
+  tags:
+  - Client Session API
+  properties:
+  - type: OpenAPI
+    url: openapi/primer-client-session-api-api-openapi.yml
+  - type: Documentation
+    url: https://primer.io/docs/api-reference/get-started/overview
+  - type: Sandbox
+    url: https://api.sandbox.primer.io
+- aid: primer:primer-dispute-chargebacks-webhooks-api
+  name: Primer Dispute & Chargebacks Webhooks API
+  description: >-
+    The Dispute & Chargebacks Webhooks API from Primer — 2 operation(s) for dispute & chargebacks webhooks.
+  humanURL: https://primer.io/docs/api-reference/get-started/overview
+  baseURL: https://api.primer.io
+  tags:
+  - Dispute & Chargebacks Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/primer-dispute-chargebacks-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://primer.io/docs/api-reference/get-started/overview
+  - type: Sandbox
+    url: https://api.sandbox.primer.io
+- aid: primer:primer-payment-methods-api-api
+  name: Primer Payment Methods API API
+  description: The Payment Methods API API from Primer — 4 operation(s) for payment methods api.
+  humanURL: https://primer.io/docs/api-reference/get-started/overview
+  baseURL: https://api.primer.io
+  tags:
+  - Payment Methods API
+  properties:
+  - type: OpenAPI
+    url: openapi/primer-payment-methods-api-api-openapi.yml
+  - type: Documentation
+    url: https://primer.io/docs/api-reference/get-started/overview
+  - type: Sandbox
+    url: https://api.sandbox.primer.io
+- aid: primer:primer-payment-webhooks-api
+  name: Primer Payment Webhooks API
+  description: The Payment Webhooks API from Primer — 2 operation(s) for payment webhooks.
+  humanURL: https://primer.io/docs/api-reference/get-started/overview
+  baseURL: https://api.primer.io
+  tags:
+  - Payment Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/primer-payment-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://primer.io/docs/api-reference/get-started/overview
+  - type: Sandbox
+    url: https://api.sandbox.primer.io
+- aid: primer:primer-payments-api-api
+  name: Primer Payments API API
+  description: The Payments API API from Primer — 8 operation(s) for payments api.
+  humanURL: https://primer.io/docs/api-reference/get-started/overview
+  baseURL: https://api.primer.io
+  tags:
+  - Payments API
+  properties:
+  - type: OpenAPI
+    url: openapi/primer-payments-api-api-openapi.yml
+  - type: Documentation
+    url: https://primer.io/docs/api-reference/get-started/overview
+  - type: Sandbox
+    url: https://api.sandbox.primer.io
 common:
   - type: AgenticAccess
     url: agentic-access/primer-agentic-access.yml
