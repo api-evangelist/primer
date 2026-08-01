@@ -1,0 +1,22 @@
+{
+  "provider": "primer",
+  "sources": [
+    "primer-client-session-api-api-openapi.yml",
+    "primer-dispute-chargebacks-webhooks-api-openapi.yml",
+    "primer-payment-methods-api-api-openapi.yml",
+    "primer-payment-webhooks-api-openapi.yml",
+    "primer-payments-api-api-openapi.yml"
+  ],
+  "outputs": [
+    "primer-client-session-api-api-openapi.yml",
+    "primer-dispute-chargebacks-webhooks-api-openapi.yml",
+    "primer-payment-methods-api-api-openapi.yml",
+    "primer-payment-webhooks-api-openapi.yml",
+    "primer-payments-api-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
