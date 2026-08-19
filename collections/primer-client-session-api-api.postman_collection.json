@@ -1,0 +1,709 @@
+{
+  "item": [
+    {
+      "id": "11315841-ea51-4257-b8c7-487958fa9e20",
+      "name": "Client Session API",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e8e35cd7-f8f6-431a-a277-686a6dc6b13e",
+          "name": "Create a client session",
+          "request": {
+            "name": "Create a client session",
+            "description": {
+              "content": "Creating a client session generates a client token: a temporary key used to initialize [Universal Checkout](/docs/get-started/set-up-a-checkout) and authenticate it against your account.\n\nUniversal Checkout automatically retrieves all the settings from the client session and the Dashboard to configure the payment methods and the checkout experience.\n\n<b>Note:</b>\nWhen creating a Client Session, please make sure to provide `currencyCode`, `orderId`, and at least one of `amount` or `lineItems`. \nIf any of these are not yet available, you can provide them when making the payment request.\n\n<code>POST /client-session</code> does not have required fields as all fields are not always known when a client session is created. \nUse <code>PATCH /client-session</code> to update the parameters throughout the checkout session.\n\nClient tokens expire after 24 hours.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-session"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": \"<string>\",\n  \"currencyCode\": \"<string>\",\n  \"amount\": \"<long>\",\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      },\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      }\n    ],\n    \"countryCode\": \"<string>\",\n    \"retailerCountryCode\": \"<string>\",\n    \"fees\": [\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"shipping\": {\n      \"amount\": \"<long>\",\n      \"methodId\": \"<string>\",\n      \"methodName\": \"<string>\",\n      \"methodDescription\": \"<string>\"\n    }\n  },\n  \"customerId\": \"<string>\",\n  \"customer\": {\n    \"emailAddress\": \"<email>\",\n    \"mobileNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"billingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"shippingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"taxId\": \"<string>\",\n    \"nationalDocumentId\": \"<string>\"\n  },\n  \"metadata\": \"<object>\",\n  \"paymentMethod\": {\n    \"vaultOnSuccess\": false,\n    \"vaultOn3DS\": false,\n    \"vaultOnAgreement\": false,\n    \"descriptor\": \"<string>\",\n    \"paymentType\": \"<string>\",\n    \"orderedAllowedCardNetworks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"options\": {\n      \"<PAYMENT_METHOD_TYPE>\": {\n        \"surcharge\": {\n          \"amount\": \"<long>\"\n        },\n        \"extraMerchantData\": {\n          \"key_0\": 4389,\n          \"key_1\": 5088\n        },\n        \"merchantName\": \"<string>\"\n      },\n      \"APPLE_PAY\": {\n        \"merchantName\": \"<string>\",\n        \"recurringPaymentRequest\": {\n          \"managementUrl\": \"<uri>\",\n          \"regularBilling\": {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringStartDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringEndDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringIntervalUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringIntervalCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"paymentDescription\": \"<string>\",\n          \"billingAgreement\": \"<string>\",\n          \"trialBilling\": {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringStartDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringEndDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringIntervalUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringIntervalCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"deferredPaymentRequest\": {\n          \"managementUrl\": \"<uri>\",\n          \"deferredBilling\": {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"deferredPaymentDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"paymentDescription\": \"<string>\",\n          \"billingAgreement\": \"<string>\",\n          \"freeCancellationDate\": \"<dateTime>\",\n          \"freeCancellationTimeZone\": \"<string>\"\n        },\n        \"automaticReloadRequest\": {\n          \"managementUrl\": \"<uri>\",\n          \"automaticReloadBilling\": {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"automaticReloadThresholdAmount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"paymentDescription\": \"<string>\",\n          \"billingAgreement\": \"<string>\"\n        }\n      },\n      \"PAYMENT_CARD\": {\n        \"networks\": {\n          \"AMEX\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"CARTES_BANCAIRES\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DANKORT\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DINERS_CLUB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DISCOVER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ENROUTE\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ELO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"HIPER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"INTERAC\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"JCB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MAESTRO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MASTERCARD\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MIR\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"PRIVATE_LABEL\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"UNIONPAY\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"VISA\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"OTHER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"captureVaultedCardCvv\": \"<boolean>\"\n      }\n    },\n    \"authorizationType\": \"<string>\",\n    \"firstPaymentReason\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c2d6de1c-daff-416f-aef7-98ec804707d7",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-session"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"<string>\",\n  \"currencyCode\": \"<string>\",\n  \"amount\": \"<long>\",\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      },\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      }\n    ],\n    \"countryCode\": \"<string>\",\n    \"retailerCountryCode\": \"<string>\",\n    \"fees\": [\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"shipping\": {\n      \"amount\": \"<long>\",\n      \"methodId\": \"<string>\",\n      \"methodName\": \"<string>\",\n      \"methodDescription\": \"<string>\"\n    }\n  },\n  \"customerId\": \"<string>\",\n  \"customer\": {\n    \"emailAddress\": \"<email>\",\n    \"mobileNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"billingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"shippingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"taxId\": \"<string>\",\n    \"nationalDocumentId\": \"<string>\"\n  },\n  \"metadata\": \"<object>\",\n  \"paymentMethod\": {\n    \"vaultOnSuccess\": false,\n    \"vaultOn3DS\": false,\n    \"vaultOnAgreement\": false,\n    \"descriptor\": \"<string>\",\n    \"paymentType\": \"<string>\",\n    \"orderedAllowedCardNetworks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"options\": {\n      \"<PAYMENT_METHOD_TYPE>\": {\n        \"surcharge\": {\n          \"amount\": \"<long>\"\n        },\n        \"extraMerchantData\": {\n          \"key_0\": 8317,\n          \"key_1\": false\n        },\n        \"merchantName\": \"<string>\"\n      },\n      \"APPLE_PAY\": {\n        \"merchantName\": \"My Store\",\n        \"recurringPaymentRequest\": {\n          \"paymentDescription\": \"Monthly Subscription\",\n          \"billingAgreement\": \"You agree to pay monthly until you cancel.\",\n          \"managementUrl\": \"https://example.com/manage\",\n          \"regularBilling\": {\n            \"label\": \"Monthly Plan\",\n            \"amount\": 999,\n            \"recurringStartDate\": \"2025-06-09T00:00:00Z\",\n            \"recurringIntervalUnit\": \"month\"\n          }\n        }\n      },\n      \"PAYMENT_CARD\": {\n        \"networks\": {\n          \"AMEX\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"CARTES_BANCAIRES\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DANKORT\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DINERS_CLUB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DISCOVER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ENROUTE\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ELO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"HIPER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"INTERAC\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"JCB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MAESTRO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MASTERCARD\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MIR\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"PRIVATE_LABEL\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"UNIONPAY\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"VISA\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"OTHER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"captureVaultedCardCvv\": \"<boolean>\"\n      }\n    },\n    \"authorizationType\": \"<string>\",\n    \"firstPaymentReason\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"clientToken\": \"string\",\n  \"clientTokenExpirationDate\": \"1978-04-09T09:15:06.950Z\",\n  \"orderId\": \"string\",\n  \"currencyCode\": \"string\",\n  \"amount\": 6178,\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      },\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      }\n    ],\n    \"countryCode\": \"<string>\",\n    \"retailerCountryCode\": \"<string>\",\n    \"fees\": [\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"shipping\": {\n      \"amount\": \"<long>\",\n      \"methodId\": \"<string>\",\n      \"methodName\": \"<string>\",\n      \"methodDescription\": \"<string>\"\n    }\n  },\n  \"customerId\": \"string\",\n  \"customer\": {\n    \"emailAddress\": \"85OGjRFL9@AejxzELCsBs.mlb\",\n    \"mobileNumber\": \"string\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"billingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"shippingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"taxId\": \"string\",\n    \"nationalDocumentId\": \"string\"\n  },\n  \"metadata\": {},\n  \"paymentMethod\": {\n    \"vaultOnSuccess\": false,\n    \"vaultOn3DS\": false,\n    \"vaultOnAgreement\": false,\n    \"descriptor\": \"<string>\",\n    \"paymentType\": \"<string>\",\n    \"orderedAllowedCardNetworks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"options\": {\n      \"<PAYMENT_METHOD_TYPE>\": {\n        \"surcharge\": {\n          \"amount\": \"<long>\"\n        },\n        \"extraMerchantData\": {\n          \"key_0\": 4206.426132752229\n        },\n        \"merchantName\": \"<string>\"\n      },\n      \"APPLE_PAY\": {\n        \"merchantName\": \"My Store\",\n        \"recurringPaymentRequest\": {\n          \"paymentDescription\": \"Monthly Subscription\",\n          \"billingAgreement\": \"You agree to pay monthly until you cancel.\",\n          \"managementUrl\": \"https://example.com/manage\",\n          \"regularBilling\": {\n            \"label\": \"Monthly Plan\",\n            \"amount\": 999,\n            \"recurringStartDate\": \"2025-06-09T00:00:00Z\",\n            \"recurringIntervalUnit\": \"month\"\n          }\n        }\n      },\n      \"PAYMENT_CARD\": {\n        \"networks\": {\n          \"AMEX\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"CARTES_BANCAIRES\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DANKORT\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DINERS_CLUB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DISCOVER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ENROUTE\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ELO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"HIPER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"INTERAC\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"JCB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MAESTRO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MASTERCARD\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MIR\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"PRIVATE_LABEL\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"UNIONPAY\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"VISA\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"OTHER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"captureVaultedCardCvv\": \"<boolean>\"\n      }\n    },\n    \"authorizationType\": \"<string>\",\n    \"firstPaymentReason\": \"<string>\"\n  },\n  \"warnings\": {\n    \"type\": \"TAXJAR\",\n    \"code\": \"MISSING_DATA\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4193d4fd-f833-4870-ae81-4393ca6d6c6d",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-session"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"<string>\",\n  \"currencyCode\": \"<string>\",\n  \"amount\": \"<long>\",\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      },\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      }\n    ],\n    \"countryCode\": \"<string>\",\n    \"retailerCountryCode\": \"<string>\",\n    \"fees\": [\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"shipping\": {\n      \"amount\": \"<long>\",\n      \"methodId\": \"<string>\",\n      \"methodName\": \"<string>\",\n      \"methodDescription\": \"<string>\"\n    }\n  },\n  \"customerId\": \"<string>\",\n  \"customer\": {\n    \"emailAddress\": \"<email>\",\n    \"mobileNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"billingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"shippingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"taxId\": \"<string>\",\n    \"nationalDocumentId\": \"<string>\"\n  },\n  \"metadata\": \"<object>\",\n  \"paymentMethod\": {\n    \"vaultOnSuccess\": false,\n    \"vaultOn3DS\": false,\n    \"vaultOnAgreement\": false,\n    \"descriptor\": \"<string>\",\n    \"paymentType\": \"<string>\",\n    \"orderedAllowedCardNetworks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"options\": {\n      \"<PAYMENT_METHOD_TYPE>\": {\n        \"surcharge\": {\n          \"amount\": \"<long>\"\n        },\n        \"extraMerchantData\": {\n          \"key_0\": 8317,\n          \"key_1\": false\n        },\n        \"merchantName\": \"<string>\"\n      },\n      \"APPLE_PAY\": {\n        \"merchantName\": \"My Store\",\n        \"recurringPaymentRequest\": {\n          \"paymentDescription\": \"Monthly Subscription\",\n          \"billingAgreement\": \"You agree to pay monthly until you cancel.\",\n          \"managementUrl\": \"https://example.com/manage\",\n          \"regularBilling\": {\n            \"label\": \"Monthly Plan\",\n            \"amount\": 999,\n            \"recurringStartDate\": \"2025-06-09T00:00:00Z\",\n            \"recurringIntervalUnit\": \"month\"\n          }\n        }\n      },\n      \"PAYMENT_CARD\": {\n        \"networks\": {\n          \"AMEX\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"CARTES_BANCAIRES\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DANKORT\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DINERS_CLUB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DISCOVER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ENROUTE\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ELO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"HIPER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"INTERAC\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"JCB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MAESTRO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MASTERCARD\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MIR\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"PRIVATE_LABEL\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"UNIONPAY\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"VISA\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"OTHER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"captureVaultedCardCvv\": \"<boolean>\"\n      }\n    },\n    \"authorizationType\": \"<string>\",\n    \"firstPaymentReason\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"ClientSessionValidationError\",\n    \"description\": \"The client token is invalid.\",\n    \"recoverySuggestion\": \"Please provide a valid client token.\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62a049e7-e9e1-4e70-b0b2-15b32f9ba13f",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-session"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"<string>\",\n  \"currencyCode\": \"<string>\",\n  \"amount\": \"<long>\",\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      },\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      }\n    ],\n    \"countryCode\": \"<string>\",\n    \"retailerCountryCode\": \"<string>\",\n    \"fees\": [\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"shipping\": {\n      \"amount\": \"<long>\",\n      \"methodId\": \"<string>\",\n      \"methodName\": \"<string>\",\n      \"methodDescription\": \"<string>\"\n    }\n  },\n  \"customerId\": \"<string>\",\n  \"customer\": {\n    \"emailAddress\": \"<email>\",\n    \"mobileNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"billingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"shippingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"taxId\": \"<string>\",\n    \"nationalDocumentId\": \"<string>\"\n  },\n  \"metadata\": \"<object>\",\n  \"paymentMethod\": {\n    \"vaultOnSuccess\": false,\n    \"vaultOn3DS\": false,\n    \"vaultOnAgreement\": false,\n    \"descriptor\": \"<string>\",\n    \"paymentType\": \"<string>\",\n    \"orderedAllowedCardNetworks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"options\": {\n      \"<PAYMENT_METHOD_TYPE>\": {\n        \"surcharge\": {\n          \"amount\": \"<long>\"\n        },\n        \"extraMerchantData\": {\n          \"key_0\": 8317,\n          \"key_1\": false\n        },\n        \"merchantName\": \"<string>\"\n      },\n      \"APPLE_PAY\": {\n        \"merchantName\": \"My Store\",\n        \"recurringPaymentRequest\": {\n          \"paymentDescription\": \"Monthly Subscription\",\n          \"billingAgreement\": \"You agree to pay monthly until you cancel.\",\n          \"managementUrl\": \"https://example.com/manage\",\n          \"regularBilling\": {\n            \"label\": \"Monthly Plan\",\n            \"amount\": 999,\n            \"recurringStartDate\": \"2025-06-09T00:00:00Z\",\n            \"recurringIntervalUnit\": \"month\"\n          }\n        }\n      },\n      \"PAYMENT_CARD\": {\n        \"networks\": {\n          \"AMEX\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"CARTES_BANCAIRES\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DANKORT\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DINERS_CLUB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DISCOVER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ENROUTE\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ELO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"HIPER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"INTERAC\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"JCB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MAESTRO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MASTERCARD\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MIR\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"PRIVATE_LABEL\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"UNIONPAY\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"VISA\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"OTHER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"captureVaultedCardCvv\": \"<boolean>\"\n      }\n    },\n    \"authorizationType\": \"<string>\",\n    \"firstPaymentReason\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"RequestValidationError\",\n    \"description\": \"We were unable to validate your request, please check your payload against /docs/api\",\n    \"diagnosticsId\": \"1234567898\",\n    \"validationErrors\": [\n      {\n        \"model\": \"ClientSessionAPIRequest\",\n        \"errors\": [\n          {\n            \"path\": \"$.customerId\",\n            \"description\": \"Value must be a valid string\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "214b013c-ace0-4402-9b10-549939f90c1c",
+          "name": "Retrieve a client session",
+          "request": {
+            "name": "Retrieve a client session",
+            "description": {
+              "content": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in the request. The fields with empty values are excluded from the response.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-session"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "clientToken",
+                  "value": "<string>",
+                  "description": "Client token corresponding to the client session to retrieve"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ac888153-a6fa-431a-8da1-898237179b19",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-session"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "clientToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customerId\": \"string\",\n  \"orderId\": \"string\",\n  \"currencyCode\": \"<string>\",\n  \"amount\": 7885,\n  \"metadata\": {},\n  \"customer\": {\n    \"emailAddress\": \"N6o-Ui30Jdx@TLckDT.tp\",\n    \"mobileNumber\": \"string\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"billingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"shippingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"taxId\": \"string\",\n    \"nationalDocumentId\": \"string\"\n  },\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      },\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      }\n    ],\n    \"countryCode\": \"<string>\",\n    \"retailerCountryCode\": \"<string>\",\n    \"fees\": [\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"shipping\": {\n      \"amount\": \"<long>\",\n      \"methodId\": \"<string>\",\n      \"methodName\": \"<string>\",\n      \"methodDescription\": \"<string>\"\n    }\n  },\n  \"paymentMethod\": {\n    \"vaultOnSuccess\": false,\n    \"vaultOn3DS\": false,\n    \"vaultOnAgreement\": false,\n    \"descriptor\": \"<string>\",\n    \"paymentType\": \"<string>\",\n    \"orderedAllowedCardNetworks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"options\": {\n      \"<PAYMENT_METHOD_TYPE>\": {\n        \"surcharge\": {\n          \"amount\": \"<long>\"\n        },\n        \"extraMerchantData\": {\n          \"key_0\": 9695.33761934549\n        },\n        \"merchantName\": \"<string>\"\n      },\n      \"APPLE_PAY\": {\n        \"merchantName\": \"My Store\",\n        \"recurringPaymentRequest\": {\n          \"paymentDescription\": \"Monthly Subscription\",\n          \"billingAgreement\": \"You agree to pay monthly until you cancel.\",\n          \"managementUrl\": \"https://example.com/manage\",\n          \"regularBilling\": {\n            \"label\": \"Monthly Plan\",\n            \"amount\": 999,\n            \"recurringStartDate\": \"2025-06-09T00:00:00Z\",\n            \"recurringIntervalUnit\": \"month\"\n          }\n        }\n      },\n      \"PAYMENT_CARD\": {\n        \"networks\": {\n          \"AMEX\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"CARTES_BANCAIRES\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DANKORT\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DINERS_CLUB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DISCOVER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ENROUTE\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ELO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"HIPER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"INTERAC\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"JCB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MAESTRO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MASTERCARD\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MIR\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"PRIVATE_LABEL\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"UNIONPAY\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"VISA\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"OTHER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"captureVaultedCardCvv\": \"<boolean>\"\n      }\n    },\n    \"authorizationType\": \"<string>\",\n    \"firstPaymentReason\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b40b8fe-8972-45db-b533-d203a2d4becd",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-session"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "clientToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"string\",\n    \"description\": \"string\",\n    \"recoverySuggestion\": \"string\",\n    \"diagnosticsId\": \"string\",\n    \"paymentId\": \"string\",\n    \"paymentStatus\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17791eff-cc07-4a05-9c2c-f9c6e2cba3cb",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-session"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "clientToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"string\",\n    \"description\": \"string\",\n    \"recoverySuggestion\": \"string\",\n    \"diagnosticsId\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "96fcee6e-15ee-46a7-b032-73942c684cc5",
+          "name": "Update client session",
+          "request": {
+            "name": "Update client session",
+            "description": {
+              "content": "You can update a clients session created earlier with the `PATCH /client-session` [API call](#operation/create_client_side_token_client_session_post).\n\nThe only required field for the request is `clientToken`. Other supported request fields are same as for the `POST /client-session` [API call](#operation/create_client_side_token_client_session_post).\n\nYou need to specify only the fields you wish to update. However, if the items to be updated are arrays (e.g.`lineItems`), you need to provide the entire array, including any new or modified items. Primer will replace the full array with whatever is sent in the request. If you want to keep existing items, make sure to include them in your request, anything omitted will be removed.\n\nIf you wish to update nested fields on the client session, such as the customer `emailAddress` field, you can pass the `customer` object with only one field, `emailAddress`, to update.\n\nIf you simply wish to clear the value of the field, pass `null` as your input.\n\nYou can update `paymentMethod.vaultOnSuccess` field but updating of the `paymentMethod.options` field through `PATCH /client-session` is not supported.\n\nThe response will contain all the fields of the client session including the ones that were changed.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-session"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clientToken\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"currencyCode\": \"<string>\",\n  \"amount\": \"<long>\",\n  \"metadata\": \"<object>\",\n  \"customer\": {\n    \"emailAddress\": \"<email>\",\n    \"mobileNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"billingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"shippingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"taxId\": \"<string>\",\n    \"nationalDocumentId\": \"<string>\"\n  },\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      },\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      }\n    ],\n    \"countryCode\": \"<string>\",\n    \"retailerCountryCode\": \"<string>\",\n    \"fees\": [\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"shipping\": {\n      \"amount\": \"<long>\",\n      \"methodId\": \"<string>\",\n      \"methodName\": \"<string>\",\n      \"methodDescription\": \"<string>\"\n    }\n  },\n  \"paymentMethod\": {\n    \"vaultOnSuccess\": false,\n    \"vaultOn3DS\": false,\n    \"vaultOnAgreement\": false,\n    \"descriptor\": \"<string>\",\n    \"paymentType\": \"<string>\",\n    \"orderedAllowedCardNetworks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"options\": {\n      \"<PAYMENT_METHOD_TYPE>\": {\n        \"surcharge\": {\n          \"amount\": \"<long>\"\n        },\n        \"extraMerchantData\": {\n          \"key_0\": 2987,\n          \"key_1\": 4108.67741423388,\n          \"key_2\": 5369.207442418009\n        },\n        \"merchantName\": \"<string>\"\n      },\n      \"APPLE_PAY\": {\n        \"merchantName\": \"<string>\",\n        \"recurringPaymentRequest\": {\n          \"managementUrl\": \"<uri>\",\n          \"regularBilling\": {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringStartDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringEndDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringIntervalUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringIntervalCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"paymentDescription\": \"<string>\",\n          \"billingAgreement\": \"<string>\",\n          \"trialBilling\": {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringStartDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringEndDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringIntervalUnit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"recurringIntervalCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"deferredPaymentRequest\": {\n          \"managementUrl\": \"<uri>\",\n          \"deferredBilling\": {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"deferredPaymentDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"paymentDescription\": \"<string>\",\n          \"billingAgreement\": \"<string>\",\n          \"freeCancellationDate\": \"<dateTime>\",\n          \"freeCancellationTimeZone\": \"<string>\"\n        },\n        \"automaticReloadRequest\": {\n          \"managementUrl\": \"<uri>\",\n          \"automaticReloadBilling\": {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"automaticReloadThresholdAmount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"paymentDescription\": \"<string>\",\n          \"billingAgreement\": \"<string>\"\n        }\n      },\n      \"PAYMENT_CARD\": {\n        \"networks\": {\n          \"AMEX\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"CARTES_BANCAIRES\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DANKORT\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DINERS_CLUB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DISCOVER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ENROUTE\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ELO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"HIPER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"INTERAC\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"JCB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MAESTRO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MASTERCARD\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MIR\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"PRIVATE_LABEL\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"UNIONPAY\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"VISA\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"OTHER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"captureVaultedCardCvv\": \"<boolean>\"\n      }\n    },\n    \"authorizationType\": \"<string>\",\n    \"firstPaymentReason\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "da869dbd-a6c3-49e6-ae95-956c1df55a3c",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-session"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientToken\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"currencyCode\": \"<string>\",\n  \"amount\": \"<long>\",\n  \"metadata\": \"<object>\",\n  \"customer\": {\n    \"emailAddress\": \"<email>\",\n    \"mobileNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"billingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"shippingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"taxId\": \"<string>\",\n    \"nationalDocumentId\": \"<string>\"\n  },\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      },\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      }\n    ],\n    \"countryCode\": \"<string>\",\n    \"retailerCountryCode\": \"<string>\",\n    \"fees\": [\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"shipping\": {\n      \"amount\": \"<long>\",\n      \"methodId\": \"<string>\",\n      \"methodName\": \"<string>\",\n      \"methodDescription\": \"<string>\"\n    }\n  },\n  \"paymentMethod\": {\n    \"vaultOnSuccess\": false,\n    \"vaultOn3DS\": false,\n    \"vaultOnAgreement\": false,\n    \"descriptor\": \"<string>\",\n    \"paymentType\": \"<string>\",\n    \"orderedAllowedCardNetworks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"options\": {\n      \"<PAYMENT_METHOD_TYPE>\": {\n        \"surcharge\": {\n          \"amount\": \"<long>\"\n        },\n        \"extraMerchantData\": {\n          \"key_0\": 7802.800613693689\n        },\n        \"merchantName\": \"<string>\"\n      },\n      \"APPLE_PAY\": {\n        \"merchantName\": \"My Store\",\n        \"recurringPaymentRequest\": {\n          \"paymentDescription\": \"Monthly Subscription\",\n          \"billingAgreement\": \"You agree to pay monthly until you cancel.\",\n          \"managementUrl\": \"https://example.com/manage\",\n          \"regularBilling\": {\n            \"label\": \"Monthly Plan\",\n            \"amount\": 999,\n            \"recurringStartDate\": \"2025-06-09T00:00:00Z\",\n            \"recurringIntervalUnit\": \"month\"\n          }\n        }\n      },\n      \"PAYMENT_CARD\": {\n        \"networks\": {\n          \"AMEX\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"CARTES_BANCAIRES\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DANKORT\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DINERS_CLUB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DISCOVER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ENROUTE\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ELO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"HIPER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"INTERAC\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"JCB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MAESTRO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MASTERCARD\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MIR\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"PRIVATE_LABEL\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"UNIONPAY\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"VISA\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"OTHER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"captureVaultedCardCvv\": \"<boolean>\"\n      }\n    },\n    \"authorizationType\": \"<string>\",\n    \"firstPaymentReason\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customerId\": \"string\",\n  \"orderId\": \"string\",\n  \"currencyCode\": \"<string>\",\n  \"amount\": 7885,\n  \"metadata\": {},\n  \"customer\": {\n    \"emailAddress\": \"N6o-Ui30Jdx@TLckDT.tp\",\n    \"mobileNumber\": \"string\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"billingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"shippingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"taxId\": \"string\",\n    \"nationalDocumentId\": \"string\"\n  },\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      },\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      }\n    ],\n    \"countryCode\": \"<string>\",\n    \"retailerCountryCode\": \"<string>\",\n    \"fees\": [\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"shipping\": {\n      \"amount\": \"<long>\",\n      \"methodId\": \"<string>\",\n      \"methodName\": \"<string>\",\n      \"methodDescription\": \"<string>\"\n    }\n  },\n  \"paymentMethod\": {\n    \"vaultOnSuccess\": false,\n    \"vaultOn3DS\": false,\n    \"vaultOnAgreement\": false,\n    \"descriptor\": \"<string>\",\n    \"paymentType\": \"<string>\",\n    \"orderedAllowedCardNetworks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"options\": {\n      \"<PAYMENT_METHOD_TYPE>\": {\n        \"surcharge\": {\n          \"amount\": \"<long>\"\n        },\n        \"extraMerchantData\": {\n          \"key_0\": 9695.33761934549\n        },\n        \"merchantName\": \"<string>\"\n      },\n      \"APPLE_PAY\": {\n        \"merchantName\": \"My Store\",\n        \"recurringPaymentRequest\": {\n          \"paymentDescription\": \"Monthly Subscription\",\n          \"billingAgreement\": \"You agree to pay monthly until you cancel.\",\n          \"managementUrl\": \"https://example.com/manage\",\n          \"regularBilling\": {\n            \"label\": \"Monthly Plan\",\n            \"amount\": 999,\n            \"recurringStartDate\": \"2025-06-09T00:00:00Z\",\n            \"recurringIntervalUnit\": \"month\"\n          }\n        }\n      },\n      \"PAYMENT_CARD\": {\n        \"networks\": {\n          \"AMEX\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"CARTES_BANCAIRES\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DANKORT\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DINERS_CLUB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DISCOVER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ENROUTE\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ELO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"HIPER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"INTERAC\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"JCB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MAESTRO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MASTERCARD\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MIR\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"PRIVATE_LABEL\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"UNIONPAY\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"VISA\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"OTHER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"captureVaultedCardCvv\": \"<boolean>\"\n      }\n    },\n    \"authorizationType\": \"<string>\",\n    \"firstPaymentReason\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c481cfdd-d27c-468a-b8bb-26fb69152e9b",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-session"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientToken\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"currencyCode\": \"<string>\",\n  \"amount\": \"<long>\",\n  \"metadata\": \"<object>\",\n  \"customer\": {\n    \"emailAddress\": \"<email>\",\n    \"mobileNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"billingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"shippingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"taxId\": \"<string>\",\n    \"nationalDocumentId\": \"<string>\"\n  },\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      },\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      }\n    ],\n    \"countryCode\": \"<string>\",\n    \"retailerCountryCode\": \"<string>\",\n    \"fees\": [\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"shipping\": {\n      \"amount\": \"<long>\",\n      \"methodId\": \"<string>\",\n      \"methodName\": \"<string>\",\n      \"methodDescription\": \"<string>\"\n    }\n  },\n  \"paymentMethod\": {\n    \"vaultOnSuccess\": false,\n    \"vaultOn3DS\": false,\n    \"vaultOnAgreement\": false,\n    \"descriptor\": \"<string>\",\n    \"paymentType\": \"<string>\",\n    \"orderedAllowedCardNetworks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"options\": {\n      \"<PAYMENT_METHOD_TYPE>\": {\n        \"surcharge\": {\n          \"amount\": \"<long>\"\n        },\n        \"extraMerchantData\": {\n          \"key_0\": 7802.800613693689\n        },\n        \"merchantName\": \"<string>\"\n      },\n      \"APPLE_PAY\": {\n        \"merchantName\": \"My Store\",\n        \"recurringPaymentRequest\": {\n          \"paymentDescription\": \"Monthly Subscription\",\n          \"billingAgreement\": \"You agree to pay monthly until you cancel.\",\n          \"managementUrl\": \"https://example.com/manage\",\n          \"regularBilling\": {\n            \"label\": \"Monthly Plan\",\n            \"amount\": 999,\n            \"recurringStartDate\": \"2025-06-09T00:00:00Z\",\n            \"recurringIntervalUnit\": \"month\"\n          }\n        }\n      },\n      \"PAYMENT_CARD\": {\n        \"networks\": {\n          \"AMEX\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"CARTES_BANCAIRES\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DANKORT\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DINERS_CLUB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DISCOVER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ENROUTE\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ELO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"HIPER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"INTERAC\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"JCB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MAESTRO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MASTERCARD\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MIR\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"PRIVATE_LABEL\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"UNIONPAY\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"VISA\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"OTHER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"captureVaultedCardCvv\": \"<boolean>\"\n      }\n    },\n    \"authorizationType\": \"<string>\",\n    \"firstPaymentReason\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"ClientSessionValidationError\",\n    \"description\": \"The client token is invalid.\",\n    \"recoverySuggestion\": \"Please provide a valid client token.\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6fa2775e-3a78-4017-9010-28d2bebfbf9f",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-session"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientToken\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"currencyCode\": \"<string>\",\n  \"amount\": \"<long>\",\n  \"metadata\": \"<object>\",\n  \"customer\": {\n    \"emailAddress\": \"<email>\",\n    \"mobileNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"billingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"shippingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"taxId\": \"<string>\",\n    \"nationalDocumentId\": \"<string>\"\n  },\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      },\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      }\n    ],\n    \"countryCode\": \"<string>\",\n    \"retailerCountryCode\": \"<string>\",\n    \"fees\": [\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"shipping\": {\n      \"amount\": \"<long>\",\n      \"methodId\": \"<string>\",\n      \"methodName\": \"<string>\",\n      \"methodDescription\": \"<string>\"\n    }\n  },\n  \"paymentMethod\": {\n    \"vaultOnSuccess\": false,\n    \"vaultOn3DS\": false,\n    \"vaultOnAgreement\": false,\n    \"descriptor\": \"<string>\",\n    \"paymentType\": \"<string>\",\n    \"orderedAllowedCardNetworks\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"options\": {\n      \"<PAYMENT_METHOD_TYPE>\": {\n        \"surcharge\": {\n          \"amount\": \"<long>\"\n        },\n        \"extraMerchantData\": {\n          \"key_0\": 7802.800613693689\n        },\n        \"merchantName\": \"<string>\"\n      },\n      \"APPLE_PAY\": {\n        \"merchantName\": \"My Store\",\n        \"recurringPaymentRequest\": {\n          \"paymentDescription\": \"Monthly Subscription\",\n          \"billingAgreement\": \"You agree to pay monthly until you cancel.\",\n          \"managementUrl\": \"https://example.com/manage\",\n          \"regularBilling\": {\n            \"label\": \"Monthly Plan\",\n            \"amount\": 999,\n            \"recurringStartDate\": \"2025-06-09T00:00:00Z\",\n            \"recurringIntervalUnit\": \"month\"\n          }\n        }\n      },\n      \"PAYMENT_CARD\": {\n        \"networks\": {\n          \"AMEX\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"CARTES_BANCAIRES\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DANKORT\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DINERS_CLUB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"DISCOVER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ENROUTE\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"ELO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"HIPER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"INTERAC\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"JCB\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MAESTRO\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MASTERCARD\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"MIR\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"PRIVATE_LABEL\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"UNIONPAY\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"VISA\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"OTHER\": {\n            \"surcharge\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"captureVaultedCardCvv\": \"<boolean>\"\n      }\n    },\n    \"authorizationType\": \"<string>\",\n    \"firstPaymentReason\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"string\",\n    \"description\": \"string\",\n    \"recoverySuggestion\": \"string\",\n    \"diagnosticsId\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.primer.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "83d27543-0ff6-442e-a160-61a0be9cfe25",
+    "name": "Primer Client Session API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API enforces a timeout of 90 seconds for all requests. A 504 response indicates a timeout occurred.",
+      "type": "text/plain"
+    }
+  }
+}

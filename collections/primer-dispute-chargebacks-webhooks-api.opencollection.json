@@ -1,0 +1,76 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Primer Client Session API Dispute & Chargebacks Webhooks API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Dispute & Chargebacks Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dispute Open",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.primer.io/dispute-opened",
+            "headers": [
+              {
+                "name": "X-Signature-Primary",
+                "value": ""
+              },
+              {
+                "name": "X-Signature-Secondary",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Primer notifies you with a `DISPUTE.OPENED` webhook on newly opened disputes or chargebacks. This notification is unified across all processors.\n\nLearn more about [how Primer handles webhooks](/docs/api-reference/get-started/configure-webhooks).\n"
+        },
+        {
+          "info": {
+            "name": "Dispute Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.primer.io/dispute-status",
+            "headers": [
+              {
+                "name": "X-Signature-Primary",
+                "value": ""
+              },
+              {
+                "name": "X-Signature-Secondary",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Primer notifies you with a `DISPUTE.STATUS` webhook that will provide information on retrievals, disputes (also known as chargebacks), and preabritration filings.\n\nThis notification is supported for processors Adyen, Braintree, Checkout.com & PayPal.\n\nThe `DISPUTE.STATUS` event can be used to proactively communicate with customers, issue refunds, send disputes to risk tools, or to proactively defend disputes.\n\nThe `DISPUTE.STATUS` event is currently in an open beta stage, as we continue to add m"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

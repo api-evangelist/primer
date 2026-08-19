@@ -1,0 +1,3161 @@
+{
+  "item": [
+    {
+      "id": "51e2ccc1-b4d7-428e-81a4-ef41eccab120",
+      "name": "Payments API",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cfa09ccd-1c5d-4b8e-8804-131071ddc616",
+          "name": "Search & list payments",
+          "request": {
+            "name": "Search & list payments",
+            "description": {
+              "content": "<p/>\n\nRetrieve a list of your payments.\n\nResults are paginated, they will only return up to 100 payments maximum.\nTo access the next page of result, set the `cursor` query parameter to the value of `nextCursor` in\nyour current result payload. Use `prevCursor` to go back to the previous page.\n\n**Note:** this endpoint returns a list of\nsummarized payments. Not all payments attributes are present. You can use\nthe query parameters to filter payments. You can separate multiple query parameters with the `&` symbol.\nQuery parameters with types of the form \"Array of strings\" (such as the status parameter) can be specified as a comma-separated list.\n\nFor example, if you wanted to get both `FAILED`  and `CANCELLED` payments, for customer `john-123`, you would use:\n```bash\ncurl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANCELLED&customer_id=john-123' \\\n--header 'X-Api-Key: <YOUR_API_KEY>'\n```\n\nYou can alternatively specify a list by repeating the parameter multiple times.\n\n**Note:** payments will be available within a minute from being created.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter payments by their status."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter payments by their status."
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_method_type",
+                  "value": "<string>",
+                  "description": "Filter payments by their payment method type."
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_method_type",
+                  "value": "<string>",
+                  "description": "Filter payments by their payment method type."
+                },
+                {
+                  "disabled": false,
+                  "key": "processor",
+                  "value": "<string>",
+                  "description": "Filter payments by their payment processor."
+                },
+                {
+                  "disabled": false,
+                  "key": "processor",
+                  "value": "<string>",
+                  "description": "Filter payments by their payment processor."
+                },
+                {
+                  "disabled": false,
+                  "key": "currency_code",
+                  "value": "<string>",
+                  "description": "Filter payments by their payment currency.\ne.g. use `USD` for US dollars.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency_code",
+                  "value": "<string>",
+                  "description": "Filter payments by their payment currency.\ne.g. use `USD` for US dollars.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "from_date",
+                  "value": "<dateTime>",
+                  "description": "Return only payments from this date (inclusive)."
+                },
+                {
+                  "disabled": false,
+                  "key": "to_date",
+                  "value": "<dateTime>",
+                  "description": "Return only payments up to this date (inclusive)."
+                },
+                {
+                  "disabled": false,
+                  "key": "order_id",
+                  "value": "<string>",
+                  "description": "Return payments related to this order ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "min_amount",
+                  "value": "<long>",
+                  "description": "Return payments of this amount minimum (inclusive)."
+                },
+                {
+                  "disabled": false,
+                  "key": "max_amount",
+                  "value": "<long>",
+                  "description": "Return payments of this amount max (inclusive)."
+                },
+                {
+                  "disabled": false,
+                  "key": "customer_id",
+                  "value": "<string>",
+                  "description": "ID of the customer that has made the payment."
+                },
+                {
+                  "disabled": false,
+                  "key": "customer_id",
+                  "value": "<string>",
+                  "description": "ID of the customer that has made the payment."
+                },
+                {
+                  "disabled": false,
+                  "key": "merchant_id",
+                  "value": "<string>",
+                  "description": "ID of the merchant involved in the payment."
+                },
+                {
+                  "disabled": false,
+                  "key": "merchant_id",
+                  "value": "<string>",
+                  "description": "ID of the merchant involved in the payment."
+                },
+                {
+                  "disabled": false,
+                  "key": "customer_email_address",
+                  "value": "<string>",
+                  "description": "Email of the customer that has made the payment."
+                },
+                {
+                  "disabled": false,
+                  "key": "customer_email_address",
+                  "value": "<string>",
+                  "description": "Email of the customer that has made the payment."
+                },
+                {
+                  "disabled": false,
+                  "key": "last_4_digits",
+                  "value": "<string>",
+                  "description": "Last 4 digits of the card used for the payment."
+                },
+                {
+                  "disabled": false,
+                  "key": "last_4_digits",
+                  "value": "<string>",
+                  "description": "Last 4 digits of the card used for the payment."
+                },
+                {
+                  "disabled": false,
+                  "key": "paypal_email",
+                  "value": "<string>",
+                  "description": "Paypal email address associated with the payment."
+                },
+                {
+                  "disabled": false,
+                  "key": "paypal_email",
+                  "value": "<string>",
+                  "description": "Paypal email address associated with the payment."
+                },
+                {
+                  "disabled": false,
+                  "key": "klarna_email",
+                  "value": "<string>",
+                  "description": "Klarna email address associated with the payment."
+                },
+                {
+                  "disabled": false,
+                  "key": "klarna_email",
+                  "value": "<string>",
+                  "description": "Klarna email address associated with the payment."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Maximum number of payments to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "If results are paginated, pass the `nextCursor` to access next page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f5a24c8d-d36d-4fe5-a4e4-8a5102ebf2d5",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_method_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_method_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "processor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "processor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "order_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "min_amount",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "max_amount",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "customer_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customer_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "merchant_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "merchant_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customer_email_address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customer_email_address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_4_digits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_4_digits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "paypal_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "paypal_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "klarna_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "klarna_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"date\": \"1974-04-30T12:13:04.924Z\",\n      \"dateUpdated\": \"1997-04-22T01:28:59.507Z\",\n      \"status\": \"<string>\",\n      \"orderId\": \"string\",\n      \"currencyCode\": \"string\",\n      \"amount\": 3070,\n      \"processor\": {\n        \"name\": \"string\",\n        \"processorMerchantId\": \"string\"\n      },\n      \"metadata\": {}\n    },\n    {\n      \"id\": \"string\",\n      \"date\": \"2022-01-04T02:33:15.383Z\",\n      \"dateUpdated\": \"1979-05-28T20:07:52.998Z\",\n      \"status\": \"<string>\",\n      \"orderId\": \"string\",\n      \"currencyCode\": \"string\",\n      \"amount\": 1701,\n      \"processor\": {\n        \"name\": \"string\",\n        \"processorMerchantId\": \"string\"\n      },\n      \"metadata\": {}\n    }\n  ],\n  \"nextCursor\": \"string\",\n  \"prevCursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf78d1bd-071f-4ded-8a0f-30cbcc6c5354",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_method_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_method_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "processor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "processor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "to_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "order_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "min_amount",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "max_amount",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "customer_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customer_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "merchant_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "merchant_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customer_email_address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customer_email_address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_4_digits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_4_digits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "paypal_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "paypal_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "klarna_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "klarna_email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"RequestValidationError\",\n    \"description\": \"Invalid type for `currencyCode`\",\n    \"recoverySuggestion\": \"The currency code must be a valid value\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3bd28dfb-63d3-4c0b-a565-a3a54f520e0e",
+          "name": "Create a payment",
+          "request": {
+            "name": "Create a payment",
+            "description": {
+              "content": "<p/>\n\nCreate and authorize a payment for a given customer order. You\nshould provide a payment method token here to avoid PCI implications.\n\nIf only a payment method token is passed, the values passed with the Client Session is used to determine the amount, currency etc.\nNote: `amount`, `currencyCode` and `orderId` are required during payment creation. Make sure to pass these fields when creating a client session, or if not yet available, when creating a payment.\n\nAll fields provided on this request will take preference over any field on the `order` associated with the client session. E.g. if you pass `amount` on this request, it will override the `amount` on the `order` associated with the Client Session.\nParameters that are not on this request will be fetched from previously created Client Session and merged. E.g. if you specify `customer.billingAddress` in Client Session and then pass `customer.emailAddress` data with this request, it will automatically merge the `customer` fields and use both `billingAddress` and `emailAddress` for later calculations.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                "key": "X-Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentMethodToken\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"currencyCode\": \"<string>\",\n  \"amount\": \"<long>\",\n  \"order\": {\n    \"lineItems\": [\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      },\n      {\n        \"amount\": \"<long>\",\n        \"itemId\": \"<string>\",\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"quantity\": 1,\n        \"discountAmount\": \"<long>\",\n        \"taxAmount\": \"<long>\",\n        \"taxCode\": \"<string>\",\n        \"productType\": \"<string>\",\n        \"productData\": {\n          \"sku\": \"<string>\",\n          \"brand\": \"<string>\",\n          \"color\": \"<string>\",\n          \"globalTradeItemNumber\": \"<string>\",\n          \"manufacturerPartNumber\": \"<string>\",\n          \"weight\": \"<number>\",\n          \"weightUnit\": \"<string>\",\n          \"pageUrl\": \"<string>\"\n        }\n      }\n    ],\n    \"countryCode\": \"<string>\",\n    \"retailerCountryCode\": \"<string>\",\n    \"fees\": [\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      },\n      {\n        \"amount\": \"<long>\",\n        \"type\": \"<string>\",\n        \"description\": \"<string>\"\n      }\n    ],\n    \"shipping\": {\n      \"amount\": \"<long>\",\n      \"methodId\": \"<string>\",\n      \"methodName\": \"<string>\",\n      \"methodDescription\": \"<string>\"\n    }\n  },\n  \"customerId\": \"<string>\",\n  \"customer\": {\n    \"emailAddress\": \"<email>\",\n    \"mobileNumber\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"billingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"shippingAddress\": {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"addressLine1\": \"<string>\",\n      \"addressLine2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"taxId\": \"<string>\",\n    \"nationalDocumentId\": \"<string>\"\n  },\n  \"metadata\": \"<object>\",\n  \"paymentMethod\": {\n    \"vaultOnSuccess\": false,\n    \"vaultOn3DS\": false,\n    \"vaultOnAgreement\": false,\n    \"descriptor\": \"<string>\",\n    \"paymentType\": \"<string>\",\n    \"authorizationType\": \"<string>\",\n    \"firstPaymentReason\": \"<string>\"\n  },\n  \"expand\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6026547f-1e67-4f54-bcd4-a8d80c7f444d",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"order-abc\",\n  \"currencyCode\": \"EUR\",\n  \"amount\": 42,\n  \"paymentMethodToken\": \"heNwnqaeRiqvY1UcslfQc3wxNjEzOTIxNjc4\",\n  \"customerId\": \"customer-123\",\n  \"customer\": {\n    \"emailAddress\": \"customer123@gmail.com\"\n  },\n  \"metadata\": {\n    \"productId\": 123,\n    \"merchantId\": \"a13bsd62s\"\n  },\n  \"paymentMethod\": {\n    \"paymentType\": \"SUBSCRIPTION\",\n    \"vaultOnSuccess\": true,\n    \"authorizationType\": \"ESTIMATED\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"kHdEw9EG\",\n  \"date\": \"2021-02-21T15:36:16.367687\",\n  \"dateUpdated\": \"2021-02-21T15:36:17.133701\",\n  \"status\": \"AUTHORIZED\",\n  \"orderId\": \"order-abc\",\n  \"currencyCode\": \"EUR\",\n  \"amount\": 42,\n  \"customerId\": \"customer-123\",\n  \"customer\": {\n    \"email\": \"customer123@gmail.com\"\n  },\n  \"cardTokenType\": \"CARD_PAN\",\n  \"paymentMethod\": {\n    \"paymentType\": \"SUBSCRIPTION\",\n    \"paymentMethodToken\": \"heNwnqaeRiqvY1UcslfQc3wxNjEzOTIxNjc4\",\n    \"isVaulted\": true,\n    \"authorizationType\": \"FINAL\",\n    \"descriptor\": \"Purchase: Socks\",\n    \"analyticsId\": \"VtkMDAxZW5isH0HsbbNxZ3lo\",\n    \"paymentMethodType\": \"PAYMENT_CARD\",\n    \"paymentMethodData\": {\n      \"first6Digits\": \"411111\",\n      \"last4Digits\": \"1111\",\n      \"expirationMonth\": \"12\",\n      \"expirationYear\": \"2030\",\n      \"cardholderName\": \"John Biggins\",\n      \"network\": \"Visa\",\n      \"isNetworkTokenized\": false,\n      \"binData\": {\n        \"network\": \"VISA\",\n        \"regionalRestriction\": \"UNKNOWN\",\n        \"accountNumberType\": \"UNKNOWN\",\n        \"accountFundingType\": \"UNKNOWN\",\n        \"prepaidReloadableIndicator\": \"NOT_APPLICABLE\",\n        \"productUsageType\": \"UNKNOWN\",\n        \"productCode\": \"VISA\",\n        \"productName\": \"VISA\"\n      }\n    }\n  },\n  \"processor\": {\n    \"name\": \"STRIPE\",\n    \"processorMerchantId\": \"acct_stripe_1234\",\n    \"amountCaptured\": 0,\n    \"amountRefunded\": 0\n  },\n  \"transactions\": [\n    {\n      \"type\": \"SALE\",\n      \"processorStatus\": \"AUTHORIZED\",\n      \"processorName\": \"STRIPE\",\n      \"processorMerchantId\": \"acct_stripe_1234\",\n      \"processorTransactionId\": \"54c4eb5b3ef8a\",\n      \"cardTokenType\": \"CARD_PAN\"\n    }\n  ],\n  \"metadata\": {\n    \"productId\": 123,\n    \"merchantId\": \"a13bsd62s\"\n  },\n  \"riskData\": {\n    \"fraudChecks\": {\n      \"source\": \"FRAUD_PROVIDER\",\n      \"preAuthorizationResult\": \"THREE_DS\",\n      \"postAuthorizationResult\": \"ACCEPT\"\n    },\n    \"cvvCheck\": {\n      \"source\": \"PROCESSOR\",\n      \"result\": \"MATCHED\"\n    },\n    \"avsCheck\": {\n      \"source\": \"PROCESSOR\",\n      \"result\": {\n        \"streetAddress\": \"NOT_MATCHED\",\n        \"postalCode\": \"NOT_VERIFIED\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9aa8d264-0819-4f45-882a-927f17327193",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"order-abc\",\n  \"currencyCode\": \"EUR\",\n  \"amount\": 42,\n  \"paymentMethodToken\": \"heNwnqaeRiqvY1UcslfQc3wxNjEzOTIxNjc4\",\n  \"customerId\": \"customer-123\",\n  \"customer\": {\n    \"emailAddress\": \"customer123@gmail.com\"\n  },\n  \"metadata\": {\n    \"productId\": 123,\n    \"merchantId\": \"a13bsd62s\"\n  },\n  \"paymentMethod\": {\n    \"paymentType\": \"SUBSCRIPTION\",\n    \"vaultOnSuccess\": true,\n    \"authorizationType\": \"ESTIMATED\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"PaymentError\",\n    \"description\": \"The payment could not be created.\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04bcab4d-79d8-4be4-8675-f4f1d1df69c6",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"order-abc\",\n  \"currencyCode\": \"EUR\",\n  \"amount\": 42,\n  \"paymentMethodToken\": \"heNwnqaeRiqvY1UcslfQc3wxNjEzOTIxNjc4\",\n  \"customerId\": \"customer-123\",\n  \"customer\": {\n    \"emailAddress\": \"customer123@gmail.com\"\n  },\n  \"metadata\": {\n    \"productId\": 123,\n    \"merchantId\": \"a13bsd62s\"\n  },\n  \"paymentMethod\": {\n    \"paymentType\": \"SUBSCRIPTION\",\n    \"vaultOnSuccess\": true,\n    \"authorizationType\": \"ESTIMATED\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"RequestValidationError\",\n    \"description\": \"Missing fields for payment.\",\n    \"recoverySuggestion\": \"When creating a payment `amount` must either be provided via the Client Session or the Payment request.\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "79db57fc-0310-4000-b0d4-94661021db52",
+          "name": "Authorize a payment",
+          "request": {
+            "name": "Authorize a payment",
+            "description": {
+              "content": "<p/>\n\nManually authorize a payment using a provided processor. This is useful if you want to authorize a payment without a workflow action.\nThe processor merchant ID must be provided which can be found on the [Integrations page](https://dashboard.primer.io/integrations).\nThe processor name is optional but it must be provided if your account has multiple processors configured which share the same merchant IDs.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                ":id",
+                "authorize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) ID of the payment to authorize."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                "key": "X-Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"processor\": {\n    \"processorMerchantId\": \"<string>\",\n    \"name\": \"<string>\"\n  },\n  \"expand\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a7b7504d-ea3c-49f9-ba4b-0e1b5a273245",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of the payment to authorize."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"processor\": {\n    \"processorMerchantId\": \"acct_myprocessor_1234\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"kHdEw9EG\",\n  \"date\": \"2021-02-21T15:36:16.367687\",\n  \"dateUpdated\": \"2021-02-21T15:36:17.133701\",\n  \"status\": \"AUTHORIZED\",\n  \"orderId\": \"order-abc\",\n  \"customerId\": \"customer-123\",\n  \"currencyCode\": \"EUR\",\n  \"amount\": 42,\n  \"cardTokenType\": \"CARD_PAN\",\n  \"paymentMethod\": {\n    \"paymentType\": \"SUBSCRIPTION\",\n    \"paymentMethodToken\": \"heNwnqaeRiqvY1UcslfQc3wxNjEzOTIxNjc4\",\n    \"isVaulted\": true,\n    \"authorizationType\": \"FINAL\",\n    \"descriptor\": \"Purchase: Socks\",\n    \"analyticsId\": \"VtkMDAxZW5isH0HsbbNxZ3lo\",\n    \"paymentMethodType\": \"PAYMENT_CARD\",\n    \"paymentMethodData\": {\n      \"first6Digits\": \"411111\",\n      \"last4Digits\": \"1111\",\n      \"expirationMonth\": \"12\",\n      \"expirationYear\": \"2030\",\n      \"cardholderName\": \"John Biggins\",\n      \"network\": \"Visa\",\n      \"isNetworkTokenized\": false,\n      \"binData\": {\n        \"network\": \"VISA\",\n        \"regionalRestriction\": \"UNKNOWN\",\n        \"accountNumberType\": \"UNKNOWN\",\n        \"accountFundingType\": \"UNKNOWN\",\n        \"prepaidReloadableIndicator\": \"NOT_APPLICABLE\",\n        \"productUsageType\": \"UNKNOWN\",\n        \"productCode\": \"VISA\",\n        \"productName\": \"VISA\"\n      }\n    }\n  },\n  \"processor\": {\n    \"name\": \"MYPROCESSOR\",\n    \"processorMerchantId\": \"acct_myprocessor_1234\",\n    \"amountCaptured\": 42,\n    \"amountRefunded\": 0\n  },\n  \"customer\": {\n    \"email\": \"customer123@gmail.com\"\n  },\n  \"metadata\": {\n    \"productId\": 123,\n    \"merchantId\": \"a13bsd62s\"\n  },\n  \"transactions\": [\n    {\n      \"type\": \"SALE\",\n      \"processorStatus\": \"AUTHORIZED\",\n      \"processorName\": \"MYPROCESSOR\",\n      \"processorMerchantId\": \"acct_myprocessor_1234\",\n      \"processorTransactionId\": \"54c4eb5b3ef8a\",\n      \"cardTokenType\": \"CARD_PAN\"\n    }\n  ],\n  \"riskData\": {\n    \"fraudChecks\": {\n      \"source\": \"FRAUD_PROVIDER\",\n      \"preAuthorizationResult\": \"THREE_DS\",\n      \"postAuthorizationResult\": \"ACCEPT\"\n    },\n    \"cvvCheck\": {\n      \"source\": \"PROCESSOR\",\n      \"result\": \"MATCHED\"\n    },\n    \"avsCheck\": {\n      \"source\": \"PROCESSOR\",\n      \"result\": {\n        \"streetAddress\": \"NOT_MATCHED\",\n        \"postalCode\": \"NOT_VERIFIED\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c79b21d-a9ae-4625-9564-68974f80e299",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of the payment to authorize."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"processor\": {\n    \"processorMerchantId\": \"acct_myprocessor_1234\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"PaymentAlreadyAuthorized\",\n    \"description\": \"The payment has already been authorized\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "731353f8-cc13-4480-b4ca-86972ff9f11e",
+              "name": "Payment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of the payment to authorize."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"processor\": {\n    \"processorMerchantId\": \"acct_myprocessor_1234\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"PaymentNotFoundError\",\n    \"description\": \"The payment could not be found\",\n    \"diagnosticsId\": \"1234567898\",\n    \"validationErrors\": []\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ec44a56-dc1e-4668-a7d7-4dd10c50a884",
+              "name": "Idempotency key already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of the payment to authorize."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"processor\": {\n    \"processorMerchantId\": \"acct_myprocessor_1234\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"IdempotencyKeyAlreadyExists\",\n    \"description\": \"The idempotency key \\\"1234567898\\\" already exists for transaction\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20b4e9c4-0aec-4d6e-9111-7194ded542af",
+              "name": "Request failed validation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of the payment to authorize."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"processor\": {\n    \"processorMerchantId\": \"acct_myprocessor_1234\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"RequestValidationError\",\n    \"description\": \"We were unable to validate your request, please check your payload against /docs/api\",\n    \"diagnosticsId\": \"1234567898\",\n    \"validationErrors\": [\n      {\n        \"model\": \"PaymentAuthorizationAPIRequest\",\n        \"errors\": [\n          {\n            \"path\": \"$.processor.processorMerchantId\",\n            \"description\": \"Value must be a valid string\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fae8f2b6-ade7-4224-93dc-a66350880981",
+          "name": "Capture a payment",
+          "request": {
+            "name": "Capture a payment",
+            "description": {
+              "content": "<p/>\n\nIf you have successfully authorized a payment, you can now\nfully capture, or partially capture funds from the authorized payment, depending\non whether your selected payment processor supports it. The payment will\nbe updated to `SETTLED` or `SETTLING`, depending on the payment method type.\n\nThe payload sent in this capture request is completely optional. If you don't\nsend a payload with the capture request, the full amount that was authorized\nwill be sent for capture. Below are the available payload attributes, which\ngive you more granular control when capturing funds, if you require it.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                ":id",
+                "capture"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) ID of the payment to capture."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                "key": "X-Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<long>\",\n  \"final\": true,\n  \"order\": {\n    \"retailerCountryCode\": \"<string>\"\n  },\n  \"metadata\": \"<object>\",\n  \"expand\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "06a57aea-290c-401d-a287-526fd0147092",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "capture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of the payment to capture."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 42\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"kHdEw9EG\",\n  \"date\": \"2021-02-21T15:36:16.367687\",\n  \"dateUpdated\": \"2021-02-21T15:36:17.133701\",\n  \"status\": \"SETTLED\",\n  \"orderId\": \"order-abc\",\n  \"customerId\": \"customer-123\",\n  \"currencyCode\": \"EUR\",\n  \"amount\": 42,\n  \"cardTokenType\": \"CARD_PAN\",\n  \"paymentMethod\": {\n    \"paymentType\": \"SUBSCRIPTION\",\n    \"paymentMethodToken\": \"heNwnqaeRiqvY1UcslfQc3wxNjEzOTIxNjc4\",\n    \"isVaulted\": true,\n    \"authorizationType\": \"FINAL\",\n    \"descriptor\": \"Purchase: Socks\",\n    \"analyticsId\": \"VtkMDAxZW5isH0HsbbNxZ3lo\",\n    \"paymentMethodType\": \"PAYMENT_CARD\",\n    \"paymentMethodData\": {\n      \"first6Digits\": \"411111\",\n      \"last4Digits\": \"1111\",\n      \"expirationMonth\": \"12\",\n      \"expirationYear\": \"2030\",\n      \"cardholderName\": \"John Biggins\",\n      \"network\": \"Visa\",\n      \"isNetworkTokenized\": false,\n      \"binData\": {\n        \"network\": \"VISA\",\n        \"regionalRestriction\": \"UNKNOWN\",\n        \"accountNumberType\": \"UNKNOWN\",\n        \"accountFundingType\": \"UNKNOWN\",\n        \"prepaidReloadableIndicator\": \"NOT_APPLICABLE\",\n        \"productUsageType\": \"UNKNOWN\",\n        \"productCode\": \"VISA\",\n        \"productName\": \"VISA\"\n      }\n    }\n  },\n  \"processor\": {\n    \"name\": \"STRIPE\",\n    \"processorMerchantId\": \"acct_stripe_1234\",\n    \"amountCaptured\": 42,\n    \"amountRefunded\": 0\n  },\n  \"transactions\": [\n    {\n      \"type\": \"SALE\",\n      \"processorStatus\": \"SETTLED\",\n      \"processorName\": \"STRIPE\",\n      \"processorMerchantId\": \"acct_stripe_1234\",\n      \"processorTransactionId\": \"54c4eb5b3ef8a\",\n      \"cardTokenType\": \"CARD_PAN\"\n    }\n  ],\n  \"customer\": {\n    \"email\": \"customer123@gmail.com\"\n  },\n  \"metadata\": {\n    \"productId\": 123,\n    \"merchantId\": \"a13bsd62s\"\n  },\n  \"riskData\": {\n    \"fraudChecks\": {\n      \"source\": \"FRAUD_PROVIDER\",\n      \"preAuthorizationResult\": \"THREE_DS\",\n      \"postAuthorizationResult\": \"ACCEPT\"\n    },\n    \"cvvCheck\": {\n      \"source\": \"PROCESSOR\",\n      \"result\": \"MATCHED\"\n    },\n    \"avsCheck\": {\n      \"source\": \"PROCESSOR\",\n      \"result\": {\n        \"streetAddress\": \"NOT_MATCHED\",\n        \"postalCode\": \"NOT_VERIFIED\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77cf7791-7869-410d-9e9a-cfd48e29bada",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "capture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of the payment to capture."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 42\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"PaymentError\",\n    \"description\": \"The payment could not be found\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9848907-95b6-4be9-aff1-76110b2681e4",
+              "name": "Idempotency key already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "capture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of the payment to capture."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 42\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"IdempotencyKeyAlreadyExists\",\n    \"description\": \"The idempotency key \\\"1234567898\\\" already exists for transaction\",\n    \"diagnosticsId\": \"1234567898\",\n    \"paymentId\": \"gg3r3tsa3\",\n    \"paymentStatus\": \"SETTLED\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d289ce39-8434-4205-a3c8-d5725cc49aad",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "capture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of the payment to capture."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 42\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"RequestValidationError\",\n    \"description\": \"We were unable to validate your request, please check your payload against /docs/api\",\n    \"diagnosticsId\": \"1234567898\",\n    \"validationErrors\": [\n      {\n        \"model\": \"PaymentCaptureAPIRequest\",\n        \"errors\": [\n          {\n            \"path\": \"$.amount\",\n            \"description\": \"Value must be a valid integer\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "950a177f-dbb6-4396-baf3-c9a4aed575f7",
+          "name": "Cancel a payment",
+          "request": {
+            "name": "Cancel a payment",
+            "description": {
+              "content": "<p/>\n\nProvided the payment has not reached `SETTLED` status, Primer will\nsend a \"void\" request to the payment processor, thereby cancelling the payment\nand releasing the hold on customer funds. Upon success, the payment will transition\nto `CANCELLED`. The payload is optional.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                ":id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) ID of payment to cancel."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                "key": "X-Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"<string>\",\n  \"expand\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3367d9e0-97f4-404b-b2b7-2c008a4e3e69",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment to cancel."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"Customer cancelled order #1234.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"kHdEw9EG\",\n  \"date\": \"2021-02-21T15:36:16.367687\",\n  \"dateUpdated\": \"2021-02-21T15:36:17.133701\",\n  \"status\": \"CANCELLED\",\n  \"orderId\": \"order-abc\",\n  \"customerId\": \"customer-123\",\n  \"currencyCode\": \"EUR\",\n  \"amount\": 42,\n  \"cardTokenType\": \"CARD_PAN\",\n  \"paymentMethod\": {\n    \"paymentType\": \"SUBSCRIPTION\",\n    \"paymentMethodToken\": \"heNwnqaeRiqvY1UcslfQc3wxNjEzOTIxNjc4\",\n    \"isVaulted\": true,\n    \"authorizationType\": \"FINAL\",\n    \"descriptor\": \"Purchase: Socks\",\n    \"analyticsId\": \"VtkMDAxZW5isH0HsbbNxZ3lo\",\n    \"paymentMethodType\": \"PAYMENT_CARD\",\n    \"paymentMethodData\": {\n      \"first6Digits\": \"411111\",\n      \"last4Digits\": \"1111\",\n      \"expirationMonth\": \"12\",\n      \"expirationYear\": \"2030\",\n      \"cardholderName\": \"John Biggins\",\n      \"network\": \"Visa\",\n      \"isNetworkTokenized\": false,\n      \"binData\": {\n        \"network\": \"VISA\",\n        \"regionalRestriction\": \"UNKNOWN\",\n        \"accountNumberType\": \"UNKNOWN\",\n        \"accountFundingType\": \"UNKNOWN\",\n        \"prepaidReloadableIndicator\": \"NOT_APPLICABLE\",\n        \"productUsageType\": \"UNKNOWN\",\n        \"productCode\": \"VISA\",\n        \"productName\": \"VISA\"\n      }\n    }\n  },\n  \"processor\": {\n    \"name\": \"STRIPE\",\n    \"processorMerchantId\": \"acct_stripe_1234\",\n    \"amountCaptured\": 0,\n    \"amountRefunded\": 0\n  },\n  \"transactions\": [\n    {\n      \"type\": \"SALE\",\n      \"processorStatus\": \"CANCELLED\",\n      \"processorName\": \"STRIPE\",\n      \"processorMerchantId\": \"acct_stripe_1234\",\n      \"processorTransactionId\": \"54c4eb5b3ef8a\",\n      \"cardTokenType\": \"CARD_PAN\",\n      \"reason\": \"Customer returned order #1234.\"\n    }\n  ],\n  \"customer\": {\n    \"email\": \"customer123@gmail.com\"\n  },\n  \"metadata\": {\n    \"productId\": 123,\n    \"merchantId\": \"a13bsd62s\"\n  },\n  \"riskData\": {\n    \"fraudChecks\": {\n      \"source\": \"FRAUD_PROVIDER\",\n      \"preAuthorizationResult\": \"THREE_DS\",\n      \"postAuthorizationResult\": \"ACCEPT\"\n    },\n    \"cvvCheck\": {\n      \"source\": \"PROCESSOR\",\n      \"result\": \"MATCHED\"\n    },\n    \"avsCheck\": {\n      \"source\": \"PROCESSOR\",\n      \"result\": {\n        \"streetAddress\": \"NOT_MATCHED\",\n        \"postalCode\": \"NOT_VERIFIED\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d90ca6e0-f3cf-478a-a7f8-c83abfc1b5ce",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment to cancel."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"Customer cancelled order #1234.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"PaymentError\",\n    \"description\": \"The payment could not be found\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51e5a465-78a4-4651-9a82-9f0c39d76099",
+              "name": "Idempotency key already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment to cancel."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"Customer cancelled order #1234.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"IdempotencyKeyAlreadyExists\",\n    \"description\": \"The idempotency key \\\"1234567898\\\" already exists for transaction\",\n    \"diagnosticsId\": \"1234567898\",\n    \"paymentId\": \"gg3r3tsa3\",\n    \"paymentStatus\": \"SETTLED\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6bd712e8-7bb8-4d37-81a8-cd057815a682",
+          "name": "Refund a payment",
+          "request": {
+            "name": "Refund a payment",
+            "description": {
+              "content": "<p/>\n\nIssue a full or partial refund for a previously settled payment. By default, the full amount\nwill be refunded unless a specific amount is provided for a partial refund.\n\nIf the payment was partially captured multiple times, you can specify which capture to\nrefund by using the transaction event ID. Refer to the `transactions.events` array in the\npayment object to find available transaction event IDs (when the appropriate `expand`\nparameter is passed).\n\nWhen specifying a transaction event ID, the refund amount should not exceed the amount\ncaptured in that event. If no refund amount is provided, it defaults to the amount captured\nin that specific event.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                ":id",
+                "refund"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) ID of payment to refund."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                "key": "X-Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<long>\",\n  \"orderId\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"transactionEventId\": \"<uuid>\",\n  \"expand\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "43375447-f8ce-48a1-88f7-349a428f4f1f",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment to refund."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"kHdEw9EG\",\n  \"date\": \"2021-02-21T15:36:16.367687\",\n  \"dateUpdated\": \"2021-02-21T15:36:17.133701\",\n  \"status\": \"SETTLED\",\n  \"orderId\": \"order-abc\",\n  \"customerId\": \"customer-123\",\n  \"currencyCode\": \"EUR\",\n  \"amount\": 42,\n  \"cardTokenType\": \"CARD_PAN\",\n  \"paymentMethod\": {\n    \"paymentType\": \"SUBSCRIPTION\",\n    \"paymentMethodToken\": \"heNwnqaeRiqvY1UcslfQc3wxNjEzOTIxNjc4\",\n    \"isVaulted\": true,\n    \"authorizationType\": \"FINAL\",\n    \"descriptor\": \"Purchase: Socks\",\n    \"analyticsId\": \"VtkMDAxZW5isH0HsbbNxZ3lo\",\n    \"paymentMethodType\": \"PAYMENT_CARD\",\n    \"paymentMethodData\": {\n      \"first6Digits\": \"411111\",\n      \"last4Digits\": \"1111\",\n      \"expirationMonth\": \"12\",\n      \"expirationYear\": \"2030\",\n      \"cardholderName\": \"John Biggins\",\n      \"network\": \"Visa\",\n      \"isNetworkTokenized\": false,\n      \"binData\": {\n        \"network\": \"VISA\",\n        \"regionalRestriction\": \"UNKNOWN\",\n        \"accountNumberType\": \"UNKNOWN\",\n        \"accountFundingType\": \"UNKNOWN\",\n        \"prepaidReloadableIndicator\": \"NOT_APPLICABLE\",\n        \"productUsageType\": \"UNKNOWN\",\n        \"productCode\": \"VISA\",\n        \"productName\": \"VISA\"\n      }\n    }\n  },\n  \"processor\": {\n    \"name\": \"STRIPE\",\n    \"processorMerchantId\": \"acct_stripe_1234\",\n    \"amountCaptured\": 42,\n    \"amountRefunded\": 42\n  },\n  \"transactions\": [\n    {\n      \"type\": \"SALE\",\n      \"processorStatus\": \"SETTLED\",\n      \"processorName\": \"STRIPE\",\n      \"processorMerchantId\": \"acct_stripe_1234\",\n      \"processorTransactionId\": \"54c4eb5b3ef8a\",\n      \"cardTokenType\": \"CARD_PAN\"\n    },\n    {\n      \"type\": \"REFUND\",\n      \"processorStatus\": \"SETTLED\",\n      \"processorName\": \"STRIPE\",\n      \"processorMerchantId\": \"acct_stripe_1234\",\n      \"processorTransactionId\": \"54c4eb5b3ef8a\",\n      \"reason\": \"Customer returned order #1234.\"\n    }\n  ],\n  \"customer\": {\n    \"email\": \"customer123@gmail.com\"\n  },\n  \"metadata\": {\n    \"productId\": 123,\n    \"merchantId\": \"a13bsd62s\"\n  },\n  \"riskData\": {\n    \"fraudChecks\": {\n      \"source\": \"FRAUD_PROVIDER\",\n      \"preAuthorizationResult\": \"THREE_DS\",\n      \"postAuthorizationResult\": \"ACCEPT\"\n    },\n    \"cvvCheck\": {\n      \"source\": \"PROCESSOR\",\n      \"result\": \"MATCHED\"\n    },\n    \"avsCheck\": {\n      \"source\": \"PROCESSOR\",\n      \"result\": {\n        \"streetAddress\": \"NOT_MATCHED\",\n        \"postalCode\": \"NOT_VERIFIED\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af997078-c090-4138-8830-523efb6ecaa8",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment to refund."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"PaymentError\",\n    \"description\": \"The payment could not be found\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80903a88-a67c-4820-b9b0-1a51a1fc2230",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment to refund."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"IdempotencyKeyAlreadyExists\",\n    \"description\": \"The idempotency key \\\"1234567898\\\" already exists for transaction\",\n    \"diagnosticsId\": \"1234567898\",\n    \"paymentId\": \"gg3r3tsa3\",\n    \"paymentStatus\": \"SETTLED\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28eb8cdc-f48a-4763-ab29-49f4501d2fa1",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment to refund."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"RequestValidationError\",\n    \"description\": \"We were unable to validate your request, please check your payload against /docs/api\",\n    \"diagnosticsId\": \"1234567898\",\n    \"validationErrors\": [\n      {\n        \"model\": \"PaymentCaptureAPIRequest\",\n        \"errors\": [\n          {\n            \"path\": \"$.amount\",\n            \"description\": \"Value must be a valid integer\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e43426c8-de6a-4814-b186-7fb284e740e9",
+          "name": "Resume a payment",
+          "request": {
+            "name": "Resume a payment",
+            "description": {
+              "content": "<p/>\n\nResume a payment's workflow execution from a paused state. This\nis usually required when a Workflow was paused in order to get further information\nfrom the customer, or when waiting for an asynchronous response from a third\nparty connection.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                ":id",
+                "resume"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) ID of payment to resume."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resumeToken\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "73a902d9-17de-461a-a349-e45ab4a6139a",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "resume"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment to resume."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"resumeToken\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"kHdEw9EG\",\n  \"date\": \"2021-02-21T15:36:16.367687\",\n  \"dateUpdated\": \"2021-02-21T15:36:17.133701\",\n  \"status\": \"AUTHORIZED\",\n  \"orderId\": \"order-abc\",\n  \"customerId\": \"customer-123\",\n  \"currencyCode\": \"EUR\",\n  \"amount\": 42,\n  \"cardTokenType\": \"CARD_PAN\",\n  \"paymentMethod\": {\n    \"paymentType\": \"SUBSCRIPTION\",\n    \"paymentMethodToken\": \"heNwnqaeRiqvY1UcslfQc3wxNjEzOTIxNjc4\",\n    \"isVaulted\": true,\n    \"authorizationType\": \"FINAL\",\n    \"descriptor\": \"Purchase: Socks\",\n    \"analyticsId\": \"VtkMDAxZW5isH0HsbbNxZ3lo\",\n    \"paymentMethodType\": \"PAYMENT_CARD\",\n    \"paymentMethodData\": {\n      \"first6Digits\": \"411111\",\n      \"last4Digits\": \"1111\",\n      \"expirationMonth\": \"12\",\n      \"expirationYear\": \"2030\",\n      \"cardholderName\": \"John Biggins\",\n      \"network\": \"Visa\",\n      \"isNetworkTokenized\": false,\n      \"binData\": {\n        \"network\": \"VISA\",\n        \"regionalRestriction\": \"UNKNOWN\",\n        \"accountNumberType\": \"UNKNOWN\",\n        \"accountFundingType\": \"UNKNOWN\",\n        \"prepaidReloadableIndicator\": \"NOT_APPLICABLE\",\n        \"productUsageType\": \"UNKNOWN\",\n        \"productCode\": \"VISA\",\n        \"productName\": \"VISA\"\n      }\n    }\n  },\n  \"processor\": {\n    \"name\": \"STRIPE\",\n    \"processorMerchantId\": \"acct_stripe_1234\",\n    \"amountCaptured\": 0,\n    \"amountRefunded\": 0\n  },\n  \"transactions\": [\n    {\n      \"type\": \"SALE\",\n      \"processorStatus\": \"AUTHORIZED\",\n      \"processorName\": \"STRIPE\",\n      \"processorMerchantId\": \"acct_stripe_1234\",\n      \"processorTransactionId\": \"54c4eb5b3ef8a\",\n      \"cardTokenType\": \"CARD_PAN\"\n    }\n  ],\n  \"customer\": {\n    \"email\": \"customer123@gmail.com\"\n  },\n  \"metadata\": {\n    \"productId\": 123,\n    \"merchantId\": \"a13bsd62s\"\n  },\n  \"riskData\": {\n    \"fraudChecks\": {\n      \"source\": \"FRAUD_PROVIDER\",\n      \"preAuthorizationResult\": \"THREE_DS\",\n      \"postAuthorizationResult\": \"ACCEPT\"\n    },\n    \"cvvCheck\": {\n      \"source\": \"PROCESSOR\",\n      \"result\": \"MATCHED\"\n    },\n    \"avsCheck\": {\n      \"source\": \"PROCESSOR\",\n      \"result\": {\n        \"streetAddress\": \"NOT_MATCHED\",\n        \"postalCode\": \"NOT_VERIFIED\",\n        \"responses\": null\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c8de143-5a84-44fe-93d2-39680568e627",
+              "name": "Accepted for Processing Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "resume"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment to resume."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"resumeToken\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"description\": \"The payment was not processed in time. Processing will continue asynchronously.\",\n    \"diagnosticsId\": \"1234567898\",\n    \"errorId\": \"NoActionsToHandle\",\n    \"recoverySuggestion\": \"Use GET /payments/:paymentId to get the state of the payment\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c5f4e8c-5bda-4f8f-98ef-d6ab0f6e53c8",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "resume"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment to resume."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"resumeToken\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"PaymentError\",\n    \"description\": \"The payment could not be found\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a17c456-3e16-4075-832c-77f02e0c5c58",
+          "name": "Adjust authorized amount",
+          "request": {
+            "name": "Adjust authorized amount",
+            "description": {
+              "content": "<p/>\n\nAdjust authorized amount. This is only possible if `authorizationType` was set to \n`ESTIMATED` when the payment was created, and the mechanism is supported by the payment method.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                ":id",
+                "adjust-authorization"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) ID of payment for adjusting authorization."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                "key": "X-Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<long>\",\n  \"expand\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "784285b1-0f0d-4982-9f85-e5300bee849d",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "adjust-authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment for adjusting authorization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"expand\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"kHdEw9EG\",\n  \"date\": \"2021-02-21T15:36:16.367687\",\n  \"dateUpdated\": \"2021-02-21T15:36:17.133701\",\n  \"status\": \"AUTHORIZED\",\n  \"orderId\": \"order-abc\",\n  \"customerId\": \"customer-123\",\n  \"currencyCode\": \"EUR\",\n  \"amount\": 42,\n  \"cardTokenType\": \"CARD_PAN\",\n  \"paymentMethod\": {\n    \"paymentMethodToken\": \"heNwnqaeRiqvY1UcslfQc3wxNjEzOTIxNjc4\",\n    \"authorizationType\": \"ESTIMATED\",\n    \"isVaulted\": true,\n    \"descriptor\": \"Purchase: Socks\",\n    \"analyticsId\": \"VtkMDAxZW5isH0HsbbNxZ3lo\",\n    \"paymentMethodType\": \"PAYMENT_CARD\",\n    \"paymentMethodData\": {\n      \"first6Digits\": \"411111\",\n      \"last4Digits\": \"1111\",\n      \"expirationMonth\": \"12\",\n      \"expirationYear\": \"2030\",\n      \"cardholderName\": \"John Biggins\",\n      \"network\": \"Visa\",\n      \"isNetworkTokenized\": false,\n      \"binData\": {\n        \"network\": \"VISA\",\n        \"regionalRestriction\": \"UNKNOWN\",\n        \"accountNumberType\": \"UNKNOWN\",\n        \"accountFundingType\": \"UNKNOWN\",\n        \"prepaidReloadableIndicator\": \"NOT_APPLICABLE\",\n        \"productUsageType\": \"UNKNOWN\",\n        \"productCode\": \"VISA\",\n        \"productName\": \"VISA\"\n      }\n    }\n  },\n  \"processor\": {\n    \"name\": \"STRIPE\",\n    \"processorMerchantId\": \"acct_stripe_1234\",\n    \"amountCaptured\": 0,\n    \"amountRefunded\": 0\n  },\n  \"transactions\": [\n    {\n      \"type\": \"SALE\",\n      \"processorStatus\": \"AUTHORIZED\",\n      \"processorName\": \"STRIPE\",\n      \"processorMerchantId\": \"acct_stripe_1234\",\n      \"processorTransactionId\": \"54c4eb5b3ef8a\",\n      \"cardTokenType\": \"CARD_PAN\"\n    }\n  ],\n  \"customer\": {\n    \"email\": \"customer123@gmail.com\"\n  },\n  \"metadata\": {\n    \"productId\": 123,\n    \"merchantId\": \"a13bsd62s\"\n  },\n  \"riskData\": {\n    \"fraudChecks\": {\n      \"source\": \"FRAUD_PROVIDER\",\n      \"preAuthorizationResult\": \"THREE_DS\",\n      \"postAuthorizationResult\": \"ACCEPT\"\n    },\n    \"cvvCheck\": {\n      \"source\": \"PROCESSOR\",\n      \"result\": \"MATCHED\"\n    },\n    \"avsCheck\": {\n      \"source\": \"PROCESSOR\",\n      \"result\": {\n        \"streetAddress\": \"NOT_MATCHED\",\n        \"postalCode\": \"NOT_VERIFIED\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5266096-6610-4b03-9d0e-adae1367390b",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "adjust-authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment for adjusting authorization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"expand\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"IncorrectPaymentAuthorizationType\",\n    \"description\": \"Adjust authorization is only allowed on payments where authorizationType is set to estimated and not final.\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d1fda76-7588-490b-84e9-b19aac75b17f",
+              "name": "Payment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "adjust-authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment for adjusting authorization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"expand\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"EntityNotFound\",\n    \"description\": \"No matching Payment could be found.\",\n    \"diagnosticsId\": \"1234567898\",\n    \"validationErrors\": []\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d3b3dce-683f-405c-8a24-66168554be31",
+              "name": "Idempotency key already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "adjust-authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment for adjusting authorization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"expand\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"IdempotencyKeyAlreadyExists\",\n    \"description\": \"The idempotency key \\\"1234567898\\\" already exists for transaction\",\n    \"diagnosticsId\": \"1234567898\",\n    \"paymentId\": \"gg3r3tsa3\",\n    \"paymentStatus\": \"SETTLED\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b273cc3-6f51-46e3-bca7-c35b2f8b81ac",
+              "name": "Invalid payload",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id",
+                    "adjust-authorization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment for adjusting authorization."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key to make the request idempotent. Enables a safe retry of a request without risking the user being charged or refunded multiple times. The idempotency key must be generated by the client and needs to be unique for every new request.",
+                    "key": "X-Idempotency-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"expand\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"string\",\n    \"description\": \"string\",\n    \"recoverySuggestion\": \"string\",\n    \"diagnosticsId\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a8a29369-b52a-4cc1-bbe5-00819e9dd8e3",
+          "name": "Get a payment",
+          "request": {
+            "name": "Get a payment",
+            "description": {
+              "content": "<p/>\n\nRetrieve a payment by its ID.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) ID of payment to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e5d43875-3c67-4240-acfb-2f48bed752dc",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"kHdEw9EG\",\n  \"date\": \"2021-02-21T15:36:16.367687\",\n  \"dateUpdated\": \"2021-02-21T15:36:17.133701\",\n  \"status\": \"AUTHORIZED\",\n  \"orderId\": \"order-abc\",\n  \"customerId\": \"customer-123\",\n  \"currencyCode\": \"EUR\",\n  \"amount\": 42,\n  \"cardTokenType\": \"CARD_PAN\",\n  \"paymentMethod\": {\n    \"paymentType\": \"SUBSCRIPTION\",\n    \"paymentMethodToken\": \"heNwnqaeRiqvY1UcslfQc3wxNjEzOTIxNjc4\",\n    \"isVaulted\": true,\n    \"authorizationType\": \"FINAL\",\n    \"descriptor\": \"Purchase: Socks\",\n    \"analyticsId\": \"VtkMDAxZW5isH0HsbbNxZ3lo\",\n    \"paymentMethodType\": \"PAYMENT_CARD\",\n    \"paymentMethodData\": {\n      \"first6Digits\": \"411111\",\n      \"last4Digits\": \"1111\",\n      \"expirationMonth\": \"12\",\n      \"expirationYear\": \"2030\",\n      \"cardholderName\": \"John Biggins\",\n      \"network\": \"Visa\",\n      \"isNetworkTokenized\": false,\n      \"binData\": {\n        \"network\": \"VISA\",\n        \"regionalRestriction\": \"UNKNOWN\",\n        \"accountNumberType\": \"UNKNOWN\",\n        \"accountFundingType\": \"UNKNOWN\",\n        \"prepaidReloadableIndicator\": \"NOT_APPLICABLE\",\n        \"productUsageType\": \"UNKNOWN\",\n        \"productCode\": \"VISA\",\n        \"productName\": \"VISA\"\n      }\n    }\n  },\n  \"processor\": {\n    \"name\": \"STRIPE\",\n    \"processorMerchantId\": \"acct_stripe_1234\",\n    \"amountCaptured\": 0,\n    \"amountRefunded\": 0\n  },\n  \"transactions\": [\n    {\n      \"type\": \"SALE\",\n      \"processorStatus\": \"AUTHORIZED\",\n      \"processorName\": \"STRIPE\",\n      \"processorMerchantId\": \"acct_stripe_1234\",\n      \"processorTransactionId\": \"54c4eb5b3ef8a\",\n      \"cardTokenType\": \"CARD_PAN\"\n    }\n  ],\n  \"customer\": {\n    \"email\": \"customer123@gmail.com\"\n  },\n  \"metadata\": {\n    \"productId\": 123,\n    \"merchantId\": \"a13bsd62s\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54a569de-3d9b-445e-b861-4fdeac84bb5e",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) ID of payment to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"PaymentError\",\n    \"description\": \"The payment could not be found\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.primer.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d66554d8-a561-42e1-ad12-5e6e7c80c061",
+    "name": "Primer Client Session API Payments API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API enforces a timeout of 90 seconds for all requests. A 504 response indicates a timeout occurred.",
+      "type": "text/plain"
+    }
+  }
+}

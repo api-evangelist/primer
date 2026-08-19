@@ -1,0 +1,751 @@
+{
+  "item": [
+    {
+      "id": "4815e683-96df-45cd-bd19-d3daaa822f51",
+      "name": "Payment Methods API",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d8c77610-0334-4455-ac51-8f0b2cc0c6eb",
+          "name": "Save a payment method token",
+          "request": {
+            "name": "Save a payment method token",
+            "description": {
+              "content": "<p/>\n\nSave a `SINGLE_USE` payment method token so it can be used\nagain later.\n\nIf you try to vault an already vaulted token, you will get the existing vaulted token back.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payment-instruments",
+                ":paymentMethodToken",
+                "vault"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentMethodToken",
+                  "description": "(Required) Payment method token to store."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2fc6fa26-fe29-4beb-8533-f96b3644ef01",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payment-instruments",
+                    ":paymentMethodToken",
+                    "vault"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentMethodToken",
+                      "description": "(Required) Payment method token to store."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"2021-03-01T12:00:00.123456\",\n  \"token\": \"_xlXlmBcTnuFxc2N3HAI73wxNjE1NTU5ODY5\",\n  \"tokenType\": \"MULTI_USE\",\n  \"analyticsId\": \"vuXhpZouWxaZpRZ-x_brZmtT\",\n  \"paymentMethodType\": \"PAYMENT_CARD\",\n  \"payment_method_data\": {\n    \"last4Digits\": \"1111\",\n    \"expirationMonth\": \"12\",\n    \"expirationYear\": \"2030\",\n    \"cardholderName\": \"John Biggins\",\n    \"network\": \"Visa\",\n    \"networkTransactionId\": 20210628190752,\n    \"accountFundingType\": \"DEBIT\"\n  },\n  \"customerId\": \"customer-123\",\n  \"description\": \"My first card\",\n  \"deleted\": false,\n  \"default\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3793ada-bd14-43da-9000-ff0454d48435",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payment-instruments",
+                    ":paymentMethodToken",
+                    "vault"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentMethodToken",
+                      "description": "(Required) Payment method token to store."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"FailedVerification\",\n    \"description\": \"Payment method could not be verified\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c2a2f39-463b-4cea-be1c-6b7a5ffcaf10",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payment-instruments",
+                    ":paymentMethodToken",
+                    "vault"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentMethodToken",
+                      "description": "(Required) Payment method token to store."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"RequestValidationError\",\n    \"description\": \"We were unable to validate your request, please check your payload against /docs/api\",\n    \"diagnosticsId\": \"1234567898\",\n    \"validationErrors\": [\n      {\n        \"model\": \"VaultPaymentInstrumentAPIRequest\",\n        \"errors\": [\n          {\n            \"path\": \"$.customerId\",\n            \"description\": \"Ensure this value has at least 1 characters\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1db111f8-6770-4911-812f-5c4b2389cce6",
+          "name": "List saved payment methods",
+          "request": {
+            "name": "List saved payment methods",
+            "description": {
+              "content": "Retrieve a list of stored payment methods for a customer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payment-instruments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "customer_id",
+                  "value": "<string>",
+                  "description": "(Required) Return payment methods for this customer ID."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b128cf74-6fce-45bb-bfcb-5edc92630145",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payment-instruments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "customer_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"createdAt\": \"2021-03-01T12:00:00.123456\",\n      \"token\": \"_xlXlmBcTnuFxc2N3HAI73wxNjE1NTU5ODY5\",\n      \"tokenType\": \"MULTI_USE\",\n      \"analyticsId\": \"vuXhpZouWxaZpRZ-x_brZmtT\",\n      \"paymentMethodType\": \"PAYMENT_CARD\",\n      \"payment_method_data\": {\n        \"last4Digits\": \"1111\",\n        \"expirationMonth\": \"12\",\n        \"expirationYear\": \"2030\",\n        \"cardholderName\": \"John Biggins\",\n        \"network\": \"Visa\",\n        \"networkTransactionId\": 20210628190752,\n        \"accountFundingType\": \"DEBIT\"\n      },\n      \"customerId\": \"customer-123\",\n      \"description\": \"My first card\",\n      \"deleted\": false,\n      \"default\": true\n    },\n    {\n      \"createdAt\": \"2021-03-01T12:00:00.123456\",\n      \"token\": \"_xlXlmBcTnuFxc2N3HAI73wxNjE1NTU5ODY5\",\n      \"tokenType\": \"MULTI_USE\",\n      \"analyticsId\": \"vuXhpZouWxaZpRZ-x_brZmtT\",\n      \"paymentMethodType\": \"PAYMENT_CARD\",\n      \"payment_method_data\": {\n        \"last4Digits\": \"1111\",\n        \"expirationMonth\": \"12\",\n        \"expirationYear\": \"2030\",\n        \"cardholderName\": \"John Biggins\",\n        \"network\": \"Visa\",\n        \"networkTransactionId\": 20210628190752,\n        \"accountFundingType\": \"DEBIT\"\n      },\n      \"customerId\": \"customer-123\",\n      \"description\": \"My first card\",\n      \"deleted\": false,\n      \"default\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e5590689-6b01-42b8-b678-e8d3046cabd9",
+          "name": "Delete a saved payment method",
+          "request": {
+            "name": "Delete a saved payment method",
+            "description": {
+              "content": "Delete a saved payment method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payment-instruments",
+                ":paymentMethodToken"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentMethodToken",
+                  "description": "(Required) Saved payment method token to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "989302f4-31ce-4e93-b37e-d80bda3cda4a",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payment-instruments",
+                    ":paymentMethodToken"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentMethodToken",
+                      "description": "(Required) Saved payment method token to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"2021-03-01T12:00:00.123456\",\n  \"token\": \"_xlXlmBcTnuFxc2N3HAI73wxNjE1NTU5ODY5\",\n  \"tokenType\": \"MULTI_USE\",\n  \"analyticsId\": \"vuXhpZouWxaZpRZ-x_brZmtT\",\n  \"paymentMethodType\": \"PAYMENT_CARD\",\n  \"payment_method_data\": {\n    \"last4Digits\": \"1111\",\n    \"expirationMonth\": \"12\",\n    \"expirationYear\": \"2030\",\n    \"cardholderName\": \"John Biggins\",\n    \"network\": \"Visa\",\n    \"networkTransactionId\": 20210628190752,\n    \"accountFundingType\": \"DEBIT\"\n  },\n  \"customerId\": \"customer-123\",\n  \"description\": \"My first card\",\n  \"deleted\": false,\n  \"default\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ed98696-ee9f-4983-b4f1-9454813547c4",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payment-instruments",
+                    ":paymentMethodToken"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentMethodToken",
+                      "description": "(Required) Saved payment method token to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"InvalidPaymentInstrumentToken\",\n    \"description\": \"Invalid payment instrument.\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5348a6d6-a4ec-4bdc-baa6-180a42e33826",
+          "name": "Update the default saved payment method",
+          "request": {
+            "name": "Update the default saved payment method",
+            "description": {
+              "content": "Update a saved payment method to be the default stored payment method for a customer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payment-instruments",
+                ":paymentMethodToken",
+                "default"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentMethodToken",
+                  "description": "(Required) Saved payment method token to set to default."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                "key": "X-API-VERSION",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d2e02d57-4d6e-4d32-bdcc-2c61beb54f8b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payment-instruments",
+                    ":paymentMethodToken",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentMethodToken",
+                      "description": "(Required) Saved payment method token to set to default."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"2021-03-01T12:00:00.123456\",\n  \"token\": \"_xlXlmBcTnuFxc2N3HAI73wxNjE1NTU5ODY5\",\n  \"tokenType\": \"MULTI_USE\",\n  \"analyticsId\": \"vuXhpZouWxaZpRZ-x_brZmtT\",\n  \"paymentMethodType\": \"PAYMENT_CARD\",\n  \"payment_method_data\": {\n    \"last4Digits\": \"1111\",\n    \"expirationMonth\": \"12\",\n    \"expirationYear\": \"2030\",\n    \"cardholderName\": \"John Biggins\",\n    \"network\": \"Visa\",\n    \"networkTransactionId\": 20210628190752,\n    \"accountFundingType\": \"DEBIT\"\n  },\n  \"customerId\": \"customer-123\",\n  \"description\": \"My first card\",\n  \"deleted\": false,\n  \"default\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35eb1e70-577c-42ed-9bd1-85261fefab13",
+              "name": "Error Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payment-instruments",
+                    ":paymentMethodToken",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentMethodToken",
+                      "description": "(Required) Saved payment method token to set to default."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Specifies the version of the API to use. This must be set to `2.4`.",
+                    "key": "X-API-VERSION",
+                    "value": "2.4"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"errorId\": \"InvalidPaymentInstrumentToken\",\n    \"description\": \"Invalid payment instrument.\",\n    \"diagnosticsId\": \"1234567898\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.primer.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fc70aa93-ef46-493f-aa92-a197df18dc70",
+    "name": "Primer Client Session API Payment Methods API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API enforces a timeout of 90 seconds for all requests. A 504 response indicates a timeout occurred.",
+      "type": "text/plain"
+    }
+  }
+}

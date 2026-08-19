@@ -1,0 +1,396 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Primer Client Session API Payments API API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payments API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search & list payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.primer.io/payments",
+            "headers": [
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments by their status."
+              },
+              {
+                "name": "payment_method_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments by their payment method type."
+              },
+              {
+                "name": "processor",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments by their payment processor."
+              },
+              {
+                "name": "currency_code",
+                "value": "",
+                "type": "query",
+                "description": "Filter payments by their payment currency.\ne.g. use `USD` for US dollars.\n"
+              },
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query",
+                "description": "Return only payments from this date (inclusive)."
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query",
+                "description": "Return only payments up to this date (inclusive)."
+              },
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "query",
+                "description": "Return payments related to this order ID."
+              },
+              {
+                "name": "min_amount",
+                "value": "",
+                "type": "query",
+                "description": "Return payments of this amount minimum (inclusive)."
+              },
+              {
+                "name": "max_amount",
+                "value": "",
+                "type": "query",
+                "description": "Return payments of this amount max (inclusive)."
+              },
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "query",
+                "description": "ID of the customer that has made the payment."
+              },
+              {
+                "name": "merchant_id",
+                "value": "",
+                "type": "query",
+                "description": "ID of the merchant involved in the payment."
+              },
+              {
+                "name": "customer_email_address",
+                "value": "",
+                "type": "query",
+                "description": "Email of the customer that has made the payment."
+              },
+              {
+                "name": "last_4_digits",
+                "value": "",
+                "type": "query",
+                "description": "Last 4 digits of the card used for the payment."
+              },
+              {
+                "name": "paypal_email",
+                "value": "",
+                "type": "query",
+                "description": "Paypal email address associated with the payment."
+              },
+              {
+                "name": "klarna_email",
+                "value": "",
+                "type": "query",
+                "description": "Klarna email address associated with the payment."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of payments to return per page."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "If results are paginated, pass the `nextCursor` to access next page."
+              }
+            ]
+          },
+          "docs": "<p/>\n\nRetrieve a list of your payments.\n\nResults are paginated, they will only return up to 100 payments maximum.\nTo access the next page of result, set the `cursor` query parameter to the value of `nextCursor` in\nyour current result payload. Use `prevCursor` to go back to the previous page.\n\n**Note:** this endpoint returns a list of\nsummarized payments. Not all payments attributes are present. You can use\nthe query parameters to filter payments. You can separate multiple query parameters with t"
+        },
+        {
+          "info": {
+            "name": "Create a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.primer.io/payments",
+            "headers": [
+              {
+                "name": "X-Idempotency-Key",
+                "value": ""
+              },
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<p/>\n\nCreate and authorize a payment for a given customer order. You\nshould provide a payment method token here to avoid PCI implications.\n\nIf only a payment method token is passed, the values passed with the Client Session is used to determine the amount, currency etc.\nNote: `amount`, `currencyCode` and `orderId` are required during payment creation. Make sure to pass these fields when creating a client session, or if not yet available, when creating a payment.\n\nAll fields provided on this requ"
+        },
+        {
+          "info": {
+            "name": "Authorize a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.primer.io/payments/:id/authorize",
+            "headers": [
+              {
+                "name": "X-Idempotency-Key",
+                "value": ""
+              },
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the payment to authorize."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<p/>\n\nManually authorize a payment using a provided processor. This is useful if you want to authorize a payment without a workflow action.\nThe processor merchant ID must be provided which can be found on the [Integrations page](https://dashboard.primer.io/integrations).\nThe processor name is optional but it must be provided if your account has multiple processors configured which share the same merchant IDs.\n"
+        },
+        {
+          "info": {
+            "name": "Capture a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.primer.io/payments/:id/capture",
+            "headers": [
+              {
+                "name": "X-Idempotency-Key",
+                "value": ""
+              },
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the payment to capture."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<p/>\n\nIf you have successfully authorized a payment, you can now\nfully capture, or partially capture funds from the authorized payment, depending\non whether your selected payment processor supports it. The payment will\nbe updated to `SETTLED` or `SETTLING`, depending on the payment method type.\n\nThe payload sent in this capture request is completely optional. If you don't\nsend a payload with the capture request, the full amount that was authorized\nwill be sent for capture. Below are the availabl"
+        },
+        {
+          "info": {
+            "name": "Cancel a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.primer.io/payments/:id/cancel",
+            "headers": [
+              {
+                "name": "X-Idempotency-Key",
+                "value": ""
+              },
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of payment to cancel."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<p/>\n\nProvided the payment has not reached `SETTLED` status, Primer will\nsend a \"void\" request to the payment processor, thereby cancelling the payment\nand releasing the hold on customer funds. Upon success, the payment will transition\nto `CANCELLED`. The payload is optional.\n"
+        },
+        {
+          "info": {
+            "name": "Refund a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.primer.io/payments/:id/refund",
+            "headers": [
+              {
+                "name": "X-Idempotency-Key",
+                "value": ""
+              },
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of payment to refund."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<p/>\n\nIssue a full or partial refund for a previously settled payment. By default, the full amount\nwill be refunded unless a specific amount is provided for a partial refund.\n\nIf the payment was partially captured multiple times, you can specify which capture to\nrefund by using the transaction event ID. Refer to the `transactions.events` array in the\npayment object to find available transaction event IDs (when the appropriate `expand`\nparameter is passed).\n\nWhen specifying a transaction event ID"
+        },
+        {
+          "info": {
+            "name": "Resume a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.primer.io/payments/:id/resume",
+            "headers": [
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of payment to resume."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<p/>\n\nResume a payment's workflow execution from a paused state. This\nis usually required when a Workflow was paused in order to get further information\nfrom the customer, or when waiting for an asynchronous response from a third\nparty connection.\n"
+        },
+        {
+          "info": {
+            "name": "Adjust authorized amount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.primer.io/payments/:id/adjust-authorization",
+            "headers": [
+              {
+                "name": "X-Idempotency-Key",
+                "value": ""
+              },
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of payment for adjusting authorization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<p/>\n\nAdjust authorized amount. This is only possible if `authorizationType` was set to \n`ESTIMATED` when the payment was created, and the mechanism is supported by the payment method.\n"
+        },
+        {
+          "info": {
+            "name": "Get a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.primer.io/payments/:id",
+            "headers": [
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of payment to retrieve."
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "<p/>\n\nRetrieve a payment by its ID.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

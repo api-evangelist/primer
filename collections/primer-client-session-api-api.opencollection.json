@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Primer Client Session API API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Client Session API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a client session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.primer.io/client-session",
+            "headers": [
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientToken",
+                "value": "",
+                "type": "query",
+                "description": "Client token corresponding to the client session to retrieve"
+              }
+            ]
+          },
+          "docs": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in the request. The fields with empty values are excluded from the response.\n"
+        },
+        {
+          "info": {
+            "name": "Create a client session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.primer.io/client-session",
+            "headers": [
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creating a client session generates a client token: a temporary key used to initialize [Universal Checkout](/docs/get-started/set-up-a-checkout) and authenticate it against your account.\n\nUniversal Checkout automatically retrieves all the settings from the client session and the Dashboard to configure the payment methods and the checkout experience.\n\n<b>Note:</b>\nWhen creating a Client Session, please make sure to provide `currencyCode`, `orderId`, and at least one of `amount` or `lineItems`. \nI"
+        },
+        {
+          "info": {
+            "name": "Update client session",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.sandbox.primer.io/client-session",
+            "headers": [
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "You can update a clients session created earlier with the `PATCH /client-session` [API call](#operation/create_client_side_token_client_session_post).\n\nThe only required field for the request is `clientToken`. Other supported request fields are same as for the `POST /client-session` [API call](#operation/create_client_side_token_client_session_post).\n\nYou need to specify only the fields you wish to update. However, if the items to be updated are arrays (e.g.`lineItems`), you need to provide the "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

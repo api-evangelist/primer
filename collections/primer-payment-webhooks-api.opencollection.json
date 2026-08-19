@@ -1,0 +1,76 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Primer Client Session API Payment Webhooks API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payment Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Payment Status Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.primer.io/payment-status",
+            "headers": [
+              {
+                "name": "X-Signature-Primary",
+                "value": ""
+              },
+              {
+                "name": "X-Signature-Secondary",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Primer notifies you with a `PAYMENT.STATUS` webhook when a payment's status\nhas been updated. This is especially useful for asyncronous processor Connections,\nwhich do not respond with an upfront authorization.\n\nThe webhook events will arrive in the order that the payment status changes,\nfor example you should expect a status of `PENDING`, then `AUTHORIZED`, then\n`SETTLED` (depending on how your workflow is set up).\n\nThe webhook body contains the full payment object.\n"
+        },
+        {
+          "info": {
+            "name": "Payment Refund",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.primer.io/payment-refund",
+            "headers": [
+              {
+                "name": "X-Signature-Primary",
+                "value": ""
+              },
+              {
+                "name": "X-Signature-Secondary",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Primer notifies you with a `PAYMENT.REFUND` Webhook when a refund request has been fully processed by a payment processor and the refund has reached a final state.\n\nCheck the transaction with the most recent `transactionType: \"REFUND\"` in the `transactions` array:\n- if `processorStatus` is `SETTLED`, the refund was successful and the funds have been returned to the customer\n- if `processorStatus` is `FAILED`, the refund was unsuccessful\n\nLearn more about [how Primer handles webhooks](/docs/api-r"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

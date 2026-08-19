@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Primer Client Session API Payment Methods API API",
+    "version": "2.4"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payment Methods API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Save a payment method token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.primer.io/payment-instruments/:paymentMethodToken/vault",
+            "headers": [
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentMethodToken",
+                "value": "",
+                "type": "path",
+                "description": "Payment method token to store."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<p/>\n\nSave a `SINGLE_USE` payment method token so it can be used\nagain later.\n\nIf you try to vault an already vaulted token, you will get the existing vaulted token back.\n"
+        },
+        {
+          "info": {
+            "name": "List saved payment methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sandbox.primer.io/payment-instruments",
+            "headers": [
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "query",
+                "description": "Return payment methods for this customer ID."
+              }
+            ]
+          },
+          "docs": "Retrieve a list of stored payment methods for a customer."
+        },
+        {
+          "info": {
+            "name": "Delete a saved payment method",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sandbox.primer.io/payment-instruments/:paymentMethodToken",
+            "headers": [
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentMethodToken",
+                "value": "",
+                "type": "path",
+                "description": "Saved payment method token to delete."
+              }
+            ]
+          },
+          "docs": "Delete a saved payment method."
+        },
+        {
+          "info": {
+            "name": "Update the default saved payment method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sandbox.primer.io/payment-instruments/:paymentMethodToken/default",
+            "headers": [
+              {
+                "name": "X-API-VERSION",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentMethodToken",
+                "value": "",
+                "type": "path",
+                "description": "Saved payment method token to set to default."
+              }
+            ]
+          },
+          "docs": "Update a saved payment method to be the default stored payment method for a customer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

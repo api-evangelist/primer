@@ -1,0 +1,279 @@
+{
+  "item": [
+    {
+      "id": "9f2fead1-0a63-43ac-b19b-e96334a85660",
+      "name": "Payment Webhooks",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a6d8b272-d5bd-4b8f-8826-7cd7ab5d889e",
+          "name": "Payment Status Update",
+          "request": {
+            "name": "Payment Status Update",
+            "description": {
+              "content": "Primer notifies you with a `PAYMENT.STATUS` webhook when a payment's status\nhas been updated. This is especially useful for asyncronous processor Connections,\nwhich do not respond with an upfront authorization.\n\nThe webhook events will arrive in the order that the payment status changes,\nfor example you should expect a status of `PENDING`, then `AUTHORIZED`, then\n`SETTLED` (depending on how your workflow is set up).\n\nThe webhook body contains the full payment object.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payment-status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) An [HMAC signature](https://en.wikipedia.org/wiki/HMAC) generated using the webhook payload and a shared signing secret. This is then converted to a base64 encoded string.",
+                "key": "X-Signature-Primary",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) A secondary signature that is added when you have rotated your secret within the past 24 hours.",
+                "key": "X-Signature-Secondary",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventType\": \"<string>\",\n  \"date\": \"<dateTime>\",\n  \"notificationConfig\": {\n    \"id\": \"<uuid>\",\n    \"description\": \"<string>\"\n  },\n  \"version\": \"<string>\",\n  \"payment\": {\n    \"id\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"dateUpdated\": \"<dateTime>\",\n    \"status\": \"<string>\",\n    \"orderId\": \"<string>\",\n    \"currencyCode\": \"<string>\",\n    \"amount\": \"<long>\",\n    \"customerId\": \"<string>\",\n    \"metadata\": \"<object>\",\n    \"customer\": {\n      \"emailAddress\": \"<email>\",\n      \"mobileNumber\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"billingAddress\": {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"countryCode\": \"<string>\",\n        \"postalCode\": \"<string>\"\n      },\n      \"shippingAddress\": {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"countryCode\": \"<string>\",\n        \"postalCode\": \"<string>\"\n      },\n      \"taxId\": \"<string>\",\n      \"nationalDocumentId\": \"<string>\"\n    },\n    \"paymentMethod\": {\n      \"descriptor\": \"<string>\",\n      \"paymentType\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"paymentMethodToken\": \"<string>\",\n      \"isVaulted\": \"<boolean>\",\n      \"analyticsId\": \"<string>\",\n      \"paymentMethodType\": \"<string>\",\n      \"paymentMethodData\": {\n        \"last4Digits\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expirationMonth\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expirationYear\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"first6Digits\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"cardholderName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"network\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"isNetworkTokenized\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"binData\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"threeDSecureAuthentication\": {\n        \"response_code\": \"NOT_PERFORMED\"\n      }\n    },\n    \"processor\": {\n      \"name\": \"<string>\",\n      \"processorMerchantId\": \"<string>\",\n      \"amountCaptured\": \"<long>\",\n      \"amountRefunded\": \"<long>\"\n    },\n    \"statusReason\": {\n      \"type\": \"<string>\",\n      \"declineType\": \"<string>\",\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"paymentMethodResultCode\": \"<string>\",\n      \"paymentMethodResultMessage\": \"<string>\",\n      \"paymentMethodAdviceCode\": \"<string>\",\n      \"paymentMethodAdviceMessage\": \"<string>\",\n      \"advisedAction\": \"<string>\"\n    },\n    \"transactions\": [\n      {\n        \"processorMerchantId\": \"<string>\",\n        \"date\": \"<string>\",\n        \"amount\": \"<long>\",\n        \"currencyCode\": \"<string>\",\n        \"orderId\": \"<string>\",\n        \"transactionType\": \"<string>\",\n        \"processorTransactionId\": \"<string>\",\n        \"processorName\": \"<string>\",\n        \"processorStatus\": \"<string>\",\n        \"processorStatusReason\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"declineType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"advisedAction\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"reason\": \"<string>\"\n      },\n      {\n        \"processorMerchantId\": \"<string>\",\n        \"date\": \"<string>\",\n        \"amount\": \"<long>\",\n        \"currencyCode\": \"<string>\",\n        \"orderId\": \"<string>\",\n        \"transactionType\": \"<string>\",\n        \"processorTransactionId\": \"<string>\",\n        \"processorName\": \"<string>\",\n        \"processorStatus\": \"<string>\",\n        \"processorStatusReason\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"declineType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"advisedAction\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"reason\": \"<string>\"\n      }\n    ],\n    \"riskData\": {\n      \"fraudChecks\": {\n        \"source\": \"<string>\",\n        \"preAuthorizationResult\": \"<string>\",\n        \"preAuthorizationRecommendation\": \"<string>\",\n        \"postAuthorizationResult\": \"<string>\"\n      },\n      \"cvvCheck\": {\n        \"source\": \"<string>\",\n        \"result\": \"<string>\"\n      },\n      \"avsCheck\": {\n        \"source\": \"<string>\",\n        \"result\": {\n          \"streetAddress\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"postalCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b1eeb076-3541-4c23-90cf-54ce5055daee",
+              "name": "Return a 200 status to indicate that the data was received successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payment-status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An [HMAC signature](https://en.wikipedia.org/wiki/HMAC) generated using the webhook payload and a shared signing secret. This is then converted to a base64 encoded string.",
+                    "key": "X-Signature-Primary",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secondary signature that is added when you have rotated your secret within the past 24 hours.",
+                    "key": "X-Signature-Secondary",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventType\": \"<string>\",\n  \"date\": \"<dateTime>\",\n  \"notificationConfig\": {\n    \"id\": \"<uuid>\",\n    \"description\": \"<string>\"\n  },\n  \"version\": \"2.4\",\n  \"payment\": {\n    \"id\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"dateUpdated\": \"<dateTime>\",\n    \"status\": \"<string>\",\n    \"orderId\": \"<string>\",\n    \"currencyCode\": \"<string>\",\n    \"amount\": \"<long>\",\n    \"customerId\": \"<string>\",\n    \"metadata\": \"<object>\",\n    \"customer\": {\n      \"emailAddress\": \"<email>\",\n      \"mobileNumber\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"billingAddress\": {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"countryCode\": \"<string>\",\n        \"postalCode\": \"<string>\"\n      },\n      \"shippingAddress\": {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"countryCode\": \"<string>\",\n        \"postalCode\": \"<string>\"\n      },\n      \"taxId\": \"<string>\",\n      \"nationalDocumentId\": \"<string>\"\n    },\n    \"paymentMethod\": {\n      \"descriptor\": \"<string>\",\n      \"paymentType\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"paymentMethodToken\": \"<string>\",\n      \"isVaulted\": \"<boolean>\",\n      \"analyticsId\": \"<string>\",\n      \"paymentMethodType\": \"<string>\",\n      \"paymentMethodData\": {\n        \"last4Digits\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expirationMonth\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expirationYear\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"first6Digits\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"cardholderName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"network\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"isNetworkTokenized\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"binData\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"threeDSecureAuthentication\": {\n        \"response_code\": \"NOT_PERFORMED\"\n      }\n    },\n    \"processor\": {\n      \"name\": \"<string>\",\n      \"processorMerchantId\": \"<string>\",\n      \"amountCaptured\": \"<long>\",\n      \"amountRefunded\": \"<long>\"\n    },\n    \"statusReason\": {\n      \"type\": \"<string>\",\n      \"declineType\": \"<string>\",\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"paymentMethodResultCode\": \"<string>\",\n      \"paymentMethodResultMessage\": \"<string>\",\n      \"paymentMethodAdviceCode\": \"<string>\",\n      \"paymentMethodAdviceMessage\": \"<string>\",\n      \"advisedAction\": \"<string>\"\n    },\n    \"transactions\": [\n      {\n        \"processorMerchantId\": \"<string>\",\n        \"date\": \"<string>\",\n        \"amount\": \"<long>\",\n        \"currencyCode\": \"<string>\",\n        \"orderId\": \"<string>\",\n        \"transactionType\": \"<string>\",\n        \"processorTransactionId\": \"<string>\",\n        \"processorName\": \"<string>\",\n        \"processorStatus\": \"<string>\",\n        \"processorStatusReason\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"declineType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"advisedAction\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"reason\": \"Item returned.\"\n      },\n      {\n        \"processorMerchantId\": \"<string>\",\n        \"date\": \"<string>\",\n        \"amount\": \"<long>\",\n        \"currencyCode\": \"<string>\",\n        \"orderId\": \"<string>\",\n        \"transactionType\": \"<string>\",\n        \"processorTransactionId\": \"<string>\",\n        \"processorName\": \"<string>\",\n        \"processorStatus\": \"<string>\",\n        \"processorStatusReason\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"declineType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"advisedAction\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"reason\": \"Item returned.\"\n      }\n    ],\n    \"riskData\": {\n      \"fraudChecks\": {\n        \"source\": \"FRAUD_PROVIDER\",\n        \"preAuthorizationResult\": \"THREE_DS\",\n        \"preAuthorizationRecommendation\": \"TRANSACTION_RISK_ANALYSIS\",\n        \"postAuthorizationResult\": \"ACCEPT\"\n      },\n      \"cvvCheck\": {\n        \"source\": \"PROCESSOR\",\n        \"result\": \"MATCHED\"\n      },\n      \"avsCheck\": {\n        \"source\": \"PROCESSOR\",\n        \"result\": {\n          \"streetAddress\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"postalCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9fed16b-039e-498d-8395-e121e0707a7a",
+          "name": "Payment Refund",
+          "request": {
+            "name": "Payment Refund",
+            "description": {
+              "content": "Primer notifies you with a `PAYMENT.REFUND` Webhook when a refund request has been fully processed by a payment processor and the refund has reached a final state.\n\nCheck the transaction with the most recent `transactionType: \"REFUND\"` in the `transactions` array:\n- if `processorStatus` is `SETTLED`, the refund was successful and the funds have been returned to the customer\n- if `processorStatus` is `FAILED`, the refund was unsuccessful\n\nLearn more about [how Primer handles webhooks](/docs/api-reference/get-started/configure-webhooks).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payment-refund"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) An [HMAC signature](https://en.wikipedia.org/wiki/HMAC) generated using the webhook payload and a shared signing secret. This is then converted to a base64 encoded string.",
+                "key": "X-Signature-Primary",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) A secondary signature that is added when you have rotated your secret within the past 24 hours.",
+                "key": "X-Signature-Secondary",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventType\": \"<string>\",\n  \"date\": \"<dateTime>\",\n  \"notificationConfig\": {\n    \"id\": \"<uuid>\",\n    \"description\": \"<string>\"\n  },\n  \"version\": \"<string>\",\n  \"payment\": {\n    \"id\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"status\": \"<string>\",\n    \"orderId\": \"<string>\",\n    \"currencyCode\": \"<string>\",\n    \"amount\": \"<long>\",\n    \"customerId\": \"<string>\",\n    \"metadata\": \"<object>\",\n    \"customer\": {\n      \"emailAddress\": \"<email>\",\n      \"mobileNumber\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"billingAddress\": {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"countryCode\": \"<string>\",\n        \"postalCode\": \"<string>\"\n      },\n      \"shippingAddress\": {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"countryCode\": \"<string>\",\n        \"postalCode\": \"<string>\"\n      },\n      \"taxId\": \"<string>\",\n      \"nationalDocumentId\": \"<string>\"\n    },\n    \"paymentMethod\": {\n      \"descriptor\": \"<string>\",\n      \"paymentType\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"paymentMethodToken\": \"<string>\",\n      \"isVaulted\": \"<boolean>\",\n      \"analyticsId\": \"<string>\",\n      \"paymentMethodType\": \"<string>\",\n      \"paymentMethodData\": {\n        \"last4Digits\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expirationMonth\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expirationYear\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"first6Digits\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"cardholderName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"network\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"isNetworkTokenized\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"binData\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"threeDSecureAuthentication\": {\n        \"response_code\": \"NOT_PERFORMED\"\n      }\n    },\n    \"processor\": {\n      \"name\": \"<string>\",\n      \"processorMerchantId\": \"<string>\",\n      \"amountCaptured\": \"<long>\",\n      \"amountRefunded\": \"<long>\"\n    },\n    \"statusReason\": {\n      \"type\": \"<string>\",\n      \"declineType\": \"<string>\",\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"paymentMethodResultCode\": \"<string>\",\n      \"paymentMethodResultMessage\": \"<string>\",\n      \"paymentMethodAdviceCode\": \"<string>\",\n      \"paymentMethodAdviceMessage\": \"<string>\",\n      \"advisedAction\": \"<string>\"\n    },\n    \"transactions\": [\n      {\n        \"processorMerchantId\": \"<string>\",\n        \"date\": \"<string>\",\n        \"amount\": \"<long>\",\n        \"currencyCode\": \"<string>\",\n        \"orderId\": \"<string>\",\n        \"transactionType\": \"<string>\",\n        \"processorTransactionId\": \"<string>\",\n        \"processorName\": \"<string>\",\n        \"processorStatus\": \"<string>\",\n        \"processorStatusReason\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"declineType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"advisedAction\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"reason\": \"<string>\"\n      },\n      {\n        \"processorMerchantId\": \"<string>\",\n        \"date\": \"<string>\",\n        \"amount\": \"<long>\",\n        \"currencyCode\": \"<string>\",\n        \"orderId\": \"<string>\",\n        \"transactionType\": \"<string>\",\n        \"processorTransactionId\": \"<string>\",\n        \"processorName\": \"<string>\",\n        \"processorStatus\": \"<string>\",\n        \"processorStatusReason\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"declineType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"advisedAction\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"reason\": \"<string>\"\n      }\n    ],\n    \"riskData\": {\n      \"fraudChecks\": {\n        \"source\": \"<string>\",\n        \"preAuthorizationResult\": \"<string>\",\n        \"preAuthorizationRecommendation\": \"<string>\",\n        \"postAuthorizationResult\": \"<string>\"\n      },\n      \"cvvCheck\": {\n        \"source\": \"<string>\",\n        \"result\": \"<string>\"\n      },\n      \"avsCheck\": {\n        \"source\": \"<string>\",\n        \"result\": {\n          \"streetAddress\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"postalCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7cff6f81-a615-4b3f-b8a6-09f443406249",
+              "name": "Return a 200 status to indicate that the data was received successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payment-refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) An [HMAC signature](https://en.wikipedia.org/wiki/HMAC) generated using the webhook payload and a shared signing secret. This is then converted to a base64 encoded string.",
+                    "key": "X-Signature-Primary",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) A secondary signature that is added when you have rotated your secret within the past 24 hours.",
+                    "key": "X-Signature-Secondary",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventType\": \"<string>\",\n  \"date\": \"<dateTime>\",\n  \"notificationConfig\": {\n    \"id\": \"<uuid>\",\n    \"description\": \"<string>\"\n  },\n  \"version\": \"2.4\",\n  \"payment\": {\n    \"id\": \"<string>\",\n    \"date\": \"<dateTime>\",\n    \"status\": \"<string>\",\n    \"orderId\": \"<string>\",\n    \"currencyCode\": \"<string>\",\n    \"amount\": \"<long>\",\n    \"customerId\": \"<string>\",\n    \"metadata\": \"<object>\",\n    \"customer\": {\n      \"emailAddress\": \"<email>\",\n      \"mobileNumber\": \"<string>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"billingAddress\": {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"countryCode\": \"<string>\",\n        \"postalCode\": \"<string>\"\n      },\n      \"shippingAddress\": {\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"countryCode\": \"<string>\",\n        \"postalCode\": \"<string>\"\n      },\n      \"taxId\": \"<string>\",\n      \"nationalDocumentId\": \"<string>\"\n    },\n    \"paymentMethod\": {\n      \"descriptor\": \"<string>\",\n      \"paymentType\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"paymentMethodToken\": \"<string>\",\n      \"isVaulted\": \"<boolean>\",\n      \"analyticsId\": \"<string>\",\n      \"paymentMethodType\": \"<string>\",\n      \"paymentMethodData\": {\n        \"last4Digits\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expirationMonth\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expirationYear\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"first6Digits\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"cardholderName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"network\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"isNetworkTokenized\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"binData\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"threeDSecureAuthentication\": {\n        \"response_code\": \"NOT_PERFORMED\"\n      }\n    },\n    \"processor\": {\n      \"name\": \"<string>\",\n      \"processorMerchantId\": \"<string>\",\n      \"amountCaptured\": \"<long>\",\n      \"amountRefunded\": \"<long>\"\n    },\n    \"statusReason\": {\n      \"type\": \"<string>\",\n      \"declineType\": \"<string>\",\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"paymentMethodResultCode\": \"<string>\",\n      \"paymentMethodResultMessage\": \"<string>\",\n      \"paymentMethodAdviceCode\": \"<string>\",\n      \"paymentMethodAdviceMessage\": \"<string>\",\n      \"advisedAction\": \"<string>\"\n    },\n    \"transactions\": [\n      {\n        \"processorMerchantId\": \"<string>\",\n        \"date\": \"<string>\",\n        \"amount\": \"<long>\",\n        \"currencyCode\": \"<string>\",\n        \"orderId\": \"<string>\",\n        \"transactionType\": \"<string>\",\n        \"processorTransactionId\": \"<string>\",\n        \"processorName\": \"<string>\",\n        \"processorStatus\": \"<string>\",\n        \"processorStatusReason\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"declineType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"advisedAction\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"reason\": \"Item returned.\"\n      },\n      {\n        \"processorMerchantId\": \"<string>\",\n        \"date\": \"<string>\",\n        \"amount\": \"<long>\",\n        \"currencyCode\": \"<string>\",\n        \"orderId\": \"<string>\",\n        \"transactionType\": \"<string>\",\n        \"processorTransactionId\": \"<string>\",\n        \"processorName\": \"<string>\",\n        \"processorStatus\": \"<string>\",\n        \"processorStatusReason\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"declineType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"code\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodResultMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentMethodAdviceMessage\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"advisedAction\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"reason\": \"Item returned.\"\n      }\n    ],\n    \"riskData\": {\n      \"fraudChecks\": {\n        \"source\": \"FRAUD_PROVIDER\",\n        \"preAuthorizationResult\": \"THREE_DS\",\n        \"preAuthorizationRecommendation\": \"TRANSACTION_RISK_ANALYSIS\",\n        \"postAuthorizationResult\": \"ACCEPT\"\n      },\n      \"cvvCheck\": {\n        \"source\": \"PROCESSOR\",\n        \"result\": \"MATCHED\"\n      },\n      \"avsCheck\": {\n        \"source\": \"PROCESSOR\",\n        \"result\": {\n          \"streetAddress\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"postalCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sandbox.primer.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3ae18138-e050-48da-8fb1-26c18e051607",
+    "name": "Primer Client Session API Payment Webhooks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This API enforces a timeout of 90 seconds for all requests. A 504 response indicates a timeout occurred.",
+      "type": "text/plain"
+    }
+  }
+}
