@@ -18,7 +18,7 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/primer.png
 url: https://raw.githubusercontent.com/api-evangelist/primer/refs/heads/main/apis.yml
 created: 2026-06-12
 modified: 2026-06-12
-specificationVersion: "0.19"
+specificationVersion: '0.23'
 description: >
   Primer is a payment orchestration platform that enables merchants to build
   flexible payment flows across multiple processors through a single REST API
