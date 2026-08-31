@@ -43,14 +43,14 @@ description: >
   processes billions of dollars monthly with 99.99% uptime.
 tags:
   - Payments
-  - Payment Orchestration
-  - Payment Processing
+  - payment orchestration
+  - payment processing
   - Fintech
-  - Fraud Detection
-  - Smart Routing
-  - Checkout
+  - fraud detection
+  - smart routing
+  - checkout
   - Payment Methods
-  - Reconciliation
+  - reconciliation
   - Webhook
 tags_raw:
   - payments
