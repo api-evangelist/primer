@@ -29,43 +29,42 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/primer.png
 url: https://raw.githubusercontent.com/api-evangelist/primer/refs/heads/main/apis.yml
 created: 2026-06-12
-modified: 2026-06-12
+modified: '2026-09-16'
 specificationVersion: '0.23'
-description: >
-  Primer is a payment orchestration platform that enables merchants to build
-  flexible payment flows across multiple processors through a single REST API
-  integration. The platform provides intelligent routing, automatic fallback
-  logic, fraud detection integrations, and a no-code Workflows builder for
-  managing payment rules without engineering effort. Primer supports 60+ payment
-  methods including cards, digital wallets, and regional alternatives such as
-  iDEAL, Klarna, and Alipay. The platform delivers unified observability,
-  reconciliation, and analytics across all connected payment providers, and
-  processes billions of dollars monthly with 99.99% uptime.
+description: 'Primer is a payment orchestration platform that enables merchants to build flexible payment
+  flows across multiple processors through a single REST API integration. The platform provides intelligent
+  routing, automatic fallback logic, fraud detection integrations, and a no-code Workflows builder for
+  managing payment rules without engineering effort. Primer supports 60+ payment methods including cards,
+  digital wallets, and regional alternatives such as iDEAL, Klarna, and Alipay. The platform delivers
+  unified observability, reconciliation, and analytics across all connected payment providers, and processes
+  billions of dollars monthly with 99.99% uptime.
+
+  '
 tags:
-  - Payments
-  - Payment Orchestration
-  - Payment Processing
-  - Fintech
-  - Fraud Detection
-  - Smart Routing
-  - Checkout
-  - Payment Methods
-  - Reconciliation
-  - Webhook
+- Payments
+- Payment Orchestration
+- Payment Processing
+- Fintech
+- Fraud Detection
+- Smart Routing
+- Checkout
+- Payment Methods
+- Reconciliation
+- Webhook
 tags_raw:
-  - payments
-  - payment orchestration
-  - payment processing
-  - fintech
-  - fraud detection
-  - smart routing
-  - checkout
-  - payment methods
-  - reconciliation
-  - webhooks
+- payments
+- payment orchestration
+- payment processing
+- fintech
+- fraud detection
+- smart routing
+- checkout
+- payment methods
+- reconciliation
+- webhooks
 apis:
 - aid: primer:primer-client-session-api-api
-  name: Primer Client Session API API
+  name: Primer Client Session API
   description: The Client Session API API from Primer — 1 operation(s) for client session api.
   humanURL: https://primer.io/docs/api-reference/get-started/overview
   baseURL: https://api.primer.io
@@ -80,8 +79,8 @@ apis:
     url: https://api.sandbox.primer.io
 - aid: primer:primer-dispute-chargebacks-webhooks-api
   name: Primer Dispute & Chargebacks Webhooks API
-  description: >-
-    The Dispute & Chargebacks Webhooks API from Primer — 2 operation(s) for dispute & chargebacks webhooks.
+  description: The Dispute & Chargebacks Webhooks API from Primer — 2 operation(s) for dispute & chargebacks
+    webhooks.
   humanURL: https://primer.io/docs/api-reference/get-started/overview
   baseURL: https://api.primer.io
   tags:
@@ -94,7 +93,7 @@ apis:
   - type: Sandbox
     url: https://api.sandbox.primer.io
 - aid: primer:primer-payment-methods-api-api
-  name: Primer Payment Methods API API
+  name: Primer Payment Methods API
   description: The Payment Methods API API from Primer — 4 operation(s) for payment methods api.
   humanURL: https://primer.io/docs/api-reference/get-started/overview
   baseURL: https://api.primer.io
@@ -122,7 +121,7 @@ apis:
   - type: Sandbox
     url: https://api.sandbox.primer.io
 - aid: primer:primer-payments-api-api
-  name: Primer Payments API API
+  name: Primer Payments API
   description: The Payments API API from Primer — 8 operation(s) for payments api.
   humanURL: https://primer.io/docs/api-reference/get-started/overview
   baseURL: https://api.primer.io
@@ -136,54 +135,54 @@ apis:
   - type: Sandbox
     url: https://api.sandbox.primer.io
 common:
-  - type: AgenticAccess
-    url: agentic-access/primer-agentic-access.yml
-  - type: TrustCenter
-    url: security/primer-trust-center.yml
-  - type: VulnerabilityDisclosure
-    url: security/primer-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/primer-domain-security.yml
-  - type: Authentication
-    url: authentication/primer-authentication.yml
-  - type: Website
-    url: https://primer.io/
-  - type: Documentation
-    url: https://primer.io/docs/api-reference/get-started/overview
-  - type: GitHubOrganization
-    url: https://github.com/primer-io
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/primerapi/
-  - type: X
-    url: https://x.com/primer_io
-  - type: Blog
-    url: https://primer.io/blog
-  - type: Pricing
-    url: https://primer.io/blog/primer-launches-primer-for-growth
-  - type: StatusPage
-    url: https://status.primer.io/
-  - type: ChangeLog
-    url: https://primer.io/docs/changelogs/android-sdk
-  - type: Plans
-    url: plans/primer-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/primer-rate-limits.yml
-  - type: FinOps
-    url: finops/primer-finops.yml
-  - type: JSONSchema
-    url: json-schema/primer-clientsession.json
-  - type: JSONSchema
-    url: json-schema/primer-paymentcreation.json
-  - type: JSONSchema
-    url: json-schema/primer-payment.json
-  - type: JSONSchema
-    url: json-schema/primer-paymentrefund.json
-  - type: JSONSchema
-    url: json-schema/primer-paymentcapture.json
-  - type: Vocabulary
-    url: vocabulary/primer-vocabulary.yml
-  - type: JSONLDContext
-    url: json-ld/primer-context.jsonld
+- type: AgenticAccess
+  url: agentic-access/primer-agentic-access.yml
+- type: TrustCenter
+  url: security/primer-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/primer-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/primer-domain-security.yml
+- type: Authentication
+  url: authentication/primer-authentication.yml
+- type: Website
+  url: https://primer.io/
+- type: Documentation
+  url: https://primer.io/docs/api-reference/get-started/overview
+- type: GitHubOrganization
+  url: https://github.com/primer-io
+- type: LinkedIn
+  url: https://www.linkedin.com/company/primerapi/
+- type: X
+  url: https://x.com/primer_io
+- type: Blog
+  url: https://primer.io/blog
+- type: Pricing
+  url: https://primer.io/blog/primer-launches-primer-for-growth
+- type: StatusPage
+  url: https://status.primer.io/
+- type: ChangeLog
+  url: https://primer.io/docs/changelogs/android-sdk
+- type: Plans
+  url: plans/primer-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/primer-rate-limits.yml
+- type: FinOps
+  url: finops/primer-finops.yml
+- type: JSONSchema
+  url: json-schema/primer-clientsession.json
+- type: JSONSchema
+  url: json-schema/primer-paymentcreation.json
+- type: JSONSchema
+  url: json-schema/primer-payment.json
+- type: JSONSchema
+  url: json-schema/primer-paymentrefund.json
+- type: JSONSchema
+  url: json-schema/primer-paymentcapture.json
+- type: Vocabulary
+  url: vocabulary/primer-vocabulary.yml
+- type: JSONLDContext
+  url: json-ld/primer-context.jsonld
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
