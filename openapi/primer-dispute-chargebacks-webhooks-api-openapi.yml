@@ -1,15 +1,12 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
   x-logo:
     url: https://apidocs.primer.io/docs/assets/images/primer-logo.svg
-  title: Primer Client Session API Dispute & Chargebacks Webhooks API
+  title: Primer Webhooks Dispute & Chargebacks Webhooks API
   version: '2.4'
-  description: This API enforces a timeout of 90 seconds for all requests. A 504 response indicates a timeout occurred.
 servers:
 - url: https://api.sandbox.primer.io
 - url: https://api.primer.io
-security:
-- ApiKeyAuth: []
 tags:
 - name: Dispute & Chargebacks Webhooks
 paths:
@@ -21,9 +18,7 @@ paths:
       description: 'Primer notifies you with a `DISPUTE.OPENED` webhook on newly opened disputes or chargebacks. This notification is unified across all processors.
 
 
-        Learn more about [how Primer handles webhooks](/docs/api-reference/get-started/configure-webhooks).
-
-        '
+        Learn more about how Primer handles webhooks.'
       operationId: dispute_open_webhook_event
       requestBody:
         content:
@@ -65,9 +60,7 @@ paths:
         The `DISPUTE.STATUS` event is currently in an open beta stage, as we continue to add more processors.
 
 
-        Learn more about [managing disputes at Primer](/docs/disputes/manage-disputes).
-
-        '
+        Learn more about managing disputes at Primer.'
       operationId: dispute_status_webhook_event
       requestBody:
         content:
@@ -126,6 +119,36 @@ components:
           title: Primer Account ID
           type: string
           description: A unique identifier for your Primer merchant account.
+    PaymentMethodTypeEnum:
+      title: PaymentMethodTypeEnum
+      type: string
+      description: '[The list of available payment methods and their `PAYMENT_METHOD_TYPE` can be found here.](https://primer.io/docs/connections/payment-methods/available-payment-methods)
+
+        '
+    CardNetworkEnum:
+      title: CardNetworkEnum
+      type: string
+      enum:
+      - AMEX
+      - DANKORT
+      - DINERS_CLUB
+      - DISCOVER
+      - ENROUTE
+      - ELO
+      - HIPER
+      - INTERAC
+      - JCB
+      - MAESTRO
+      - MASTERCARD
+      - MIR
+      - PRIVATE_LABEL
+      - UNIONPAY
+      - VISA
+      - CARTES_BANCAIRES
+      - OTHER
+      description: 'The list of available card networks.
+
+        '
     DisputeStatusWebhookPayload:
       title: DisputeStatusWebhookPayload
       type: object
@@ -258,49 +281,3 @@ components:
           title: Merchant ID
           type: string
           description: The merchant ID registered at the payment processor used for this dispute.
-    CardNetworkEnum:
-      title: CardNetworkEnum
-      type: string
-      enum:
-      - AMEX
-      - DANKORT
-      - DINERS_CLUB
-      - DISCOVER
-      - ENROUTE
-      - ELO
-      - HIPER
-      - INTERAC
-      - JCB
-      - MAESTRO
-      - MASTERCARD
-      - MIR
-      - PRIVATE_LABEL
-      - UNIONPAY
-      - VISA
-      - CARTES_BANCAIRES
-      - OTHER
-      description: 'The list of available card networks.
-
-        '
-    PaymentMethodTypeEnum:
-      title: PaymentMethodTypeEnum
-      type: string
-      description: '[The list of available payment methods and their `PAYMENT_METHOD_TYPE` can be found here.](https://primer.io/docs/connections/payment-methods/available-payment-methods)
-
-        '
-  securitySchemes:
-    ApiKeyAuth:
-      type: apiKey
-      in: header
-      name: X-API-KEY
-x-readme:
-  explorer-enabled: true
-  samples-languages:
-  - curl
-  - javascript
-  - python
-  - kotlin
-  - swift
-  headers:
-  - key: X-API-VERSION
-    value: '2.4'

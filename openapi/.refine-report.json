@@ -1,22 +1,32 @@
 {
   "provider": "primer",
   "sources": [
-    "primer-client-session-api-api-openapi.yml",
-    "primer-dispute-chargebacks-webhooks-api-openapi.yml",
-    "primer-payment-methods-api-api-openapi.yml",
-    "primer-payment-webhooks-api-openapi.yml",
-    "primer-payments-api-api-openapi.yml"
+    "_original/primer-payments-openapi.yml",
+    "_original/primer-webhooks-openapi.yml"
   ],
   "outputs": [
     "primer-client-session-api-api-openapi.yml",
-    "primer-dispute-chargebacks-webhooks-api-openapi.yml",
     "primer-payment-methods-api-api-openapi.yml",
-    "primer-payment-webhooks-api-openapi.yml",
-    "primer-payments-api-api-openapi.yml"
+    "primer-payments-api-api-openapi.yml",
+    "primer-dispute-chargebacks-webhooks-api-openapi.yml",
+    "primer-payment-webhooks-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "primer-payments-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "primer-webhooks-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "primer-webhooks-openapi.yml: declared missing tag: Dispute & Chargebacks Webhooks",
+    "primer-webhooks-openapi.yml: declared missing tag: Payment Webhooks",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "primer-client-session-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "primer-dispute-chargebacks-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "primer-payment-methods-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "primer-payment-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "primer-payments-api-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

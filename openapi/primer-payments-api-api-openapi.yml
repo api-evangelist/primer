@@ -1,8 +1,8 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
   x-logo:
     url: https://apidocs.primer.io/docs/assets/images/primer-logo.svg
-  title: Primer Client Session API Payments API API
+  title: Primer Payments API
   version: '2.4'
   description: This API enforces a timeout of 90 seconds for all requests. A 504 response indicates a timeout occurred.
 servers:
@@ -18,10 +18,7 @@ paths:
       tags:
       - Payments API
       summary: Search & list payments
-      description: '<p/>
-
-
-        Retrieve a list of your payments.
+      description: 'Retrieve a list of your payments.
 
 
         Results are paginated, they will only return up to 100 payments maximum.
@@ -40,13 +37,13 @@ paths:
         Query parameters with types of the form "Array of strings" (such as the status parameter) can be specified as a comma-separated list.
 
 
-        For example, if you wanted to get both `FAILED`  and `CANCELLED` payments, for customer `john-123`, you would use:
+        For example, if you wanted to get both `FAILED` and `CANCELLED` payments, for customer `john-123`, you would use:
 
         ```bash
 
         curl --location --request GET ''https://api.primer.io/payments?status=FAILED,CANCELLED&customer_id=john-123'' \
 
-        --header ''X-Api-Key: <YOUR_API_KEY>''
+        --header ''X-Api-Key: ''
 
         ```
 
@@ -54,9 +51,7 @@ paths:
         You can alternatively specify a list by repeating the parameter multiple times.
 
 
-        **Note:** payments will be available within a minute from being created.
-
-        '
+        **Note:** payments will be available within a minute from being created.'
       operationId: list_payments_payments_get
       parameters:
       - description: Filter payments by their status.
@@ -258,10 +253,7 @@ paths:
       tags:
       - Payments API
       summary: Create a payment
-      description: '<p/>
-
-
-        Create and authorize a payment for a given customer order. You
+      description: 'Create and authorize a payment for a given customer order. You
 
         should provide a payment method token here to avoid PCI implications.
 
@@ -273,9 +265,7 @@ paths:
 
         All fields provided on this request will take preference over any field on the `order` associated with the client session. E.g. if you pass `amount` on this request, it will override the `amount` on the `order` associated with the Client Session.
 
-        Parameters that are not on this request will be fetched from previously created Client Session and merged. E.g. if you specify `customer.billingAddress` in Client Session and then pass `customer.emailAddress` data with this request, it will automatically merge the `customer` fields and use both `billingAddress` and `emailAddress` for later calculations.
-
-        '
+        Parameters that are not on this request will be fetched from previously created Client Session and merged. E.g. if you specify `customer.billingAddress` in Client Session and then pass `customer.emailAddress` data with this request, it will automatically merge the `customer` fields and use both `billingAddress` and `emailAddress` for later calculations.'
       operationId: create_payment_payments_post
       parameters:
       - $ref: '#/components/parameters/IdempotencyHeader'
@@ -405,16 +395,11 @@ paths:
       tags:
       - Payments API
       summary: Authorize a payment
-      description: '<p/>
+      description: 'Manually authorize a payment using a provided processor. This is useful if you want to authorize a payment without a workflow action.
 
+        The processor merchant ID must be provided which can be found on the Integrations page.
 
-        Manually authorize a payment using a provided processor. This is useful if you want to authorize a payment without a workflow action.
-
-        The processor merchant ID must be provided which can be found on the [Integrations page](https://dashboard.primer.io/integrations).
-
-        The processor name is optional but it must be provided if your account has multiple processors configured which share the same merchant IDs.
-
-        '
+        The processor name is optional but it must be provided if your account has multiple processors configured which share the same merchant IDs.'
       operationId: authorize_payment_payments__id__authorize_post
       parameters:
       - required: true
@@ -582,10 +567,7 @@ paths:
       tags:
       - Payments API
       summary: Capture a payment
-      description: '<p/>
-
-
-        If you have successfully authorized a payment, you can now
+      description: 'If you have successfully authorized a payment, you can now
 
         fully capture, or partially capture funds from the authorized payment, depending
 
@@ -600,9 +582,7 @@ paths:
 
         will be sent for capture. Below are the available payload attributes, which
 
-        give you more granular control when capturing funds, if you require it.
-
-        '
+        give you more granular control when capturing funds, if you require it.'
       operationId: capture_payment_payments__id__capture_post
       parameters:
       - required: true
@@ -757,18 +737,13 @@ paths:
       tags:
       - Payments API
       summary: Cancel a payment
-      description: '<p/>
-
-
-        Provided the payment has not reached `SETTLED` status, Primer will
+      description: 'Provided the payment has not reached `SETTLED` status, Primer will
 
         send a "void" request to the payment processor, thereby cancelling the payment
 
         and releasing the hold on customer funds. Upon success, the payment will transition
 
-        to `CANCELLED`. The payload is optional.
-
-        '
+        to `CANCELLED`. The payload is optional.'
       operationId: cancel_payment_payments__id__cancel_post
       parameters:
       - required: true
@@ -889,10 +864,7 @@ paths:
       tags:
       - Payments API
       summary: Refund a payment
-      description: '<p/>
-
-
-        Issue a full or partial refund for a previously settled payment. By default, the full amount
+      description: 'Issue a full or partial refund for a previously settled payment. By default, the full amount
 
         will be refunded unless a specific amount is provided for a partial refund.
 
@@ -910,9 +882,7 @@ paths:
 
         captured in that event. If no refund amount is provided, it defaults to the amount captured
 
-        in that specific event.
-
-        '
+        in that specific event.'
       operationId: refund_payment_payments__id__refund_post
       parameters:
       - required: true
@@ -1087,18 +1057,13 @@ paths:
       tags:
       - Payments API
       summary: Resume a payment
-      description: '<p/>
-
-
-        Resume a payment''s workflow execution from a paused state. This
+      description: 'Resume a payment''s workflow execution from a paused state. This
 
         is usually required when a Workflow was paused in order to get further information
 
         from the customer, or when waiting for an asynchronous response from a third
 
-        party connection.
-
-        '
+        party connection.'
       operationId: resume_payment_payments__id__resume_post
       parameters:
       - required: true
@@ -1216,7 +1181,9 @@ paths:
       tags:
       - Payments API
       summary: Adjust authorized amount
-      description: "<p/>\n\nAdjust authorized amount. This is only possible if `authorizationType` was set to \n`ESTIMATED` when the payment was created, and the mechanism is supported by the payment method.\n"
+      description: 'Adjust authorized amount. This is only possible if `authorizationType` was set to
+
+        `ESTIMATED` when the payment was created, and the mechanism is supported by the payment method.'
       operationId: adjust_authorization_payments__id__adjust_authorization_post
       parameters:
       - required: true
@@ -1376,12 +1343,7 @@ paths:
       tags:
       - Payments API
       summary: Get a payment
-      description: '<p/>
-
-
-        Retrieve a payment by its ID.
-
-        '
+      description: Retrieve a payment by its ID.
       operationId: get_payment_by_id_payments__id__get
       parameters:
       - required: true
@@ -1469,6 +1431,292 @@ paths:
                   diagnosticsId: '1234567898'
 components:
   schemas:
+    PaymentResponseProcessorAPISchema:
+      title: PaymentResponseProcessorAPISchema
+      type: object
+      properties:
+        name:
+          title: Processor Name
+          type: string
+          description: The payment processor used for this payment.
+          maxLength: 255
+        processorMerchantId:
+          title: Processor Merchant ID
+          type: string
+          description: The merchant ID registered at the payment processor used for this payment.
+          maxLength: 255
+        amountCaptured:
+          title: Amount captured
+          type: integer
+          minimum: 0.0
+          format: int64
+          description: 'If no capture was performed, this value will be set to `0`.
+
+
+            If one or more partial captures were performed, this value will be a sum
+
+            of all partial capture amounts.
+
+            '
+        amountRefunded:
+          title: Amount refunded
+          type: integer
+          minimum: 0.0
+          format: int64
+          description: 'If no refund was performed, this value will be set to `0`.
+
+
+            If one or more partial refunds were performed, this value will be a sum
+
+            of all partial refund amounts.
+
+            '
+    FirstPaymentReasonEnum:
+      title: FirstPaymentReasonEnum
+      enum:
+      - CardOnFile
+      - Recurring
+      - Unscheduled
+      type: string
+      description: 'The reason for the first payment. This is used for informing payment processors about the specific reason a payment method is being stored.
+
+        Defaults to None if not provided.
+
+        '
+    AVSRiskAssessmentValues:
+      title: AVSRiskAssessmentValues
+      type: object
+      properties:
+        streetAddress:
+          $ref: '#/components/schemas/RiskAssessmentStatusEnum'
+          example: NOT_MATCHED
+        postalCode:
+          $ref: '#/components/schemas/RiskAssessmentStatusEnum'
+          example: NOT_VERIFIED
+    PaymentAuthorizationAPIRequest:
+      title: PaymentAuthorizationAPIRequest
+      type: object
+      required:
+      - processor
+      properties:
+        processor:
+          $ref: '#/components/schemas/PaymentAuthorizationRequestProcessorAPISchema'
+          title: Processor
+          description: The payment processor to use for this payment.
+        expand:
+          $ref: '#/components/schemas/Expand'
+    ThreeDSecureFailedReasonCodeEnum:
+      title: ThreeDSecureFailedReasonCodeEnum
+      enum:
+      - UNKNOWN
+      - REJECTED_BY_ISSUER
+      - CARD_AUTHENTICATION_FAILED
+      - UNKNOWN_DEVICE
+      - UNSUPPORTED_DEVICE
+      - EXCEEDS_AUTHENTICATION_FREQUENCY_LIMIT
+      - EXPIRED_CARD
+      - INVALID_CARD_NUMBER
+      - INVALID_TRANSACTION
+      - NO_CARD_RECORD
+      - SECURITY_FAILURE
+      - STOLEN_CARD
+      - SUSPECTED_FRAUD
+      - TRANSACTION_NOT_PERMITTED_TO_CARDHOLDER
+      - CARDHOLDER_NOT_ENROLLED_IN_SERVICE
+      - TRANSACTION_TIMED_OUT_AT_THE_ACS
+      - LOW_CONFIDENCE
+      - MEDIUM_CONFIDENCE
+      - HIGH_CONFIDENCE
+      - VERY_HIGH_CONFIDENCE
+      - EXCEEDS_ACS_MAXIMUM_CHALLENGES
+      - NON_PAYMENT_NOT_SUPPORTED
+      - THREE_RI_NOT_SUPPORTED
+      - ACS_TECHNICAL_ISSUE
+      - DECOUPLED_REQUIRED_BY_ACS
+      - DECOUPLED_MAX_EXPIRY_EXCEEDED
+      - DECOUPLED_AUTHENTICATION_INSUFFICIENT_TIME
+      - AUTHENTICATION_ATTEMPTED_BUT_NOT_PERFORMED_BY_CARDHOLDER
+      - ACS_TIMED_OUT
+      - INVALID_ACS_RESPONSE
+      - ACS_SYSTEM_ERROR_RESPONSE
+      - ERROR_GENERATING_CAVV
+      - PROTOCOL_VERSION_NOT_SUPPORTED
+      - TRANSACTION_EXCLUDED_FROM_ATTEMPTS_PROCESSING
+      - REQUESTED_PROGRAM_NOT_SUPPORTED
+      type: string
+      description: 'This enum is derived from the `transStatusReason` on page 218 of the
+
+        [EMV Co 3DS protocol specification](https://www.emvco.com/terms-of-use/?u=/wp-content/uploads/documents/EMVCo_3DS_Spec_v220_122018.pdf)
+
+
+        | Code | Description                             |
+
+        |------|-----------------------------------------|
+
+        | 01   | Card authentication failed              |
+
+        | 02   | Unknown Device                          |
+
+        | 03   | Unsupported Device                      |
+
+        | 04   | Exceeds authentication frequency limit  |
+
+        | 05   | Expired card                            |
+
+        | 06   | Invalid card number                     |
+
+        | 07   | Invalid transaction                     |
+
+        | 08   | No Card record                          |
+
+        | 09   | Security failure                        |
+
+        | 10   | Stolen card                             |
+
+        | 11   | Suspected fraud                         |
+
+        | 12   | Transaction not permitted to cardholder |
+
+        | 13   | Cardholder not enrolled in service      |
+
+        | 14   | Transaction timed out at the ACS        |
+
+        | 15   | Low confidence                          |
+
+        | 16   | Medium confidence                       |'
+    KlarnaAddressAPISchema:
+      title: KlarnaAddressAPISchema
+      type: object
+      properties:
+        title:
+          title: Title
+          type: string
+        firstName:
+          title: Firstname
+          type: string
+        lastName:
+          title: Lastname
+          type: string
+        email:
+          title: Email
+          type: string
+        phoneNumber:
+          title: Phonenumber
+          type: string
+        addressLine1:
+          title: Addressline1
+          type: string
+        addressLine2:
+          title: Addressline2
+          type: string
+        addressLine3:
+          title: Addressline3
+          type: string
+        city:
+          title: City
+          type: string
+        state:
+          title: State
+          type: string
+        countryCode:
+          $ref: '#/components/schemas/CountryCodeEnum'
+        postalCode:
+          title: Postalcode
+          type: string
+    TransactionTypeEnum:
+      title: TransactionTypeEnum
+      enum:
+      - SALE
+      - REFUND
+      type: string
+      description: An enumeration.
+    PrepaidReloadableEnum:
+      title: PrepaidReloadableEnum
+      enum:
+      - RELOADABLE
+      - NON_RELOADABLE
+      - NOT_APPLICABLE
+      - UNKNOWN
+      type: string
+      description: An enumeration.
+    AVSCheckAPISchema:
+      title: AVSCheckAPISchema
+      description: 'Results of any external AVS check performed on this payment.
+
+        '
+      type: object
+      properties:
+        source:
+          type: string
+          example: PROCESSOR
+        result:
+          $ref: '#/components/schemas/AVSRiskAssessmentValues'
+    AuthorizationTypeEnum:
+      title: AuthorizationTypeEnum
+      enum:
+      - ESTIMATED
+      - FINAL
+      type: string
+      description: Type of authorization for the payment.
+    DeclineTypeEnum:
+      title: DeclineTypeEnum
+      enum:
+      - SOFT_DECLINE
+      - HARD_DECLINE
+      type: string
+      description: An enumeration.
+    OrderLineItemsProductDataAPISchema:
+      title: OrderLineItemsProductDataAPISchema
+      description: Details related to the product
+      type: object
+      properties:
+        sku:
+          title: SKU
+          type: string
+          description: The product SKU
+          minLength: 1
+          maxLength: 255
+        brand:
+          title: Brand
+          type: string
+          description: The product brand
+          minLength: 1
+          maxLength: 255
+        color:
+          title: Color
+          type: string
+          description: The product color
+          minLength: 1
+          maxLength: 255
+        globalTradeItemNumber:
+          title: Global Trade Item Number
+          type: string
+          description: The product Global Trade Item Number (e.g. ISBN)
+          minLength: 1
+          maxLength: 255
+        manufacturerPartNumber:
+          title: Manufacturer Part Number
+          type: string
+          description: The product Manufacturer Part Number
+          minLength: 1
+          maxLength: 255
+        weight:
+          title: Weight
+          type: number
+          description: The product weight
+          minimum: 0.0
+        weightUnit:
+          title: Weight Unit
+          type: string
+          description: The product weight unit (e.g. kg, g)
+          minLength: 1
+          maxLength: 255
+        pageUrl:
+          title: Page URL
+          type: string
+          description: The product page URL
+          minLength: 1
+          maxLength: 1024
     202AcceptedResponse:
       title: 202AcceptedResponse
       type: object
@@ -1488,6 +1736,283 @@ components:
             recoverySuggestion:
               type: string
               description: A suggestion on how to recover from the error.
+    GoCardlessMandateAPISchema:
+      title: GoCardlessMandateAPISchema
+      required:
+      - gocardlessMandateId
+      type: object
+      properties:
+        gocardlessMandateId:
+          title: Mandate agreement ID
+          type: string
+          description: Unique identifier of a GoCardless mandate agreement
+    ApayaCustomerTokenAPISchema:
+      title: ApayaCustomerTokenAPISchema
+      required:
+      - mx
+      type: object
+      properties:
+        mx:
+          title: Mx
+          type: string
+        mnc:
+          title: Mnc
+          type: integer
+          format: int64
+        mcc:
+          title: Mcc
+          type: integer
+          format: int64
+    OrderDetailsAPISchema:
+      title: OrderDetailsAPISchema
+      type: object
+      properties:
+        lineItems:
+          title: Line Items
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLineItemsAPISchema'
+          description: The details of the line items of the order.
+        countryCode:
+          $ref: '#/components/schemas/CountryCodeEnum'
+          title: Country Code
+          description: The country in which the order is created
+        retailerCountryCode:
+          $ref: '#/components/schemas/CountryCodeEnum'
+          title: Retailer Country Code
+          description: The country code of the retailer
+        fees:
+          title: Fee Details
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderFeesAPISchema'
+          description: The details of fees charged.
+        shipping:
+          $ref: '#/components/schemas/OrderShippingAPISchema'
+          title: Shipping Details
+          description: The details of shipping charged.
+    PaymentStatus:
+      title: PaymentStatus
+      enum:
+      - PENDING
+      - FAILED
+      - AUTHORIZED
+      - SETTLING
+      - PARTIALLY_SETTLED
+      - SETTLED
+      - DECLINED
+      - CANCELLED
+      type: string
+      description: An enumeration.
+    PaymentStatusTypeEnum:
+      title: PaymentStatusTypeEnum
+      enum:
+      - APPLICATION_ERROR
+      - GATEWAY_REJECTED
+      - GATEWAY_TIMEOUT
+      - ISSUER_DECLINED
+      type: string
+      description: "The status reason type for the payment, providing more information on the error. \n`APPLICATION_ERROR` indicates something went wrong internally within primer's system. \n`GATEWAY_REJECTED` indicates that request was rejected on the third-party. \n`GATEWAY_TIMEOUT` indicates the timeout limit on the third party request was exceeded. \n`ISSUER_DECLINED` indicates a legitimate decline that is not due to a timeout.\n"
+    FraudCheckAPISchema:
+      title: FraudCheckAPISchema
+      description: 'Results of the pre-authorization and post-authorization fraud checks.
+
+        '
+      type: object
+      properties:
+        source:
+          type: string
+          example: FRAUD_PROVIDER
+        preAuthorizationResult:
+          $ref: '#/components/schemas/PreAuthFraudDecisionTypeEnum'
+          example: THREE_DS
+        preAuthorizationRecommendation:
+          $ref: '#/components/schemas/PreAuthorizationRecommendationEnum'
+          example: TRANSACTION_RISK_ANALYSIS
+        postAuthorizationResult:
+          $ref: '#/components/schemas/PostAuthFraudDecisionTypeEnum'
+          example: ACCEPT
+    AdvisedActionEnum:
+      title: AdvisedActionEnum
+      enum:
+      - RETRY_LATER
+      - UPDATE_DATA
+      - DO_NOT_RETRY
+      - STOP_ALL_PAYMENTS
+      type: string
+      description: "The Primer-recommended action to take based on the underlying decline reason and advice code. This advised action is unified across all supported processors and payment methods.\n\n- `RETRY_LATER`: The payment was likely declined due to a temporary issue (e.g. Insufficient funds). The payment can be retried immediately or at a later date. \n- `UPDATE_DATA`: The payment was likely declined because critical data was missing or out-of-date. Please ensure you use the most up-to-date payment information and customer details before retrying the payment.\n- `DO_NOT_RETRY`: The payment was declined and should not be retried. You can still charge this payment method for future orders or installments.\n- `STOP_ALL_PAYMENTS`: The processor or payment method explicitly informs you to stop making any payment requests with this payment method. Please use another payment method to charge this customer.\n- `null`: Primer is unable to determine a recommended action. \n"
+    BlockingPaymentActionTypeEnum:
+      title: BlockingPaymentActionTypeEnum
+      enum:
+      - 3DS_AUTHENTICATION
+      - USE_PRIMER_SDK
+      - PAYMENT_METHOD_VOUCHER
+      - PROCESSOR_3DS
+      type: string
+      description: An enumeration.
+    CardRegionRestrictionEnum:
+      title: CardRegionRestrictionEnum
+      enum:
+      - DOMESTIC_USE_ONLY
+      - NONE
+      - UNKNOWN
+      type: string
+      description: An enumeration.
+    OrderShippingAPISchema:
+      title: OrderShippingAPISchema
+      type: object
+      properties:
+        amount:
+          minimum: 0.0
+          type: integer
+          format: int64
+          description: The shipping amount charged to the customer, in minor units. e.g. for $7, use `700`.
+        methodId:
+          type: string
+          description: Your unique identifier of the shipping method selected by the customer.
+        methodName:
+          type: string
+          description: The display label for the selected shipping method (e.g. "Standard Shipping").
+        methodDescription:
+          type: string
+          description: The descriptive text that is displayed alongside the shipping method name.
+    RiskAssessmentStatusEnum:
+      title: RiskAssessmentStatusEnum
+      enum:
+      - MATCHED
+      - NOT_MATCHED
+      - NOT_VERIFIED
+      - NOT_PROVIDED
+      - NOT_APPLICABLE
+      - SKIPPED
+      type: string
+      description: Possible risk assessment values for CVV and AVS checks.
+    OrderLineItemsAPISchema:
+      title: OrderLineItemsAPISchema
+      description: "The details of the line items of the order.\n\nThe total amount of a line item is calculated like so: \n````\n  totalAmount = (amount * quantity) - discountAmount + taxAmount\n```\n"
+      type: object
+      required:
+      - amount
+      properties:
+        itemId:
+          title: Item ID
+          type: string
+          description: A unique identifier for the line item.
+          minLength: 1
+          maxLength: 255
+        name:
+          title: Name
+          type: string
+          description: A name of the item.
+          maxLength: 255
+        description:
+          title: Item ID
+          type: string
+          description: A description of the item.
+          maxLength: 255
+        amount:
+          minimum: 0.0
+          type: integer
+          format: int64
+          description: The amount charged to the customer, in minor units. The minimum amount is 0. The maximum amount is the limit of `int64`.
+        quantity:
+          type: integer
+          description: The number of the particular line item that is being ordered.
+          default: 1
+          format: int64
+        discountAmount:
+          title: Discount Amount
+          minimum: 0.0
+          type: integer
+          format: int64
+          description: Any discount applicable to this item, in minor units. This discount is applied for the entire line item, and not per `quantity`.
+        taxAmount:
+          title: Tax Amount
+          minimum: 0.0
+          type: integer
+          format: int64
+          description: The tax charged on this item, in minor units. This tax amount is applied for the entire line item, and not per `quantity`.
+        taxCode:
+          title: Tax Code
+          type: string
+          description: The tax code associated with this item, in minor units. This is required for Primer-initiated tax calculations.
+          minLength: 1
+          maxLength: 255
+        productType:
+          $ref: '#/components/schemas/ProductTypeEnum'
+          title: Product Type
+          description: An identifier for the product type.
+        productData:
+          $ref: '#/components/schemas/OrderLineItemsProductDataAPISchema'
+          title: Product Data
+          description: Details related to the product
+    KlarnaCustomerTokenAPISchema:
+      title: KlarnaCustomerTokenAPISchema
+      required:
+      - klarnaCustomerToken
+      - sessionData
+      type: object
+      properties:
+        klarnaCustomerToken:
+          title: Klarnacustomertoken
+          type: string
+        sessionData:
+          $ref: '#/components/schemas/KlarnaSessionDetailsAPISchema'
+    IdealPayNLTokenAPISchema:
+      title: IdealPayNLTokenAPISchema
+      required:
+      - paymentMethodConfigId
+      type: object
+      properties:
+        paymentMethodConfigId:
+          title: Paymentmethodconfigid
+          type: string
+          format: uuid
+    PaymentListAPIResponse:
+      title: PaymentListAPIResponse
+      type: object
+      properties:
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentSummaryAPISchema'
+        nextCursor:
+          title: Nextcursor
+          type: string
+        prevCursor:
+          title: Prevcursor
+          type: string
+    KlarnaTokenDetails:
+      title: KlarnaTokenDetails
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          title: Type
+          type: string
+        brand:
+          title: Brand
+          type: string
+        masked_number:
+          title: Masked Number
+          type: string
+        expiry_date:
+          title: Expiry Date
+          type: string
+    PaymentResumeAPIRequest:
+      title: PaymentResumeAPIRequest
+      required:
+      - resumeToken
+      type: object
+      properties:
+        resumeToken:
+          title: Resume token
+          type: string
+          description: A token containing any information that is sent back from the checkout to complete a blocked payment flow.
+          format: uuid
+      additionalProperties: false
     PaymentCardTokenAPISchema:
       title: PaymentCardTokenAPISchema
       required:
@@ -1528,13 +2053,136 @@ components:
           default: false
         binData:
           $ref: '#/components/schemas/BinDataAPISchema'
-    DeclineTypeEnum:
-      title: DeclineTypeEnum
+    PaymentCreationAPIRequest:
+      title: PaymentCreationAPIRequest
+      required:
+      - paymentMethodToken
+      type: object
+      properties:
+        orderId:
+          title: Order ID
+          type: string
+          description: Your reference for the payment.
+          maxLength: 255
+        currencyCode:
+          $ref: '#/components/schemas/Currency'
+          title: Currency
+          description: 'The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.
+
+            '
+        amount:
+          title: Payment amount
+          minimum: 0.0
+          type: integer
+          format: int64
+          description: 'The amount you would like to charge the customer, in minor units. e.g. for $7, use `700`.
+
+
+            Some currencies, such as Japanese Yen, do not have minor units. In this case you should use the value as it is, without any formatting. For example for ¥100, use `100`. The minimum amount is 0. The maximum amount is the limit of `int64`.'
+        order:
+          $ref: '#/components/schemas/OrderDetailsAPISchema'
+          title: Order Details
+          description: More information associated with the order.
+        paymentMethodToken:
+          title: Payment method token
+          type: string
+          description: 'The payment method token used to authorize the payment.
+
+            '
+        customerId:
+          title: The ID of the customer using the checkout
+          type: string
+          description: 'A unique identifier for your customer.
+
+            This attribute is required if `paymentMethod.vaultOnSuccess` is set to `True`.'
+          maxLength: 255
+        customer:
+          $ref: '#/components/schemas/CustomerDetailsAPISchema'
+          title: Customer Details
+          description: 'More information associated with the customer.
+
+            '
+        metadata:
+          title: Payment Metadata
+          type: object
+          description: 'Additional data to be used throughout the payment lifecycle.
+
+
+            A dictionary of key-value pairs where the values can only be strings or
+
+            integers.
+
+
+            e.g. `{"productId": 1001, "merchantId": "a13bsd62s"}`
+
+            '
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentRequestPaymentMethodOptionsAPISchema'
+          title: Payment Method Options
+          description: Enable certain options associated with the payment method.
+        expand:
+          $ref: '#/components/schemas/Expand'
+      additionalProperties: false
+      example:
+        orderId: order-abc
+        currencyCode: EUR
+        amount: 42
+        paymentMethodToken: heNwnqaeRiqvY1UcslfQc3wxNjEzOTIxNjc4
+        customerId: customer-123
+        customer:
+          emailAddress: customer123@gmail.com
+        metadata:
+          productId: 123
+          merchantId: a13bsd62s
+        paymentMethod:
+          paymentType: SUBSCRIPTION
+          vaultOnSuccess: true
+          authorizationType: ESTIMATED
+    400ErrorResponse:
+      title: 400ErrorResponse
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          allOf:
+          - $ref: '#/components/schemas/ErrorObject'
+          - type: object
+            properties:
+              paymentId:
+                title: Payment ID
+                type: string
+                description: Payment ID of the related pay
+              paymentStatus:
+                title: Status
+                type: string
+                description: Status of the related payment
+    CVVCheckAPISchema:
+      title: CVVCheckAPISchema
+      description: 'Results of any external CVV check performed on this payment.
+
+        '
+      type: object
+      properties:
+        source:
+          type: string
+          example: PROCESSOR
+        result:
+          $ref: '#/components/schemas/RiskAssessmentStatusEnum'
+          example: MATCHED
+    PreAuthorizationRecommendationEnum:
+      title: PreAuthorizationRecommendationEnum
       enum:
-      - SOFT_DECLINE
-      - HARD_DECLINE
+      - TRANSACTION_RISK_ANALYSIS
       type: string
-      description: An enumeration.
+      description: 'Pre-authorization recommendation indicating the SCA exemption or risk assessment path taken. Only present when `preAuthorizationResult` is `THREE_DS_EXEMPTION`.
+
+
+        Values:
+
+        - `TRANSACTION_RISK_ANALYSIS`: Indicates that the fraud check deemed the transaction low risk and recommends applying a Transaction Risk Analysis (TRA) exemption to bypass Strong Customer Authentication (SCA) under PSD2, reducing friction for users.
+
+        '
     PaymentAuthorizationRequestProcessorAPISchema:
       title: PaymentAuthorizationRequestProcessorAPISchema
       type: object
@@ -1549,135 +2197,147 @@ components:
           type: string
           title: Processor Name
           description: The processor name should be provided if the processorMerchantId is not unique across all of your integrations.
-    TransactionOverviewAPISchema:
-      title: TransactionOverviewAPISchema
+    ThreeDSecureAuthenticationAPISchema:
+      title: ThreeDSecureAuthenticationAPISchema
       required:
-      - id
-      - processor
-      - processorMerchantId
-      - type
-      - status
-      - date
-      - amount
-      - currencyCode
+      - responseCode
       type: object
       properties:
-        date:
-          title: Creation date
+        responseCode:
+          $ref: '#/components/schemas/ThreeDSecureAuthResponseCodeEnum'
+        reasonCode:
+          title: Reasoncode
+          anyOf:
+          - $ref: '#/components/schemas/ThreeDSecureSkippedReasonCodeEnum'
+          - $ref: '#/components/schemas/ThreeDSecureFailedReasonCodeEnum'
+        reasonText:
+          title: Reasontext
           type: string
-          description: Date & time of the transaction (UTC)
+        protocolVersion:
+          title: Protocolversion
+          type: string
+        challengeIssued:
+          title: Challengeissued
+          type: boolean
+    OrderFeesAPISchema:
+      title: OrderFeesAPISchema
+      type: object
+      required:
+      - amount
+      properties:
         amount:
           minimum: 0.0
           type: integer
           format: int64
-          description: Transaction amount in minor units
-        currencyCode:
-          $ref: '#/components/schemas/Currency'
-          title: Currency
-          description: 'The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.
-
-            '
-        orderId:
-          title: Order ID
+          description: The fee amount charged to the customer, in minor  units. e.g. for $7, use `700`.
+        type:
           type: string
-          description: The reference submitted on payment creation or refund.
-        transactionType:
-          $ref: '#/components/schemas/TransactionTypeEnum'
-          title: Transaction type
-        processorTransactionId:
-          title: Processor's transaction ID
+          description: The type of fee.
+          minLength: 1
+          maxLength: 255
+        description:
           type: string
-          description: Processor's unique identifier for the transaction
-        processorName:
-          title: Processor Name
-          type: string
-          description: An identifier of a processor.
-        processorMerchantId:
-          title: Processor master account identifier
-          type: string
-          description: 'Processor''s main account identifier.
-
-
-            * Adyen: Account code
-
-            * Braintree: Merchant ID
-
-            * Stripe: Account ID"
-
-            '
-        processorStatus:
-          $ref: '#/components/schemas/PaymentStatus'
-          title: Processor Transaction status
-          description: Transaction status, please refer to the [Transaction Status Codes](#section/API-Usage-Guide/Payment-Status) table for more information
-        processorStatusReason:
-          $ref: '#/components/schemas/StatusReasonAPISchema'
-          title: Payment error
-          description: 'If the transaction has a declined or failed status.
-
-
-            Only if the status is `DECLINED` or `FAILED`, otherwise `null`.
-
-            '
-        cardTokenType:
-          title: Card token type used
-          allOf:
-          - $ref: '#/components/schemas/CardTokenTypeEnum'
-          description: 'The type of card token used for the payment.
-
-
-            Only applies for card payments.
-
-            '
-          example: CARD_PAN
-        reason:
-          title: Reason
-          type: string
-          description: 'The reason for a cancel or refund request on this transaction, if any.
-
-            '
-          example: Item returned.
-        events:
-          title: Events
-          type: array
-          description: A list of events related to the transaction, included when the `expand` parameter is passed.
-          items:
-            $ref: '#/components/schemas/TransactionEventApiResponse'
-    KlarnaCustomerTokenAPISchema:
-      title: KlarnaCustomerTokenAPISchema
-      required:
-      - klarnaCustomerToken
-      - sessionData
-      type: object
-      properties:
-        klarnaCustomerToken:
-          title: Klarnacustomertoken
-          type: string
-        sessionData:
-          $ref: '#/components/schemas/KlarnaSessionDetailsAPISchema'
-    404ErrorResponse:
-      title: 404ErrorResponse
+          description: A description of the fee, e.g. "Currency Conversion Fee".
+          minLength: 1
+          maxLength: 255
+    409ErrorResponse:
+      title: 409ErrorResponse
       type: object
       required:
       - error
       properties:
         error:
-          $ref: '#/components/schemas/ErrorObject'
-    BlockingPaymentActionTypeEnum:
-      title: BlockingPaymentActionTypeEnum
+          allOf:
+          - $ref: '#/components/schemas/ErrorObject'
+          - type: object
+            properties:
+              paymentId:
+                title: Payment ID
+                type: string
+                description: Payment ID of the related payment
+              paymentStatus:
+                title: Status
+                type: string
+                description: Status of the related payment
+    RiskDataAPISchema:
+      title: RiskDataAPISchema
+      description: 'Risk data associated with this payment.
+
+        '
+      type: object
+      properties:
+        fraudChecks:
+          title: Fraud Checks
+          $ref: '#/components/schemas/FraudCheckAPISchema'
+        cvvCheck:
+          title: CVV Check
+          $ref: '#/components/schemas/CVVCheckAPISchema'
+        avsCheck:
+          title: AVS Check
+          $ref: '#/components/schemas/AVSCheckAPISchema'
+    OptionalAddressAPISchema:
+      title: OptionalAddressAPISchema
+      type: object
+      properties:
+        firstName:
+          title: First Name
+          type: string
+          minLength: 1
+          maxLength: 255
+        lastName:
+          title: Last Name
+          type: string
+          minLength: 1
+          maxLength: 255
+        addressLine1:
+          title: Address Line 1
+          type: string
+          description: Street name, Company name or PO Box
+          minLength: 1
+          maxLength: 255
+        addressLine2:
+          title: Address Line 2
+          type: string
+          description: Apartment, Unit or Building number
+          maxLength: 255
+        city:
+          title: City
+          type: string
+          description: Name of the city, district, town or village
+          minLength: 1
+          maxLength: 255
+        state:
+          title: State
+          type: string
+          description: State, County or Province
+          minLength: 1
+          maxLength: 255
+        countryCode:
+          $ref: '#/components/schemas/CountryCodeEnum'
+          title: Country Code
+          description: Two letter ISO country code
+        postalCode:
+          title: Postal Code
+          type: string
+          description: Postal or ZIP code
+          minLength: 1
+          maxLength: 255
+    TransactionDeclineReasonV2Enum:
+      title: TransactionDeclineReasonV2Enum
       enum:
-      - 3DS_AUTHENTICATION
-      - USE_PRIMER_SDK
-      - PAYMENT_METHOD_VOUCHER
-      - PROCESSOR_3DS
-      type: string
-      description: An enumeration.
-    CardProductTypeEnum:
-      title: CardProductTypeEnum
-      enum:
-      - CONSUMER
-      - BUSINESS
-      - GOVERNMENT
+      - ERROR
+      - INVALID_CARD_NUMBER
+      - EXPIRED_CARD
+      - LOST_OR_STOLEN_CARD
+      - SUSPECTED_FRAUD
       - UNKNOWN
+      - DECLINED
+      - REFER_TO_CARD_ISSUER
+      - DO_NOT_HONOR
+      - INSUFFICIENT_FUNDS
+      - WITHDRAWAL_LIMIT_EXCEEDED
+      - ISSUER_TEMPORARILY_UNAVAILABLE
+      - AUTHENTICATION_REQUIRED
       type: string
       description: An enumeration.
     ErrorObject:
@@ -1710,22 +2370,370 @@ components:
           items:
             type: object
           description: Returned in case of a badly formed request
-    RiskDataAPISchema:
-      title: RiskDataAPISchema
-      description: 'Risk data associated with this payment.
+    RecurringPaymentTypeSchema:
+      $ref: '#/components/schemas/RecurringTransactionTypeEnum'
+      title: Recurring Payment Type
+      description: "Payment types, primarily to be used for recurring payments.\nSee the table below for all possible values. \n\nNote: if no field is set, we will return a blank value and make a best effort\nto calculate the downstream fields required for processing the payment.\n\n| paymentType | Use case |\n| --- | --- |\n| `FIRST_PAYMENT` | a customer-initiated payment which is the first in a series of recurring payments or subscription, or a card on file scenario. |\n| `ECOMMERCE` | a customer-initiated payment using stored payment details where the cardholder is present. |\n| `SUBSCRIPTION` | a merchant-initiated payment as part of a series of payments on a fixed schedule and a set amount. |\n| `UNSCHEDULED` | a merchant-initiated payment using stored payment details with no fixed schedule or amount. |\n"
+    TransactionEventApiResponse:
+      type: object
+      required:
+      - id
+      - date
+      - type
+      properties:
+        id:
+          type: string
+          description: The id of the event.
+          format: uuid
+          example: 46d25279-9d36-4237-8f45-2dc4e4e262d6
+        processorEventId:
+          type: string
+          description: The ID of the event from the payment processor (e.g. PayPal).
+          example: 30B258847H402782C
+        date:
+          type: string
+          format: date-time
+          description: Timestamp of when the event occurred.
+          example: '2025-01-22T13:39:18.992928'
+        type:
+          type: string
+          description: The type of the event.
+          enum:
+          - AUTHORIZATION_SUCCEEDED
+          - AUTHORIZATION_ADJUSTMENT_SUCCEEDED
+          - CAPTURE_SUCCEEDED
+          - CANCELLATION_SUCCEEDED
+          example: CAPTURE_SUCCEEDED
+        amount:
+          type: integer
+          format: int64
+          description: The amount associated with the event in minor units.
+          example: 1234
+        final:
+          type: boolean
+          description: 'Indicates whether the event is final.
 
-        '
+            For example, in the case of a capture event this would indicate whether it was a final capture or not, but in the case of a cancellation request this field will not be present.'
+          example: false
+    PaymentAdjustAuthorizationAPIRequest:
+      title: PaymentAdjustAuthorizationAPIRequest
+      required:
+      - amount
       type: object
       properties:
-        fraudChecks:
-          title: Fraud Checks
-          $ref: '#/components/schemas/FraudCheckAPISchema'
-        cvvCheck:
-          title: CVV Check
-          $ref: '#/components/schemas/CVVCheckAPISchema'
-        avsCheck:
-          title: AVS Check
-          $ref: '#/components/schemas/AVSCheckAPISchema'
+        amount:
+          title: Payment amount
+          minimum: 0.0
+          type: integer
+          format: int64
+          description: 'The **final** amount you would like to charge the customer, in minor units. e.g. for $7, use `700`.
+
+
+            Some currencies, such as Japanese Yen, do not have minor units. In this case you should use the value as it is, without any formatting. For example for ¥100, use `100`.
+
+
+            If the amount is provided on this level, it would override any amount calculated from the provided line items, shipping and other amounts.'
+        expand:
+          $ref: '#/components/schemas/Expand'
+    AddressAPISchema:
+      title: AddressAPISchema
+      required:
+      - addressLine1
+      - city
+      - countryCode
+      type: object
+      properties:
+        firstName:
+          title: First Name
+          type: string
+        lastName:
+          title: Last Name
+          type: string
+        addressLine1:
+          title: Address Line 1
+          type: string
+          description: Street name, Company name or PO Box
+        addressLine2:
+          title: Address Line 2
+          type: string
+          description: Apartment, Unit or Building number
+        city:
+          title: City
+          type: string
+          description: Name of the city, district, town or village
+        state:
+          title: State
+          type: string
+          description: State, County or Province
+        countryCode:
+          $ref: '#/components/schemas/CountryCodeEnum'
+          title: Country Code
+          description: Two letter ISO country code
+        postalCode:
+          title: Postal Code
+          type: string
+          description: Postal or ZIP code
+    AccountFundingTypeEnum:
+      title: AccountFundingTypeEnum
+      enum:
+      - CREDIT
+      - DEBIT
+      - PREPAID
+      - CHARGE
+      - DEFERRED_DEBIT
+      - UNKNOWN
+      type: string
+      description: An enumeration.
+    CardAccountNumberTypeEnum:
+      title: CardAccountNumberTypeEnum
+      enum:
+      - PRIMARY_ACCOUNT_NUMBER
+      - NETWORK_TOKEN
+      - DIGITAL_PAN
+      - UNKNOWN
+      type: string
+      description: An enumeration.
+    KlarnaPaymentSessionAPISchema:
+      title: KlarnaPaymentSessionAPISchema
+      required:
+      - klarnaAuthorizationToken
+      - sessionData
+      type: object
+      properties:
+        klarnaAuthorizationToken:
+          title: Klarnaauthorizationtoken
+          type: string
+        sessionData:
+          $ref: '#/components/schemas/KlarnaSessionDetailsAPISchema'
+    PaymentAPIResponse:
+      title: PaymentAPIResponse
+      type: object
+      properties:
+        id:
+          title: Payment identifier
+          type: string
+          description: 'The unique payment ID.
+
+
+            You can use this ID to retrieve the payment details, or perform downstream
+
+            operations.
+
+            '
+        date:
+          title: Payment date
+          type: string
+          description: The date and time at which the payment was created in UTC format.
+          format: date-time
+        dateUpdated:
+          title: Payment updated date
+          type: string
+          description: The date and time of the last payment update in UTC format.
+          format: date-time
+        status:
+          $ref: '#/components/schemas/PaymentStatus'
+          title: Current status
+          description: See the payment [status table](../docs#payment-status) for more information.
+        cardTokenType:
+          title: Card token type used
+          allOf:
+          - $ref: '#/components/schemas/CardTokenTypeEnum'
+          description: 'The type of card token used for the payment.
+
+
+            Only applies for card payments.
+
+            '
+          example: CARD_PAN
+        orderId:
+          title: Order ID
+          type: string
+          description: Your reference for the payment.
+          maxLength: 255
+        currencyCode:
+          $ref: '#/components/schemas/Currency'
+          title: Currency
+          description: 'The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.
+
+            '
+        amount:
+          title: Payment amount
+          minimum: 0.0
+          type: integer
+          format: int64
+          description: The amount you charged the customer, in minor units.
+        order:
+          $ref: '#/components/schemas/OrderDetailsAPISchema'
+          title: Order Details
+          description: More information associated with the order.
+        customerId:
+          title: The ID of the customer using the checkout
+          type: string
+          description: The unique identifier for your customer.
+          maxLength: 255
+        customer:
+          $ref: '#/components/schemas/CustomerDetailsAPISchema'
+          title: Customer Details
+          description: More information associated with the customer.
+        metadata:
+          title: Payment Metadata
+          type: object
+          description: 'Additional data to be used throughout the payment lifecycle.
+
+            '
+        paymentMethod:
+          $ref: '#/components/schemas/PaymentResponsePaymentMethodOptionsAPISchema'
+          title: Payment Method Options
+          description: The payment method options provided in the request, as well as the token used to process the payment.
+        processor:
+          $ref: '#/components/schemas/PaymentResponseProcessorAPISchema'
+          title: Processor Information
+          description: More information associated with the payment processor, including the processor name.
+        requiredAction:
+          $ref: '#/components/schemas/PaymentRequiredActionAPISchema'
+          title: Required action
+          description: Required action to perform in order to resume the payment workflow. This can be requiring a 3DS check from the customer for instance.
+        statusReason:
+          $ref: '#/components/schemas/StatusReasonAPISchema'
+          title: Status Reason
+          description: 'Check this field for more information regarding the payment''s status. This is especially useful when the status is `DECLINED` or `FAILED`.
+
+            '
+        transactions:
+          title: Transactions
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionOverviewAPISchema'
+          description: 'A list summarizing the transactions that occurred while processing the payment.
+
+
+            Note: a refund is a separate transaction and so will appear in this `transactions` list if a refund was performed.'
+        riskData:
+          $ref: '#/components/schemas/RiskDataAPISchema'
+          title: Risk Data
+    PaymentCaptureAPIRequest:
+      title: PaymentCaptureAPIRequest
+      type: object
+      properties:
+        amount:
+          title: Amount to capture
+          minimum: 0.0
+          type: integer
+          format: int64
+          description: 'The amount you would like to capture, in minor units. The currency used on authorization is assumed.
+
+
+            If no amount is specified it defaults to the full amount.'
+        final:
+          title: Final capture
+          type: boolean
+          description: 'Indicates whether the capture request is the final capture request.
+
+
+            After a final capture, no subsequent captures are allowed.'
+          default: true
+        order:
+          title: Order
+          description: More information associated with the order.
+          type: object
+          properties:
+            retailerCountryCode:
+              $ref: '#/components/schemas/CountryCodeEnum'
+              title: Retailer Country Code
+              description: 'The country code of the retailer.
+
+                This field is passed to the processor and overwrites the retailer country code set in order details.'
+        metadata:
+          title: Payment Metadata
+          description: 'Additional payment metadata.
+
+            A dictionary of key-value pairs where the values can only be strings or integers. Keys which already exist in the payment metadata will be overwritten.'
+          type: object
+        expand:
+          $ref: '#/components/schemas/Expand'
+      additionalProperties: false
+      example:
+        amount: 42
+    Expand:
+      type:
+      - array
+      - 'null'
+      items:
+        type: string
+        enum:
+        - transactions.events
+        example:
+        - transactions.events
+      description: A list of fields to expand, such as transactions.events.
+    PaymentRefundAPIRequest:
+      title: PaymentRefundAPIRequest
+      type: object
+      properties:
+        amount:
+          title: Amount to refund
+          minimum: 0.0
+          type: integer
+          format: int64
+          description: 'The amount you would like to refund the customer, in minor units. e.g. for $7, use `700`.
+
+
+            Defaults to remaining non-refunded amount.'
+        orderId:
+          title: Order ID
+          type: string
+          description: 'Optionally you can pass a specific order ID for the refund.
+
+
+            By default this will be set to the original `orderId` given on payment creation.'
+        reason:
+          title: Refund reason
+          type: string
+          description: You can optionally specify a reason for the refund, for your own records. This will be returned in the refund transaction of payment responses.
+        transactionEventId:
+          title: Transaction Event ID
+          type: string
+          format: uuid
+          description: Specific capture ID to target for the refund. Use this to specify which transaction event the refund should apply to.
+          example: 57a2027d-36a6-494f-ad07-a6e1d0c77772
+        expand:
+          $ref: '#/components/schemas/Expand'
+      additionalProperties: false
+      example:
+        amount: 42
+        orderId: order-1234-refund
+        reason: 'Customer returned order #1234.'
+    KlarnaSessionDetailsAPISchema:
+      title: KlarnaSessionDetailsAPISchema
+      required:
+      - billingAddress
+      - purchaseCountry
+      - purchaseCurrency
+      - locale
+      - orderLines
+      type: object
+      properties:
+        recurringDescription:
+          title: Recurringdescription
+          type: string
+        billingAddress:
+          $ref: '#/components/schemas/KlarnaAddressAPISchema'
+        shippingAddress:
+          $ref: '#/components/schemas/KlarnaAddressAPISchema'
+        purchaseCountry:
+          title: Purchasecountry
+          type: string
+        purchaseCurrency:
+          title: Purchasecurrency
+          type: string
+        locale:
+          title: Locale
+          type: string
+        orderLines:
+          title: Orderlines
+          type: array
+          items: {}
+        tokenDetails:
+          $ref: '#/components/schemas/KlarnaTokenDetails'
     PaymentRequestPaymentMethodOptionsAPISchema:
       title: PaymentRequestPaymentMethodOptionsAPISchema
       type: object
@@ -1770,350 +2778,194 @@ components:
             Not all payment processors support this field so ignore it if you are not requested to provide it. If not provided defaults to null.
 
             '
-    422ErrorResponse:
-      title: 422ErrorResponse
-      type: object
+    StatusReasonAPISchema:
+      title: StatusReasonAPISchema
       required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ErrorObject'
-    PrepaidReloadableEnum:
-      title: PrepaidReloadableEnum
-      enum:
-      - RELOADABLE
-      - NON_RELOADABLE
-      - NOT_APPLICABLE
-      - UNKNOWN
-      type: string
-      description: An enumeration.
-    PreAuthorizationRecommendationEnum:
-      title: PreAuthorizationRecommendationEnum
-      enum:
-      - TRANSACTION_RISK_ANALYSIS
-      type: string
-      description: 'Pre-authorization recommendation indicating the SCA exemption or risk assessment path taken. Only present when `preAuthorizationResult` is `THREE_DS_EXEMPTION`.
-
-
-        Values:
-
-        - `TRANSACTION_RISK_ANALYSIS`: Indicates that the fraud check deemed the transaction low risk and recommends applying a Transaction Risk Analysis (TRA) exemption to bypass Strong Customer Authentication (SCA) under PSD2, reducing friction for users.
-
-        '
-    CardNetworkEnum:
-      title: CardNetworkEnum
-      enum:
-      - AMEX
-      - DANKORT
-      - DINERS_CLUB
-      - DISCOVER
-      - EFTPOS
-      - ENROUTE
-      - ELO
-      - HIPER
-      - INTERAC
-      - JCB
-      - MAESTRO
-      - MASTERCARD
-      - MIR
-      - PRIVATE_LABEL
-      - UNIONPAY
-      - VISA
-      - CARTES_BANCAIRES
-      - OTHER
-      type: string
-      description: 'The list of available card networks.
-
-        '
-    PreAuthFraudDecisionTypeEnum:
-      title: PreAuthFraudDecisionTypeEnum
-      enum:
-      - ACCEPT
-      - REFUSE
-      - FAILED
-      - THREE_DS
-      - THREE_DS_EXEMPTION
-      type: string
-      description: Possible pre-authorization fraud check outcomes.
-    ProductTypeEnum:
-      title: ProductTypeEnum
-      enum:
-      - PHYSICAL
-      - DIGITAL
-      type: string
-      description: An enumeration
-    PaymentResumeAPIRequest:
-      title: PaymentResumeAPIRequest
-      required:
-      - resumeToken
+      - type
       type: object
       properties:
-        resumeToken:
-          title: Resume token
-          type: string
-          description: A token containing any information that is sent back from the checkout to complete a blocked payment flow.
-          format: uuid
-      additionalProperties: false
-    PaymentResponseProcessorAPISchema:
-      title: PaymentResponseProcessorAPISchema
-      type: object
-      properties:
-        name:
-          title: Processor Name
-          type: string
-          description: The payment processor used for this payment.
-          maxLength: 255
-        processorMerchantId:
-          title: Processor Merchant ID
-          type: string
-          description: The merchant ID registered at the payment processor used for this payment.
-          maxLength: 255
-        amountCaptured:
-          title: Amount captured
-          type: integer
-          minimum: 0.0
-          format: int64
-          description: 'If no capture was performed, this value will be set to `0`.
+        type:
+          $ref: '#/components/schemas/PaymentStatusTypeEnum'
+          title: Payment status type
+        declineType:
+          $ref: '#/components/schemas/DeclineTypeEnum'
+          title: Decline Type
+          description: 'If the error is of type `ISSUER_DECLINED` this will be returned.
 
 
-            If one or more partial captures were performed, this value will be a sum
+            Declines of type `SOFT_DECLINE` may be retried,
 
-            of all partial capture amounts.
+            whereas declines of type `HARD_DECLINE` should not be retried.
 
             '
-        amountRefunded:
-          title: Amount refunded
-          type: integer
-          minimum: 0.0
-          format: int64
-          description: 'If no refund was performed, this value will be set to `0`.
+        code:
+          $ref: '#/components/schemas/TransactionDeclineReasonV2Enum'
+          title: Payment status code
+          description: If the error is of type `ISSUER_DECLINED`, this will be returned.
+        message:
+          title: Processor message
+          type: string
+          description: In case of an error on the processor's part, we will return the message returned by the processor. This is usually a human readable error.
+        paymentMethodResultCode:
+          title: Payment Method Result Code
+          type: string
+          description: 'The result code returned by the payment method or card network. This code is unified across all supported processors.
 
 
-            If one or more partial refunds were performed, this value will be a sum
-
-            of all partial refund amounts.
+            _e.g. Code `46` refers to the message "Closed account" for Visa across all supported processors._
 
             '
-    ThreeDSecureAuthenticationAPISchema:
-      title: ThreeDSecureAuthenticationAPISchema
-      required:
-      - responseCode
-      type: object
-      properties:
-        responseCode:
-          $ref: '#/components/schemas/ThreeDSecureAuthResponseCodeEnum'
-        reasonCode:
-          title: Reasoncode
-          anyOf:
-          - $ref: '#/components/schemas/ThreeDSecureSkippedReasonCodeEnum'
-          - $ref: '#/components/schemas/ThreeDSecureFailedReasonCodeEnum'
-        reasonText:
-          title: Reasontext
+        paymentMethodResultMessage:
+          title: Payment Method Result Message
           type: string
-        protocolVersion:
-          title: Protocolversion
-          type: string
-        challengeIssued:
-          title: Challengeissued
-          type: boolean
-    CustomerDetailsAPISchema:
-      title: CustomerDetailsAPISchema
-      type: object
-      properties:
-        emailAddress:
-          title: Email Address
-          type: string
-          description: 'Customer email address.
+          description: 'Human-readable version of the Payment Method Result Code. This message is unified across all supported processors.
 
 
-            Note: It is recommended to include this field if a 3DS check will be performed
+            _e.g. Code `46` refers to the message "Closed account" for Visa across all supported processors._
 
             '
-          format: email
-        mobileNumber:
-          title: Mobile Number
+        paymentMethodAdviceCode:
+          title: Payment Method Advice Code
           type: string
-          description: The customer's mobile number
-          maxLength: 255
-        firstName:
-          title: First Name
-          type: string
-          description: The customer's first name
-          maxLength: 255
-        lastName:
-          title: Last Name
-          type: string
-          description: The customer's last name
-          maxLength: 255
-        billingAddress:
-          $ref: '#/components/schemas/OptionalAddressAPISchema'
-          title: Billing Address
-          description: 'Customer billing address.
+          description: 'The advice code returned by the payment method or card network. This code is unified across all supported processors.
 
 
-            Note: It is recommended to include this field if a 3DS check will be performed
+            _For payments made with Mastercard, this represents the Merchant Advice Code (MAC)._
+
+
+            _e.g. Code `24` refers to the message "Retry after 1 hour" for Mastercard across all supported processors._
 
             '
-        shippingAddress:
-          $ref: '#/components/schemas/OptionalAddressAPISchema'
-          title: Shipping Address
-          description: Customer shipping address
-        taxId:
-          title: Tax ID
+        paymentMethodAdviceMessage:
+          title: Payment Method Advice Message
           type: string
-          description: The customer's tax id number for tax exemptions
-          maxLength: 255
-        nationalDocumentId:
-          title: National Document ID
-          type: string
-          description: The customer's national identification number
-          maxLength: 255
-    PaymentCaptureAPIRequest:
-      title: PaymentCaptureAPIRequest
-      type: object
-      properties:
-        amount:
-          title: Amount to capture
-          minimum: 0.0
-          type: integer
-          format: int64
-          description: 'The amount you would like to capture, in minor units. The currency used on authorization is assumed.
+          description: 'Human-readable version of the Payment Method Advice Code. This message is unified across all supported processors.
 
 
-            If no amount is specified it defaults to the full amount.'
-        final:
-          title: Final capture
-          type: boolean
-          description: 'Indicates whether the capture request is the final capture request.
+            _For payments made with Mastercard, this represents the message of the Merchant Advice Code (MAC)._
 
 
-            After a final capture, no subsequent captures are allowed.'
-          default: true
-        order:
-          title: Order
-          description: More information associated with the order.
-          type: object
-          properties:
-            retailerCountryCode:
-              $ref: '#/components/schemas/CountryCodeEnum'
-              title: Retailer Country Code
-              description: 'The country code of the retailer.
+            _e.g. Code `24` refers to the message "Retry after 1 hour" for Mastercard across all supported processors._
 
-                This field is passed to the processor and overwrites the retailer country code set in order details.'
-        metadata:
-          title: Payment Metadata
-          description: 'Additional payment metadata.
-
-            A dictionary of key-value pairs where the values can only be strings or integers. Keys which already exist in the payment metadata will be overwritten.'
-          type: object
-        expand:
-          $ref: '#/components/schemas/Expand'
-      additionalProperties: false
-      example:
-        amount: 42
-    PaymentCancelAPIRequest:
-      title: PaymentCancelAPIRequest
-      type: object
-      properties:
-        reason:
-          title: Cancellation reason
-          type: string
-          description: You can optionally specify a reason for the cancellation. This is for your own records.
-        expand:
-          $ref: '#/components/schemas/Expand'
-      additionalProperties: false
-      example:
-        reason: 'Customer cancelled order #1234.'
-    BinDataAPISchema:
-      title: BinDataAPISchema
-      required:
-      - network
-      - regionalRestriction
-      - accountNumberType
-      - accountFundingType
-      - prepaidReloadableIndicator
-      - productUsageType
-      - productCode
-      - productName
-      type: object
-      properties:
-        network:
-          $ref: '#/components/schemas/CardNetworkEnum'
-        issuerCountryCode:
-          $ref: '#/components/schemas/CountryCodeEnum'
-        issuerName:
-          title: Issuername
-          type: string
-        issuerCurrencyCode:
-          $ref: '#/components/schemas/Currency'
-        regionalRestriction:
-          $ref: '#/components/schemas/CardRegionRestrictionEnum'
-        accountNumberType:
-          $ref: '#/components/schemas/CardAccountNumberTypeEnum'
-        accountFundingType:
-          $ref: '#/components/schemas/AccountFundingTypeEnum'
-        prepaidReloadableIndicator:
-          $ref: '#/components/schemas/PrepaidReloadableEnum'
-        productUsageType:
-          $ref: '#/components/schemas/CardProductTypeEnum'
-        productCode:
-          title: Productcode
-          type: string
-        productName:
-          title: Productname
-          type: string
-    PaymentRequiredActionAPISchema:
-      title: PaymentRequiredActionAPISchema
-      required:
-      - name
-      - description
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/BlockingPaymentActionTypeEnum'
-          title: Name
-          description: Action name
-        description:
-          title: Description
-          type: string
-          description: Human description of the required action to perform.
-        clientToken:
-          title: Client token
-          type: string
-          description: The client token to be returned to the SDK if a required action is returned.
-    AuthorizationTypeEnum:
-      title: AuthorizationTypeEnum
+            '
+        advisedAction:
+          title: Advised Action
+          $ref: '#/components/schemas/AdvisedActionEnum'
+    PaymentMethodTypeEnum:
+      title: PaymentMethodTypeEnum
       enum:
-      - ESTIMATED
-      - FINAL
+      - PAYMENT_CARD
+      - GOOGLE_PAY
+      - APPLE_PAY
+      - PAYPAL
+      - BANK_ACCOUNT
+      - KLARNA
+      - APAYA
+      - OPENNODE
+      - HOOLAH
+      - ATOME
+      - COINBASE
+      - NETS
+      - TWOC2P
+      - CLEARPAY
+      - SHOPEEPAY
+      - TRIPLE_A
+      - AFTERPAY
+      - NOL_PAY
+      - PAY_NL_IDEAL
+      - PAY_NL_BANCONTACT
+      - PAY_NL_DIRECT_DEBIT
+      - PAY_NL_SOFORT_BANKING
+      - PAY_NL_PAYPAL
+      - PAY_NL_PAYCONIQ
+      - PAY_NL_GIROPAY
+      - PAY_NL_P24
+      - PAY_NL_EPS
+      - PAY_NL_KAARTDIRECT
+      - ADYEN_SOFORT
+      - ADYEN_TWINT
+      - ADYEN_GIROPAY
+      - ADYEN_TRUSTLY
+      - ADYEN_ALIPAY
+      - ADYEN_MOBILEPAY
+      - ADYEN_MULTIBANCO
+      - ADYEN_VIPPS
+      - ADYEN_DOTPAY
+      - ADYEN_IDEAL
+      - ADYEN_BLIK
+      - ADYEN_PAYTRAIL
+      - ADYEN_INTERAC
+      - ADYEN_PAYSHOP
+      - ADYEN_MBWAY
+      - ADYEN_AFFIRM
+      - ADYEN_KLARNA
+      - ADYEN_BANCONTACT_PAYCONIQ
+      - ADYEN_EPS
+      - ADYEN_BANCONTACT_CARD
+      - ADYEN_SWISH
+      - MOLLIE_IDEAL
+      - MOLLIE_BANCONTACT
+      - MOLLIE_P24
+      - MOLLIE_GIROPAY
+      - MOLLIE_EPS
+      - MOLLIE_GIFTCARD
+      - MOLLIE_SOFORT
+      - NETAXEPT_PAYTRAIL
+      - BUCKAROO_IDEAL
+      - BUCKAROO_BANCONTACT
+      - BUCKAROO_SOFORT
+      - BUCKAROO_GIROPAY
+      - BUCKAROO_EPS
+      - RAPYD_GCASH
+      - RAPYD_PROMPTPAY
+      - RAPYD_GRABPAY
+      - RAPYD_POLI
+      - RAPYD_FAST
+      - XFERS_PAYNOW
+      - STRIPE_GIROPAY
+      - STRIPE_IDEAL
+      - ALIPAY_CN
+      - CHAI_KAKAOPAY
+      - CHAI_NAVER
+      - CHAI_TOSS
+      - XENDIT_DANA
+      - XENDIT_OVO
+      - XENDIT_SHOPEEPAY
+      - XENDIT_RETAIL_OUTLETS
+      - OMISE_PROMPTPAY
+      - OMISE_TRUEMONEY
+      - EBANX_PAGOFACIL
+      - PACYPAY_WECHAT
+      - PACYPAY_ALIPAY
+      - PACYPAY_ALIPAY_PLUS
+      - WORLDPAY_IDEAL
+      - IPAY88_CARD
+      - INGENICO_PAYPAL
+      - VOLT_PIX
+      - VOLT_BANK_TRANSFER
+      - BRAINTREE_VENMO
+      - THUNES_SPIRIT_OF_CADEAU
+      - THUNES_ILLICADO
+      - THUNES_CARTE_CADEAU_CONFORAMA
+      - THUNES_CHEQUE_FIDELITE_CONFORAMA
+      - SIPS_CPAY
+      - SIPS_CPAYCONFORAMA
+      - MONEXT_CETELEM
+      - MONEXT_CPAY
       type: string
-      description: Type of authorization for the payment.
-    PayPalBillingAgreementAPISchema:
-      title: PayPalBillingAgreementAPISchema
-      required:
-      - paypalBillingAgreementId
-      type: object
-      properties:
-        paypalBillingAgreementId:
-          title: Paypalbillingagreementid
-          type: string
-        externalPayerInfo:
-          $ref: '#/components/schemas/PayPalExternalPayerInfoAPISchema'
-          title: Payer Info
-          description: Information about the PayPal customer
-        shippingAddress:
-          $ref: '#/components/schemas/AddressAPISchema'
-          title: Shipping address
-          description: The PayPal customer's shipping address
-        paypalStatus:
-          title: PayPal order status
-          type: string
-    CardTokenTypeEnum:
-      title: CardTokenTypeEnum
+      description: Payment method type, where `OFF_SESSION_PAYMENT` is used for APM (Alternative Payment Method) payments and `PAYMENT_CARD` for traditional debit or credit cards. Please note that this list is different from one indicated on [available payment methods](/docs/connections/payment-methods/available-payment-methods) page and values of this field will be changed in the future versions of the API.
+    ThreeDSecureSkippedReasonCodeEnum:
+      title: ThreeDSecureSkippedReasonCodeEnum
       enum:
-      - CARD_PAN
-      - NETWORK_TOKEN
-      - PROCESSOR_TOKEN
+      - GATEWAY_UNAVAILABLE
+      - DISABLED_BY_MERCHANT
+      - NOT_SUPPORTED_BY_ISSUER
+      - FAILED_TO_NEGOTIATE
+      - UNKNOWN_ACS_RESPONSE
+      - 3DS_SERVER_ERROR
+      - ACQUIRER_NOT_CONFIGURED
+      - ACQUIRER_NOT_PARTICIPATING
+      - EXEMPTION_ACCEPTED
       type: string
       description: An enumeration.
     PaymentSummaryAPISchema:
@@ -2375,388 +3227,98 @@ components:
       - ZMW
       - ZWL
       description: "3-letter currency code in <a href='https://en.wikipedia.org/wiki/ISO_4217#Active_codes'>ISO 4217</a> format, \ne.g. <code>USD</code> for US dollars.\n"
-    PaymentCreationAPIRequest:
-      title: PaymentCreationAPIRequest
+    404ErrorResponse:
+      title: 404ErrorResponse
+      type: object
       required:
-      - paymentMethodToken
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorObject'
+    CardProductTypeEnum:
+      title: CardProductTypeEnum
+      enum:
+      - CONSUMER
+      - BUSINESS
+      - GOVERNMENT
+      - UNKNOWN
+      type: string
+      description: An enumeration.
+    PreAuthFraudDecisionTypeEnum:
+      title: PreAuthFraudDecisionTypeEnum
+      enum:
+      - ACCEPT
+      - REFUSE
+      - FAILED
+      - THREE_DS
+      - THREE_DS_EXEMPTION
+      type: string
+      description: Possible pre-authorization fraud check outcomes.
+    CustomerDetailsAPISchema:
+      title: CustomerDetailsAPISchema
       type: object
       properties:
-        orderId:
-          title: Order ID
+        emailAddress:
+          title: Email Address
           type: string
-          description: Your reference for the payment.
+          description: 'Customer email address.
+
+
+            Note: It is recommended to include this field if a 3DS check will be performed
+
+            '
+          format: email
+        mobileNumber:
+          title: Mobile Number
+          type: string
+          description: The customer's mobile number
           maxLength: 255
-        currencyCode:
-          $ref: '#/components/schemas/Currency'
-          title: Currency
-          description: 'The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.
-
-            '
-        amount:
-          title: Payment amount
-          minimum: 0.0
-          type: integer
-          format: int64
-          description: 'The amount you would like to charge the customer, in minor units. e.g. for $7, use `700`.
-
-
-            Some currencies, such as Japanese Yen, do not have minor units. In this case you should use the value as it is, without any formatting. For example for ¥100, use `100`. The minimum amount is 0. The maximum amount is the limit of `int64`.'
-        order:
-          $ref: '#/components/schemas/OrderDetailsAPISchema'
-          title: Order Details
-          description: More information associated with the order.
-        paymentMethodToken:
-          title: Payment method token
+        firstName:
+          title: First Name
           type: string
-          description: 'The payment method token used to authorize the payment.
-
-            '
-        customerId:
-          title: The ID of the customer using the checkout
-          type: string
-          description: 'A unique identifier for your customer.
-
-            This attribute is required if `paymentMethod.vaultOnSuccess` is set to `True`.'
+          description: The customer's first name
           maxLength: 255
-        customer:
-          $ref: '#/components/schemas/CustomerDetailsAPISchema'
-          title: Customer Details
-          description: 'More information associated with the customer.
+        lastName:
+          title: Last Name
+          type: string
+          description: The customer's last name
+          maxLength: 255
+        billingAddress:
+          $ref: '#/components/schemas/OptionalAddressAPISchema'
+          title: Billing Address
+          description: 'Customer billing address.
+
+
+            Note: It is recommended to include this field if a 3DS check will be performed
 
             '
-        metadata:
-          title: Payment Metadata
-          type: object
-          description: 'Additional data to be used throughout the payment lifecycle.
-
-
-            A dictionary of key-value pairs where the values can only be strings or
-
-            integers.
-
-
-            e.g. `{"productId": 1001, "merchantId": "a13bsd62s"}`
-
-            '
-        paymentMethod:
-          $ref: '#/components/schemas/PaymentRequestPaymentMethodOptionsAPISchema'
-          title: Payment Method Options
-          description: Enable certain options associated with the payment method.
+        shippingAddress:
+          $ref: '#/components/schemas/OptionalAddressAPISchema'
+          title: Shipping Address
+          description: Customer shipping address
+        taxId:
+          title: Tax ID
+          type: string
+          description: The customer's tax id number for tax exemptions
+          maxLength: 255
+        nationalDocumentId:
+          title: National Document ID
+          type: string
+          description: The customer's national identification number
+          maxLength: 255
+    PaymentCancelAPIRequest:
+      title: PaymentCancelAPIRequest
+      type: object
+      properties:
+        reason:
+          title: Cancellation reason
+          type: string
+          description: You can optionally specify a reason for the cancellation. This is for your own records.
         expand:
           $ref: '#/components/schemas/Expand'
       additionalProperties: false
       example:
-        orderId: order-abc
-        currencyCode: EUR
-        amount: 42
-        paymentMethodToken: heNwnqaeRiqvY1UcslfQc3wxNjEzOTIxNjc4
-        customerId: customer-123
-        customer:
-          emailAddress: customer123@gmail.com
-        metadata:
-          productId: 123
-          merchantId: a13bsd62s
-        paymentMethod:
-          paymentType: SUBSCRIPTION
-          vaultOnSuccess: true
-          authorizationType: ESTIMATED
-    PaymentResponsePaymentMethodOptionsAPISchema:
-      title: PaymentResponsePaymentMethodOptionsAPISchema
-      type: object
-      properties:
-        descriptor:
-          title: Payment descriptor
-          type: string
-          description: 'The description of the payment, as it would typically appear
-
-            on a bank statement.
-
-            '
-          maxLength: 255
-        paymentType:
-          $ref: '#/components/schemas/RecurringPaymentTypeSchema'
-        paymentMethodToken:
-          title: Payment method token
-          type: string
-          description: The payment method token used to authorize the transaction.
-        isVaulted:
-          title: Is Vaulted flag
-          type: boolean
-          description: Whether the payment method token represents a vaulted payment method and can be used for future payments.
-          default: false
-        analyticsId:
-          title: Unique analytics ID
-          type: string
-          description: Unique analytics identifier corresponding to a payment method
-          maxLength: 255
-        paymentMethodType:
-          $ref: '#/components/schemas/PaymentMethodTypeEnum'
-          title: Payment method type
-          description: Payment method type used for payment authorization.
-        paymentMethodData:
-          title: Payment method data
-          anyOf:
-          - $ref: '#/components/schemas/PaymentCardTokenAPISchema'
-          - $ref: '#/components/schemas/PayPalOrderTokenAPISchema'
-          - $ref: '#/components/schemas/PayPalBillingAgreementAPISchema'
-          - $ref: '#/components/schemas/GoCardlessMandateAPISchema'
-          - $ref: '#/components/schemas/KlarnaPaymentSessionAPISchema'
-          - $ref: '#/components/schemas/KlarnaCustomerTokenAPISchema'
-          - $ref: '#/components/schemas/IdealPayNLTokenAPISchema'
-          - $ref: '#/components/schemas/ApayaCustomerTokenAPISchema'
-          description: Payment method data
-        threeDSecureAuthentication:
-          $ref: '#/components/schemas/ThreeDSecureAuthenticationAPISchema'
-          title: Threedsecureauthentication
-          default:
-            response_code: NOT_PERFORMED
-        authorizationType:
-          $ref: '#/components/schemas/AuthorizationTypeEnum'
-          title: Authorization Type
-          description: Allows to adjust the authorized amount after the authorization, if supported by payment method. `FINAL` - the authorized amount is final and can not be adjusted. Adjusting the amount can be only done via canceling the payment and re-authorization with new amount. `ESTIMATED` - the amount can be adjusted after the authorization, if supported by payment method.
-    OrderDetailsAPISchema:
-      title: OrderDetailsAPISchema
-      type: object
-      properties:
-        lineItems:
-          title: Line Items
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderLineItemsAPISchema'
-          description: The details of the line items of the order.
-        countryCode:
-          $ref: '#/components/schemas/CountryCodeEnum'
-          title: Country Code
-          description: The country in which the order is created
-        retailerCountryCode:
-          $ref: '#/components/schemas/CountryCodeEnum'
-          title: Retailer Country Code
-          description: The country code of the retailer
-        fees:
-          title: Fee Details
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderFeesAPISchema'
-          description: The details of fees charged.
-        shipping:
-          $ref: '#/components/schemas/OrderShippingAPISchema'
-          title: Shipping Details
-          description: The details of shipping charged.
-    ThreeDSecureFailedReasonCodeEnum:
-      title: ThreeDSecureFailedReasonCodeEnum
-      enum:
-      - UNKNOWN
-      - REJECTED_BY_ISSUER
-      - CARD_AUTHENTICATION_FAILED
-      - UNKNOWN_DEVICE
-      - UNSUPPORTED_DEVICE
-      - EXCEEDS_AUTHENTICATION_FREQUENCY_LIMIT
-      - EXPIRED_CARD
-      - INVALID_CARD_NUMBER
-      - INVALID_TRANSACTION
-      - NO_CARD_RECORD
-      - SECURITY_FAILURE
-      - STOLEN_CARD
-      - SUSPECTED_FRAUD
-      - TRANSACTION_NOT_PERMITTED_TO_CARDHOLDER
-      - CARDHOLDER_NOT_ENROLLED_IN_SERVICE
-      - TRANSACTION_TIMED_OUT_AT_THE_ACS
-      - LOW_CONFIDENCE
-      - MEDIUM_CONFIDENCE
-      - HIGH_CONFIDENCE
-      - VERY_HIGH_CONFIDENCE
-      - EXCEEDS_ACS_MAXIMUM_CHALLENGES
-      - NON_PAYMENT_NOT_SUPPORTED
-      - THREE_RI_NOT_SUPPORTED
-      - ACS_TECHNICAL_ISSUE
-      - DECOUPLED_REQUIRED_BY_ACS
-      - DECOUPLED_MAX_EXPIRY_EXCEEDED
-      - DECOUPLED_AUTHENTICATION_INSUFFICIENT_TIME
-      - AUTHENTICATION_ATTEMPTED_BUT_NOT_PERFORMED_BY_CARDHOLDER
-      - ACS_TIMED_OUT
-      - INVALID_ACS_RESPONSE
-      - ACS_SYSTEM_ERROR_RESPONSE
-      - ERROR_GENERATING_CAVV
-      - PROTOCOL_VERSION_NOT_SUPPORTED
-      - TRANSACTION_EXCLUDED_FROM_ATTEMPTS_PROCESSING
-      - REQUESTED_PROGRAM_NOT_SUPPORTED
-      type: string
-      description: 'This enum is derived from the `transStatusReason` on page 218 of the
-
-        [EMV Co 3DS protocol specification](https://www.emvco.com/terms-of-use/?u=/wp-content/uploads/documents/EMVCo_3DS_Spec_v220_122018.pdf)
-
-
-        | Code | Description                             |
-
-        |------|-----------------------------------------|
-
-        | 01   | Card authentication failed              |
-
-        | 02   | Unknown Device                          |
-
-        | 03   | Unsupported Device                      |
-
-        | 04   | Exceeds authentication frequency limit  |
-
-        | 05   | Expired card                            |
-
-        | 06   | Invalid card number                     |
-
-        | 07   | Invalid transaction                     |
-
-        | 08   | No Card record                          |
-
-        | 09   | Security failure                        |
-
-        | 10   | Stolen card                             |
-
-        | 11   | Suspected fraud                         |
-
-        | 12   | Transaction not permitted to cardholder |
-
-        | 13   | Cardholder not enrolled in service      |
-
-        | 14   | Transaction timed out at the ACS        |
-
-        | 15   | Low confidence                          |
-
-        | 16   | Medium confidence                       |'
-    KlarnaSessionDetailsAPISchema:
-      title: KlarnaSessionDetailsAPISchema
-      required:
-      - billingAddress
-      - purchaseCountry
-      - purchaseCurrency
-      - locale
-      - orderLines
-      type: object
-      properties:
-        recurringDescription:
-          title: Recurringdescription
-          type: string
-        billingAddress:
-          $ref: '#/components/schemas/KlarnaAddressAPISchema'
-        shippingAddress:
-          $ref: '#/components/schemas/KlarnaAddressAPISchema'
-        purchaseCountry:
-          title: Purchasecountry
-          type: string
-        purchaseCurrency:
-          title: Purchasecurrency
-          type: string
-        locale:
-          title: Locale
-          type: string
-        orderLines:
-          title: Orderlines
-          type: array
-          items: {}
-        tokenDetails:
-          $ref: '#/components/schemas/KlarnaTokenDetails'
-    PaymentAuthorizationAPIRequest:
-      title: PaymentAuthorizationAPIRequest
-      type: object
-      required:
-      - processor
-      properties:
-        processor:
-          $ref: '#/components/schemas/PaymentAuthorizationRequestProcessorAPISchema'
-          title: Processor
-          description: The payment processor to use for this payment.
-        expand:
-          $ref: '#/components/schemas/Expand'
-    TransactionTypeEnum:
-      title: TransactionTypeEnum
-      enum:
-      - SALE
-      - REFUND
-      type: string
-      description: An enumeration.
-    ThreeDSecureSkippedReasonCodeEnum:
-      title: ThreeDSecureSkippedReasonCodeEnum
-      enum:
-      - GATEWAY_UNAVAILABLE
-      - DISABLED_BY_MERCHANT
-      - NOT_SUPPORTED_BY_ISSUER
-      - FAILED_TO_NEGOTIATE
-      - UNKNOWN_ACS_RESPONSE
-      - 3DS_SERVER_ERROR
-      - ACQUIRER_NOT_CONFIGURED
-      - ACQUIRER_NOT_PARTICIPATING
-      - EXEMPTION_ACCEPTED
-      type: string
-      description: An enumeration.
-    OrderLineItemsAPISchema:
-      title: OrderLineItemsAPISchema
-      description: "The details of the line items of the order.\n\nThe total amount of a line item is calculated like so: \n````\n  totalAmount = (amount * quantity) - discountAmount + taxAmount\n```\n"
-      type: object
-      required:
-      - amount
-      properties:
-        itemId:
-          title: Item ID
-          type: string
-          description: A unique identifier for the line item.
-          minLength: 1
-          maxLength: 255
-        name:
-          title: Name
-          type: string
-          description: A name of the item.
-          maxLength: 255
-        description:
-          title: Item ID
-          type: string
-          description: A description of the item.
-          maxLength: 255
-        amount:
-          minimum: 0.0
-          type: integer
-          format: int64
-          description: The amount charged to the customer, in minor units. The minimum amount is 0. The maximum amount is the limit of `int64`.
-        quantity:
-          type: integer
-          description: The number of the particular line item that is being ordered.
-          default: 1
-          format: int64
-        discountAmount:
-          title: Discount Amount
-          minimum: 0.0
-          type: integer
-          format: int64
-          description: Any discount applicable to this item, in minor units. This discount is applied for the entire line item, and not per `quantity`.
-        taxAmount:
-          title: Tax Amount
-          minimum: 0.0
-          type: integer
-          format: int64
-          description: The tax charged on this item, in minor units. This tax amount is applied for the entire line item, and not per `quantity`.
-        taxCode:
-          title: Tax Code
-          type: string
-          description: The tax code associated with this item, in minor units. This is required for Primer-initiated tax calculations.
-          minLength: 1
-          maxLength: 255
-        productType:
-          $ref: '#/components/schemas/ProductTypeEnum'
-          title: Product Type
-          description: An identifier for the product type.
-        productData:
-          $ref: '#/components/schemas/OrderLineItemsProductDataAPISchema'
-          title: Product Data
-          description: Details related to the product
-    FirstPaymentReasonEnum:
-      title: FirstPaymentReasonEnum
-      enum:
-      - CardOnFile
-      - Recurring
-      - Unscheduled
-      type: string
-      description: 'The reason for the first payment. This is used for informing payment processors about the specific reason a payment method is being stored.
-
-        Defaults to None if not provided.
-
-        '
+        reason: 'Customer cancelled order #1234.'
     ThreeDSecureAuthResponseCodeEnum:
       title: ThreeDSecureAuthResponseCodeEnum
       enum:
@@ -2768,371 +3330,13 @@ components:
       - METHOD
       type: string
       description: An enumeration.
-    IdealPayNLTokenAPISchema:
-      title: IdealPayNLTokenAPISchema
-      required:
-      - paymentMethodConfigId
-      type: object
-      properties:
-        paymentMethodConfigId:
-          title: Paymentmethodconfigid
-          type: string
-          format: uuid
-    PaymentSummaryProcessorAPISchema:
-      title: PaymentSummaryProcessorAPISchema
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          title: Processor Name
-          type: string
-          description: The payment processor used for this payment.
-        processorMerchantId:
-          title: Processor Merchant ID
-          type: string
-          description: The merchant ID registered at the payment processor used for this payment.
-    StatusReasonAPISchema:
-      title: StatusReasonAPISchema
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/PaymentStatusTypeEnum'
-          title: Payment status type
-        declineType:
-          $ref: '#/components/schemas/DeclineTypeEnum'
-          title: Decline Type
-          description: 'If the error is of type `ISSUER_DECLINED` this will be returned.
-
-
-            Declines of type `SOFT_DECLINE` may be retried,
-
-            whereas declines of type `HARD_DECLINE` should not be retried.
-
-            '
-        code:
-          $ref: '#/components/schemas/TransactionDeclineReasonV2Enum'
-          title: Payment status code
-          description: If the error is of type `ISSUER_DECLINED`, this will be returned.
-        message:
-          title: Processor message
-          type: string
-          description: In case of an error on the processor's part, we will return the message returned by the processor. This is usually a human readable error.
-        paymentMethodResultCode:
-          title: Payment Method Result Code
-          type: string
-          description: 'The result code returned by the payment method or card network. This code is unified across all supported processors.
-
-
-            _e.g. Code `46` refers to the message "Closed account" for Visa across all supported processors._
-
-            '
-        paymentMethodResultMessage:
-          title: Payment Method Result Message
-          type: string
-          description: 'Human-readable version of the Payment Method Result Code. This message is unified across all supported processors.
-
-
-            _e.g. Code `46` refers to the message "Closed account" for Visa across all supported processors._
-
-            '
-        paymentMethodAdviceCode:
-          title: Payment Method Advice Code
-          type: string
-          description: 'The advice code returned by the payment method or card network. This code is unified across all supported processors.
-
-
-            _For payments made with Mastercard, this represents the Merchant Advice Code (MAC)._
-
-
-            _e.g. Code `24` refers to the message "Retry after 1 hour" for Mastercard across all supported processors._
-
-            '
-        paymentMethodAdviceMessage:
-          title: Payment Method Advice Message
-          type: string
-          description: 'Human-readable version of the Payment Method Advice Code. This message is unified across all supported processors.
-
-
-            _For payments made with Mastercard, this represents the message of the Merchant Advice Code (MAC)._
-
-
-            _e.g. Code `24` refers to the message "Retry after 1 hour" for Mastercard across all supported processors._
-
-            '
-        advisedAction:
-          title: Advised Action
-          $ref: '#/components/schemas/AdvisedActionEnum'
-    409ErrorResponse:
-      title: 409ErrorResponse
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          allOf:
-          - $ref: '#/components/schemas/ErrorObject'
-          - type: object
-            properties:
-              paymentId:
-                title: Payment ID
-                type: string
-                description: Payment ID of the related payment
-              paymentStatus:
-                title: Status
-                type: string
-                description: Status of the related payment
-    PaymentStatusTypeEnum:
-      title: PaymentStatusTypeEnum
+    RecurringTransactionTypeEnum:
+      title: RecurringTransactionTypeEnum
       enum:
-      - APPLICATION_ERROR
-      - GATEWAY_REJECTED
-      - GATEWAY_TIMEOUT
-      - ISSUER_DECLINED
-      type: string
-      description: "The status reason type for the payment, providing more information on the error. \n`APPLICATION_ERROR` indicates something went wrong internally within primer's system. \n`GATEWAY_REJECTED` indicates that request was rejected on the third-party. \n`GATEWAY_TIMEOUT` indicates the timeout limit on the third party request was exceeded. \n`ISSUER_DECLINED` indicates a legitimate decline that is not due to a timeout.\n"
-    PaymentRefundAPIRequest:
-      title: PaymentRefundAPIRequest
-      type: object
-      properties:
-        amount:
-          title: Amount to refund
-          minimum: 0.0
-          type: integer
-          format: int64
-          description: 'The amount you would like to refund the customer, in minor units. e.g. for $7, use `700`.
-
-
-            Defaults to remaining non-refunded amount.'
-        orderId:
-          title: Order ID
-          type: string
-          description: 'Optionally you can pass a specific order ID for the refund.
-
-
-            By default this will be set to the original `orderId` given on payment creation.'
-        reason:
-          title: Refund reason
-          type: string
-          description: You can optionally specify a reason for the refund, for your own records. This will be returned in the refund transaction of payment responses.
-        transactionEventId:
-          title: Transaction Event ID
-          type: string
-          format: uuid
-          description: Specific capture ID to target for the refund. Use this to specify which transaction event the refund should apply to.
-          example: 57a2027d-36a6-494f-ad07-a6e1d0c77772
-        expand:
-          $ref: '#/components/schemas/Expand'
-      additionalProperties: false
-      example:
-        amount: 42
-        orderId: order-1234-refund
-        reason: 'Customer returned order #1234.'
-    PaymentAPIResponse:
-      title: PaymentAPIResponse
-      type: object
-      properties:
-        id:
-          title: Payment identifier
-          type: string
-          description: 'The unique payment ID.
-
-
-            You can use this ID to retrieve the payment details, or perform downstream
-
-            operations.
-
-            '
-        date:
-          title: Payment date
-          type: string
-          description: The date and time at which the payment was created in UTC format.
-          format: date-time
-        dateUpdated:
-          title: Payment updated date
-          type: string
-          description: The date and time of the last payment update in UTC format.
-          format: date-time
-        status:
-          $ref: '#/components/schemas/PaymentStatus'
-          title: Current status
-          description: See the payment [status table](../docs#payment-status) for more information.
-        cardTokenType:
-          title: Card token type used
-          allOf:
-          - $ref: '#/components/schemas/CardTokenTypeEnum'
-          description: 'The type of card token used for the payment.
-
-
-            Only applies for card payments.
-
-            '
-          example: CARD_PAN
-        orderId:
-          title: Order ID
-          type: string
-          description: Your reference for the payment.
-          maxLength: 255
-        currencyCode:
-          $ref: '#/components/schemas/Currency'
-          title: Currency
-          description: 'The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.
-
-            '
-        amount:
-          title: Payment amount
-          minimum: 0.0
-          type: integer
-          format: int64
-          description: The amount you charged the customer, in minor units.
-        order:
-          $ref: '#/components/schemas/OrderDetailsAPISchema'
-          title: Order Details
-          description: More information associated with the order.
-        customerId:
-          title: The ID of the customer using the checkout
-          type: string
-          description: The unique identifier for your customer.
-          maxLength: 255
-        customer:
-          $ref: '#/components/schemas/CustomerDetailsAPISchema'
-          title: Customer Details
-          description: More information associated with the customer.
-        metadata:
-          title: Payment Metadata
-          type: object
-          description: 'Additional data to be used throughout the payment lifecycle.
-
-            '
-        paymentMethod:
-          $ref: '#/components/schemas/PaymentResponsePaymentMethodOptionsAPISchema'
-          title: Payment Method Options
-          description: The payment method options provided in the request, as well as the token used to process the payment.
-        processor:
-          $ref: '#/components/schemas/PaymentResponseProcessorAPISchema'
-          title: Processor Information
-          description: More information associated with the payment processor, including the processor name.
-        requiredAction:
-          $ref: '#/components/schemas/PaymentRequiredActionAPISchema'
-          title: Required action
-          description: Required action to perform in order to resume the payment workflow. This can be requiring a 3DS check from the customer for instance.
-        statusReason:
-          $ref: '#/components/schemas/StatusReasonAPISchema'
-          title: Status Reason
-          description: 'Check this field for more information regarding the payment''s status. This is especially useful when the status is `DECLINED` or `FAILED`.
-
-            '
-        transactions:
-          title: Transactions
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionOverviewAPISchema'
-          description: 'A list summarizing the transactions that occurred while processing the payment.
-
-
-            Note: a refund is a separate transaction and so will appear in this `transactions` list if a refund was performed.'
-        riskData:
-          $ref: '#/components/schemas/RiskDataAPISchema'
-          title: Risk Data
-    AVSCheckAPISchema:
-      title: AVSCheckAPISchema
-      description: 'Results of any external AVS check performed on this payment.
-
-        '
-      type: object
-      properties:
-        source:
-          type: string
-          example: PROCESSOR
-        result:
-          $ref: '#/components/schemas/AVSRiskAssessmentValues'
-    RecurringPaymentTypeSchema:
-      $ref: '#/components/schemas/RecurringTransactionTypeEnum'
-      title: Recurring Payment Type
-      description: "Payment types, primarily to be used for recurring payments.\nSee the table below for all possible values. \n\nNote: if no field is set, we will return a blank value and make a best effort\nto calculate the downstream fields required for processing the payment.\n\n| paymentType | Use case |\n| --- | --- |\n| `FIRST_PAYMENT` | a customer-initiated payment which is the first in a series of recurring payments or subscription, or a card on file scenario. |\n| `ECOMMERCE` | a customer-initiated payment using stored payment details where the cardholder is present. |\n| `SUBSCRIPTION` | a merchant-initiated payment as part of a series of payments on a fixed schedule and a set amount. |\n| `UNSCHEDULED` | a merchant-initiated payment using stored payment details with no fixed schedule or amount. |\n"
-    PayPalOrderTokenAPISchema:
-      title: PayPalOrderTokenAPISchema
-      required:
-      - paypalOrderId
-      type: object
-      properties:
-        paypalOrderId:
-          title: PayPal order identifier
-          type: string
-        externalPayerInfo:
-          $ref: '#/components/schemas/PayPalExternalPayerInfoAPISchema'
-          title: Payer Info
-          description: Information about the PayPal customer
-        paypalStatus:
-          title: PayPal order status
-          type: string
-    TransactionDeclineReasonV2Enum:
-      title: TransactionDeclineReasonV2Enum
-      enum:
-      - ERROR
-      - INVALID_CARD_NUMBER
-      - EXPIRED_CARD
-      - LOST_OR_STOLEN_CARD
-      - SUSPECTED_FRAUD
-      - UNKNOWN
-      - DECLINED
-      - REFER_TO_CARD_ISSUER
-      - DO_NOT_HONOR
-      - INSUFFICIENT_FUNDS
-      - WITHDRAWAL_LIMIT_EXCEEDED
-      - ISSUER_TEMPORARILY_UNAVAILABLE
-      - AUTHENTICATION_REQUIRED
-      type: string
-      description: An enumeration.
-    ApayaCustomerTokenAPISchema:
-      title: ApayaCustomerTokenAPISchema
-      required:
-      - mx
-      type: object
-      properties:
-        mx:
-          title: Mx
-          type: string
-        mnc:
-          title: Mnc
-          type: integer
-          format: int64
-        mcc:
-          title: Mcc
-          type: integer
-          format: int64
-    CardRegionRestrictionEnum:
-      title: CardRegionRestrictionEnum
-      enum:
-      - DOMESTIC_USE_ONLY
-      - NONE
-      - UNKNOWN
-      type: string
-      description: An enumeration.
-    AccountFundingTypeEnum:
-      title: AccountFundingTypeEnum
-      enum:
-      - CREDIT
-      - DEBIT
-      - PREPAID
-      - CHARGE
-      - DEFERRED_DEBIT
-      - UNKNOWN
-      type: string
-      description: An enumeration.
-    PaymentStatus:
-      title: PaymentStatus
-      enum:
-      - PENDING
-      - FAILED
-      - AUTHORIZED
-      - SETTLING
-      - PARTIALLY_SETTLED
-      - SETTLED
-      - DECLINED
-      - CANCELLED
+      - FIRST_PAYMENT
+      - ECOMMERCE
+      - SUBSCRIPTION
+      - UNSCHEDULED
       type: string
       description: An enumeration.
     PostAuthFraudDecisionTypeEnum:
@@ -3144,464 +3348,14 @@ components:
       - THREE_DS
       type: string
       description: Possible post-authorization fraud check outcomes.
-    PaymentMethodTypeEnum:
-      title: PaymentMethodTypeEnum
+    CardTokenTypeEnum:
+      title: CardTokenTypeEnum
       enum:
-      - PAYMENT_CARD
-      - GOOGLE_PAY
-      - APPLE_PAY
-      - PAYPAL
-      - BANK_ACCOUNT
-      - KLARNA
-      - APAYA
-      - OPENNODE
-      - HOOLAH
-      - ATOME
-      - COINBASE
-      - NETS
-      - TWOC2P
-      - CLEARPAY
-      - SHOPEEPAY
-      - TRIPLE_A
-      - AFTERPAY
-      - NOL_PAY
-      - PAY_NL_IDEAL
-      - PAY_NL_BANCONTACT
-      - PAY_NL_DIRECT_DEBIT
-      - PAY_NL_SOFORT_BANKING
-      - PAY_NL_PAYPAL
-      - PAY_NL_PAYCONIQ
-      - PAY_NL_GIROPAY
-      - PAY_NL_P24
-      - PAY_NL_EPS
-      - PAY_NL_KAARTDIRECT
-      - ADYEN_SOFORT
-      - ADYEN_TWINT
-      - ADYEN_GIROPAY
-      - ADYEN_TRUSTLY
-      - ADYEN_ALIPAY
-      - ADYEN_MOBILEPAY
-      - ADYEN_MULTIBANCO
-      - ADYEN_VIPPS
-      - ADYEN_DOTPAY
-      - ADYEN_IDEAL
-      - ADYEN_BLIK
-      - ADYEN_PAYTRAIL
-      - ADYEN_INTERAC
-      - ADYEN_PAYSHOP
-      - ADYEN_MBWAY
-      - ADYEN_AFFIRM
-      - ADYEN_KLARNA
-      - ADYEN_BANCONTACT_PAYCONIQ
-      - ADYEN_EPS
-      - ADYEN_BANCONTACT_CARD
-      - ADYEN_SWISH
-      - MOLLIE_IDEAL
-      - MOLLIE_BANCONTACT
-      - MOLLIE_P24
-      - MOLLIE_GIROPAY
-      - MOLLIE_EPS
-      - MOLLIE_GIFTCARD
-      - MOLLIE_SOFORT
-      - NETAXEPT_PAYTRAIL
-      - BUCKAROO_IDEAL
-      - BUCKAROO_BANCONTACT
-      - BUCKAROO_SOFORT
-      - BUCKAROO_GIROPAY
-      - BUCKAROO_EPS
-      - RAPYD_GCASH
-      - RAPYD_PROMPTPAY
-      - RAPYD_GRABPAY
-      - RAPYD_POLI
-      - RAPYD_FAST
-      - XFERS_PAYNOW
-      - STRIPE_GIROPAY
-      - STRIPE_IDEAL
-      - ALIPAY_CN
-      - CHAI_KAKAOPAY
-      - CHAI_NAVER
-      - CHAI_TOSS
-      - XENDIT_DANA
-      - XENDIT_OVO
-      - XENDIT_SHOPEEPAY
-      - XENDIT_RETAIL_OUTLETS
-      - OMISE_PROMPTPAY
-      - OMISE_TRUEMONEY
-      - EBANX_PAGOFACIL
-      - PACYPAY_WECHAT
-      - PACYPAY_ALIPAY
-      - PACYPAY_ALIPAY_PLUS
-      - WORLDPAY_IDEAL
-      - IPAY88_CARD
-      - INGENICO_PAYPAL
-      - VOLT_PIX
-      - VOLT_BANK_TRANSFER
-      - BRAINTREE_VENMO
-      - THUNES_SPIRIT_OF_CADEAU
-      - THUNES_ILLICADO
-      - THUNES_CARTE_CADEAU_CONFORAMA
-      - THUNES_CHEQUE_FIDELITE_CONFORAMA
-      - SIPS_CPAY
-      - SIPS_CPAYCONFORAMA
-      - MONEXT_CETELEM
-      - MONEXT_CPAY
-      type: string
-      description: Payment method type, where `OFF_SESSION_PAYMENT` is used for APM (Alternative Payment Method) payments and `PAYMENT_CARD` for traditional debit or credit cards. Please note that this list is different from one indicated on [available payment methods](/docs/connections/payment-methods/available-payment-methods) page and values of this field will be changed in the future versions of the API.
-    PaymentListAPIResponse:
-      title: PaymentListAPIResponse
-      type: object
-      properties:
-        data:
-          title: Data
-          type: array
-          items:
-            $ref: '#/components/schemas/PaymentSummaryAPISchema'
-        nextCursor:
-          title: Nextcursor
-          type: string
-        prevCursor:
-          title: Prevcursor
-          type: string
-    AVSRiskAssessmentValues:
-      title: AVSRiskAssessmentValues
-      type: object
-      properties:
-        streetAddress:
-          $ref: '#/components/schemas/RiskAssessmentStatusEnum'
-          example: NOT_MATCHED
-        postalCode:
-          $ref: '#/components/schemas/RiskAssessmentStatusEnum'
-          example: NOT_VERIFIED
-    OptionalAddressAPISchema:
-      title: OptionalAddressAPISchema
-      type: object
-      properties:
-        firstName:
-          title: First Name
-          type: string
-          minLength: 1
-          maxLength: 255
-        lastName:
-          title: Last Name
-          type: string
-          minLength: 1
-          maxLength: 255
-        addressLine1:
-          title: Address Line 1
-          type: string
-          description: Street name, Company name or PO Box
-          minLength: 1
-          maxLength: 255
-        addressLine2:
-          title: Address Line 2
-          type: string
-          description: Apartment, Unit or Building number
-          maxLength: 255
-        city:
-          title: City
-          type: string
-          description: Name of the city, district, town or village
-          minLength: 1
-          maxLength: 255
-        state:
-          title: State
-          type: string
-          description: State, County or Province
-          minLength: 1
-          maxLength: 255
-        countryCode:
-          $ref: '#/components/schemas/CountryCodeEnum'
-          title: Country Code
-          description: Two letter ISO country code
-        postalCode:
-          title: Postal Code
-          type: string
-          description: Postal or ZIP code
-          minLength: 1
-          maxLength: 255
-    CardAccountNumberTypeEnum:
-      title: CardAccountNumberTypeEnum
-      enum:
-      - PRIMARY_ACCOUNT_NUMBER
+      - CARD_PAN
       - NETWORK_TOKEN
-      - DIGITAL_PAN
-      - UNKNOWN
+      - PROCESSOR_TOKEN
       type: string
       description: An enumeration.
-    AddressAPISchema:
-      title: AddressAPISchema
-      required:
-      - addressLine1
-      - city
-      - countryCode
-      type: object
-      properties:
-        firstName:
-          title: First Name
-          type: string
-        lastName:
-          title: Last Name
-          type: string
-        addressLine1:
-          title: Address Line 1
-          type: string
-          description: Street name, Company name or PO Box
-        addressLine2:
-          title: Address Line 2
-          type: string
-          description: Apartment, Unit or Building number
-        city:
-          title: City
-          type: string
-          description: Name of the city, district, town or village
-        state:
-          title: State
-          type: string
-          description: State, County or Province
-        countryCode:
-          $ref: '#/components/schemas/CountryCodeEnum'
-          title: Country Code
-          description: Two letter ISO country code
-        postalCode:
-          title: Postal Code
-          type: string
-          description: Postal or ZIP code
-    OrderLineItemsProductDataAPISchema:
-      title: OrderLineItemsProductDataAPISchema
-      description: Details related to the product
-      type: object
-      properties:
-        sku:
-          title: SKU
-          type: string
-          description: The product SKU
-          minLength: 1
-          maxLength: 255
-        brand:
-          title: Brand
-          type: string
-          description: The product brand
-          minLength: 1
-          maxLength: 255
-        color:
-          title: Color
-          type: string
-          description: The product color
-          minLength: 1
-          maxLength: 255
-        globalTradeItemNumber:
-          title: Global Trade Item Number
-          type: string
-          description: The product Global Trade Item Number (e.g. ISBN)
-          minLength: 1
-          maxLength: 255
-        manufacturerPartNumber:
-          title: Manufacturer Part Number
-          type: string
-          description: The product Manufacturer Part Number
-          minLength: 1
-          maxLength: 255
-        weight:
-          title: Weight
-          type: number
-          description: The product weight
-          minimum: 0.0
-        weightUnit:
-          title: Weight Unit
-          type: string
-          description: The product weight unit (e.g. kg, g)
-          minLength: 1
-          maxLength: 255
-        pageUrl:
-          title: Page URL
-          type: string
-          description: The product page URL
-          minLength: 1
-          maxLength: 1024
-    TransactionEventApiResponse:
-      type: object
-      required:
-      - id
-      - date
-      - type
-      properties:
-        id:
-          type: string
-          description: The id of the event.
-          format: uuid
-          example: 46d25279-9d36-4237-8f45-2dc4e4e262d6
-        processorEventId:
-          type: string
-          description: The ID of the event from the payment processor (e.g. PayPal).
-          example: 30B258847H402782C
-        date:
-          type: string
-          format: date-time
-          description: Timestamp of when the event occurred.
-          example: '2025-01-22T13:39:18.992928'
-        type:
-          type: string
-          description: The type of the event.
-          enum:
-          - AUTHORIZATION_SUCCEEDED
-          - AUTHORIZATION_ADJUSTMENT_SUCCEEDED
-          - CAPTURE_SUCCEEDED
-          - CANCELLATION_SUCCEEDED
-          example: CAPTURE_SUCCEEDED
-        amount:
-          type: integer
-          format: int64
-          description: The amount associated with the event in minor units.
-          example: 1234
-        final:
-          type: boolean
-          description: 'Indicates whether the event is final.
-
-            For example, in the case of a capture event this would indicate whether it was a final capture or not, but in the case of a cancellation request this field will not be present.'
-          example: false
-    RecurringTransactionTypeEnum:
-      title: RecurringTransactionTypeEnum
-      enum:
-      - FIRST_PAYMENT
-      - ECOMMERCE
-      - SUBSCRIPTION
-      - UNSCHEDULED
-      type: string
-      description: An enumeration.
-    FraudCheckAPISchema:
-      title: FraudCheckAPISchema
-      description: 'Results of the pre-authorization and post-authorization fraud checks.
-
-        '
-      type: object
-      properties:
-        source:
-          type: string
-          example: FRAUD_PROVIDER
-        preAuthorizationResult:
-          $ref: '#/components/schemas/PreAuthFraudDecisionTypeEnum'
-          example: THREE_DS
-        preAuthorizationRecommendation:
-          $ref: '#/components/schemas/PreAuthorizationRecommendationEnum'
-          example: TRANSACTION_RISK_ANALYSIS
-        postAuthorizationResult:
-          $ref: '#/components/schemas/PostAuthFraudDecisionTypeEnum'
-          example: ACCEPT
-    PayPalExternalPayerInfoAPISchema:
-      title: PayPalExternalPayerInfoAPISchema
-      type: object
-      properties:
-        externalPayerId:
-          title: Externalpayerid
-          type: string
-        email:
-          title: Email
-          type: string
-        firstName:
-          title: Firstname
-          type: string
-        lastName:
-          title: Lastname
-          type: string
-    RiskAssessmentStatusEnum:
-      title: RiskAssessmentStatusEnum
-      enum:
-      - MATCHED
-      - NOT_MATCHED
-      - NOT_VERIFIED
-      - NOT_PROVIDED
-      - NOT_APPLICABLE
-      - SKIPPED
-      type: string
-      description: Possible risk assessment values for CVV and AVS checks.
-    OrderFeesAPISchema:
-      title: OrderFeesAPISchema
-      type: object
-      required:
-      - amount
-      properties:
-        amount:
-          minimum: 0.0
-          type: integer
-          format: int64
-          description: The fee amount charged to the customer, in minor  units. e.g. for $7, use `700`.
-        type:
-          type: string
-          description: The type of fee.
-          minLength: 1
-          maxLength: 255
-        description:
-          type: string
-          description: A description of the fee, e.g. "Currency Conversion Fee".
-          minLength: 1
-          maxLength: 255
-    GoCardlessMandateAPISchema:
-      title: GoCardlessMandateAPISchema
-      required:
-      - gocardlessMandateId
-      type: object
-      properties:
-        gocardlessMandateId:
-          title: Mandate agreement ID
-          type: string
-          description: Unique identifier of a GoCardless mandate agreement
-    KlarnaAddressAPISchema:
-      title: KlarnaAddressAPISchema
-      type: object
-      properties:
-        title:
-          title: Title
-          type: string
-        firstName:
-          title: Firstname
-          type: string
-        lastName:
-          title: Lastname
-          type: string
-        email:
-          title: Email
-          type: string
-        phoneNumber:
-          title: Phonenumber
-          type: string
-        addressLine1:
-          title: Addressline1
-          type: string
-        addressLine2:
-          title: Addressline2
-          type: string
-        addressLine3:
-          title: Addressline3
-          type: string
-        city:
-          title: City
-          type: string
-        state:
-          title: State
-          type: string
-        countryCode:
-          $ref: '#/components/schemas/CountryCodeEnum'
-        postalCode:
-          title: Postalcode
-          type: string
-    KlarnaTokenDetails:
-      title: KlarnaTokenDetails
-      required:
-      - type
-      type: object
-      properties:
-        type:
-          title: Type
-          type: string
-        brand:
-          title: Brand
-          type: string
-        masked_number:
-          title: Masked Number
-          type: string
-        expiry_date:
-          title: Expiry Date
-          type: string
     CountryCodeEnum:
       title: CountryCodeEnum
       enum:
@@ -3855,107 +3609,316 @@ components:
       - ZM
       - ZW
       description: "2-letter country code in <a href='https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements'>ISO 3166-1 alpha</a> format, \ne.g. <code>FR</code> for France and <code>GB</code> for the United Kingdom.\n"
-    Expand:
-      type: array
-      nullable: true
-      items:
-        type: string
-        enum:
-        - transactions.events
-        example:
-        - transactions.events
-      description: A list of fields to expand, such as transactions.events.
-    400ErrorResponse:
-      title: 400ErrorResponse
+    PaymentSummaryProcessorAPISchema:
+      title: PaymentSummaryProcessorAPISchema
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          title: Processor Name
+          type: string
+          description: The payment processor used for this payment.
+        processorMerchantId:
+          title: Processor Merchant ID
+          type: string
+          description: The merchant ID registered at the payment processor used for this payment.
+    PayPalOrderTokenAPISchema:
+      title: PayPalOrderTokenAPISchema
+      required:
+      - paypalOrderId
+      type: object
+      properties:
+        paypalOrderId:
+          title: PayPal order identifier
+          type: string
+        externalPayerInfo:
+          $ref: '#/components/schemas/PayPalExternalPayerInfoAPISchema'
+          title: Payer Info
+          description: Information about the PayPal customer
+        paypalStatus:
+          title: PayPal order status
+          type: string
+    BinDataAPISchema:
+      title: BinDataAPISchema
+      required:
+      - network
+      - regionalRestriction
+      - accountNumberType
+      - accountFundingType
+      - prepaidReloadableIndicator
+      - productUsageType
+      - productCode
+      - productName
+      type: object
+      properties:
+        network:
+          $ref: '#/components/schemas/CardNetworkEnum'
+        issuerCountryCode:
+          $ref: '#/components/schemas/CountryCodeEnum'
+        issuerName:
+          title: Issuername
+          type: string
+        issuerCurrencyCode:
+          $ref: '#/components/schemas/Currency'
+        regionalRestriction:
+          $ref: '#/components/schemas/CardRegionRestrictionEnum'
+        accountNumberType:
+          $ref: '#/components/schemas/CardAccountNumberTypeEnum'
+        accountFundingType:
+          $ref: '#/components/schemas/AccountFundingTypeEnum'
+        prepaidReloadableIndicator:
+          $ref: '#/components/schemas/PrepaidReloadableEnum'
+        productUsageType:
+          $ref: '#/components/schemas/CardProductTypeEnum'
+        productCode:
+          title: Productcode
+          type: string
+        productName:
+          title: Productname
+          type: string
+    PaymentRequiredActionAPISchema:
+      title: PaymentRequiredActionAPISchema
+      required:
+      - name
+      - description
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/BlockingPaymentActionTypeEnum'
+          title: Name
+          description: Action name
+        description:
+          title: Description
+          type: string
+          description: Human description of the required action to perform.
+        clientToken:
+          title: Client token
+          type: string
+          description: The client token to be returned to the SDK if a required action is returned.
+    422ErrorResponse:
+      title: 422ErrorResponse
       type: object
       required:
       - error
       properties:
         error:
-          allOf:
-          - $ref: '#/components/schemas/ErrorObject'
-          - type: object
-            properties:
-              paymentId:
-                title: Payment ID
-                type: string
-                description: Payment ID of the related pay
-              paymentStatus:
-                title: Status
-                type: string
-                description: Status of the related payment
-    KlarnaPaymentSessionAPISchema:
-      title: KlarnaPaymentSessionAPISchema
+          $ref: '#/components/schemas/ErrorObject'
+    TransactionOverviewAPISchema:
+      title: TransactionOverviewAPISchema
       required:
-      - klarnaAuthorizationToken
-      - sessionData
-      type: object
-      properties:
-        klarnaAuthorizationToken:
-          title: Klarnaauthorizationtoken
-          type: string
-        sessionData:
-          $ref: '#/components/schemas/KlarnaSessionDetailsAPISchema'
-    PaymentAdjustAuthorizationAPIRequest:
-      title: PaymentAdjustAuthorizationAPIRequest
-      required:
+      - id
+      - processor
+      - processorMerchantId
+      - type
+      - status
+      - date
       - amount
+      - currencyCode
       type: object
       properties:
-        amount:
-          title: Payment amount
-          minimum: 0.0
-          type: integer
-          format: int64
-          description: 'The **final** amount you would like to charge the customer, in minor units. e.g. for $7, use `700`.
-
-
-            Some currencies, such as Japanese Yen, do not have minor units. In this case you should use the value as it is, without any formatting. For example for ¥100, use `100`.
-
-
-            If the amount is provided on this level, it would override any amount calculated from the provided line items, shipping and other amounts.'
-        expand:
-          $ref: '#/components/schemas/Expand'
-    OrderShippingAPISchema:
-      title: OrderShippingAPISchema
-      type: object
-      properties:
+        date:
+          title: Creation date
+          type: string
+          description: Date & time of the transaction (UTC)
         amount:
           minimum: 0.0
           type: integer
           format: int64
-          description: The shipping amount charged to the customer, in minor units. e.g. for $7, use `700`.
-        methodId:
+          description: Transaction amount in minor units
+        currencyCode:
+          $ref: '#/components/schemas/Currency'
+          title: Currency
+          description: 'The 3-letter currency code in [ISO 4217 format](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). e.g. use `USD` for US dollars.
+
+            '
+        orderId:
+          title: Order ID
           type: string
-          description: Your unique identifier of the shipping method selected by the customer.
-        methodName:
+          description: The reference submitted on payment creation or refund.
+        transactionType:
+          $ref: '#/components/schemas/TransactionTypeEnum'
+          title: Transaction type
+        processorTransactionId:
+          title: Processor's transaction ID
           type: string
-          description: The display label for the selected shipping method (e.g. "Standard Shipping").
-        methodDescription:
+          description: Processor's unique identifier for the transaction
+        processorName:
+          title: Processor Name
           type: string
-          description: The descriptive text that is displayed alongside the shipping method name.
-    CVVCheckAPISchema:
-      title: CVVCheckAPISchema
-      description: 'Results of any external CVV check performed on this payment.
+          description: An identifier of a processor.
+        processorMerchantId:
+          title: Processor master account identifier
+          type: string
+          description: 'Processor''s main account identifier.
+
+
+            * Adyen: Account code
+
+            * Braintree: Merchant ID
+
+            * Stripe: Account ID"
+
+            '
+        processorStatus:
+          $ref: '#/components/schemas/PaymentStatus'
+          title: Processor Transaction status
+          description: Transaction status, please refer to the [Transaction Status Codes](#section/API-Usage-Guide/Payment-Status) table for more information
+        processorStatusReason:
+          $ref: '#/components/schemas/StatusReasonAPISchema'
+          title: Payment error
+          description: 'If the transaction has a declined or failed status.
+
+
+            Only if the status is `DECLINED` or `FAILED`, otherwise `null`.
+
+            '
+        cardTokenType:
+          title: Card token type used
+          allOf:
+          - $ref: '#/components/schemas/CardTokenTypeEnum'
+          description: 'The type of card token used for the payment.
+
+
+            Only applies for card payments.
+
+            '
+          example: CARD_PAN
+        reason:
+          title: Reason
+          type: string
+          description: 'The reason for a cancel or refund request on this transaction, if any.
+
+            '
+          example: Item returned.
+        events:
+          title: Events
+          type: array
+          description: A list of events related to the transaction, included when the `expand` parameter is passed.
+          items:
+            $ref: '#/components/schemas/TransactionEventApiResponse'
+    ProductTypeEnum:
+      title: ProductTypeEnum
+      enum:
+      - PHYSICAL
+      - DIGITAL
+      type: string
+      description: An enumeration
+    CardNetworkEnum:
+      title: CardNetworkEnum
+      enum:
+      - AMEX
+      - DANKORT
+      - DINERS_CLUB
+      - DISCOVER
+      - EFTPOS
+      - ENROUTE
+      - ELO
+      - HIPER
+      - INTERAC
+      - JCB
+      - MAESTRO
+      - MASTERCARD
+      - MIR
+      - PRIVATE_LABEL
+      - UNIONPAY
+      - VISA
+      - CARTES_BANCAIRES
+      - OTHER
+      type: string
+      description: 'The list of available card networks.
 
         '
+    PayPalBillingAgreementAPISchema:
+      title: PayPalBillingAgreementAPISchema
+      required:
+      - paypalBillingAgreementId
       type: object
       properties:
-        source:
+        paypalBillingAgreementId:
+          title: Paypalbillingagreementid
           type: string
-          example: PROCESSOR
-        result:
-          $ref: '#/components/schemas/RiskAssessmentStatusEnum'
-          example: MATCHED
-    AdvisedActionEnum:
-      title: AdvisedActionEnum
-      enum:
-      - RETRY_LATER
-      - UPDATE_DATA
-      - DO_NOT_RETRY
-      - STOP_ALL_PAYMENTS
-      type: string
-      description: "The Primer-recommended action to take based on the underlying decline reason and advice code. This advised action is unified across all supported processors and payment methods.\n\n- `RETRY_LATER`: The payment was likely declined due to a temporary issue (e.g. Insufficient funds). The payment can be retried immediately or at a later date. \n- `UPDATE_DATA`: The payment was likely declined because critical data was missing or out-of-date. Please ensure you use the most up-to-date payment information and customer details before retrying the payment.\n- `DO_NOT_RETRY`: The payment was declined and should not be retried. You can still charge this payment method for future orders or installments.\n- `STOP_ALL_PAYMENTS`: The processor or payment method explicitly informs you to stop making any payment requests with this payment method. Please use another payment method to charge this customer.\n- `null`: Primer is unable to determine a recommended action. \n"
+        externalPayerInfo:
+          $ref: '#/components/schemas/PayPalExternalPayerInfoAPISchema'
+          title: Payer Info
+          description: Information about the PayPal customer
+        shippingAddress:
+          $ref: '#/components/schemas/AddressAPISchema'
+          title: Shipping address
+          description: The PayPal customer's shipping address
+        paypalStatus:
+          title: PayPal order status
+          type: string
+    PayPalExternalPayerInfoAPISchema:
+      title: PayPalExternalPayerInfoAPISchema
+      type: object
+      properties:
+        externalPayerId:
+          title: Externalpayerid
+          type: string
+        email:
+          title: Email
+          type: string
+        firstName:
+          title: Firstname
+          type: string
+        lastName:
+          title: Lastname
+          type: string
+    PaymentResponsePaymentMethodOptionsAPISchema:
+      title: PaymentResponsePaymentMethodOptionsAPISchema
+      type: object
+      properties:
+        descriptor:
+          title: Payment descriptor
+          type: string
+          description: 'The description of the payment, as it would typically appear
+
+            on a bank statement.
+
+            '
+          maxLength: 255
+        paymentType:
+          $ref: '#/components/schemas/RecurringPaymentTypeSchema'
+        paymentMethodToken:
+          title: Payment method token
+          type: string
+          description: The payment method token used to authorize the transaction.
+        isVaulted:
+          title: Is Vaulted flag
+          type: boolean
+          description: Whether the payment method token represents a vaulted payment method and can be used for future payments.
+          default: false
+        analyticsId:
+          title: Unique analytics ID
+          type: string
+          description: Unique analytics identifier corresponding to a payment method
+          maxLength: 255
+        paymentMethodType:
+          $ref: '#/components/schemas/PaymentMethodTypeEnum'
+          title: Payment method type
+          description: Payment method type used for payment authorization.
+        paymentMethodData:
+          title: Payment method data
+          anyOf:
+          - $ref: '#/components/schemas/PaymentCardTokenAPISchema'
+          - $ref: '#/components/schemas/PayPalOrderTokenAPISchema'
+          - $ref: '#/components/schemas/PayPalBillingAgreementAPISchema'
+          - $ref: '#/components/schemas/GoCardlessMandateAPISchema'
+          - $ref: '#/components/schemas/KlarnaPaymentSessionAPISchema'
+          - $ref: '#/components/schemas/KlarnaCustomerTokenAPISchema'
+          - $ref: '#/components/schemas/IdealPayNLTokenAPISchema'
+          - $ref: '#/components/schemas/ApayaCustomerTokenAPISchema'
+          description: Payment method data
+        threeDSecureAuthentication:
+          $ref: '#/components/schemas/ThreeDSecureAuthenticationAPISchema'
+          title: Threedsecureauthentication
+          default:
+            response_code: NOT_PERFORMED
+        authorizationType:
+          $ref: '#/components/schemas/AuthorizationTypeEnum'
+          title: Authorization Type
+          description: Allows to adjust the authorized amount after the authorization, if supported by payment method. `FINAL` - the authorized amount is final and can not be adjusted. Adjusting the amount can be only done via canceling the payment and re-authorization with new amount. `ESTIMATED` - the amount can be adjusted after the authorization, if supported by payment method.
   parameters:
     IdempotencyHeader:
       required: false
