@@ -87,44 +87,6 @@ paths:
           description: Return a 200 status to indicate that the data was received successfully
 components:
   schemas:
-    DisputeOpenWebhookPayload:
-      title: DisputeOpenWebhookPayload
-      type: object
-      properties:
-        eventType:
-          title: Event Type
-          type: string
-          description: The type of the webhook raised. `DISPUTE.OPENED` in this case.
-        processorId:
-          title: Processor ID
-          type: string
-          description: The name of the processor that generated the dispute.
-        processorDisputeId:
-          title: Processor Dispute ID
-          type: string
-          description: A unique identifier for the corresponding connection dispute.
-        paymentId:
-          title: Payment ID
-          type: string
-          description: A unique identifier for the Primer payment corresponding to this dispute.
-        transactionId:
-          title: Transaction ID
-          type: string
-          description: A unique identifier for the Primer transaction corresponding to this dispute.
-        orderId:
-          title: Order ID
-          type: string
-          description: Your reference for the sale transaction that the dispute relates to.
-        primerAccountId:
-          title: Primer Account ID
-          type: string
-          description: A unique identifier for your Primer merchant account.
-    PaymentMethodTypeEnum:
-      title: PaymentMethodTypeEnum
-      type: string
-      description: '[The list of available payment methods and their `PAYMENT_METHOD_TYPE` can be found here.](https://primer.io/docs/connections/payment-methods/available-payment-methods)
-
-        '
     CardNetworkEnum:
       title: CardNetworkEnum
       type: string
@@ -281,3 +243,41 @@ components:
           title: Merchant ID
           type: string
           description: The merchant ID registered at the payment processor used for this dispute.
+    DisputeOpenWebhookPayload:
+      title: DisputeOpenWebhookPayload
+      type: object
+      properties:
+        eventType:
+          title: Event Type
+          type: string
+          description: The type of the webhook raised. `DISPUTE.OPENED` in this case.
+        processorId:
+          title: Processor ID
+          type: string
+          description: The name of the processor that generated the dispute.
+        processorDisputeId:
+          title: Processor Dispute ID
+          type: string
+          description: A unique identifier for the corresponding connection dispute.
+        paymentId:
+          title: Payment ID
+          type: string
+          description: A unique identifier for the Primer payment corresponding to this dispute.
+        transactionId:
+          title: Transaction ID
+          type: string
+          description: A unique identifier for the Primer transaction corresponding to this dispute.
+        orderId:
+          title: Order ID
+          type: string
+          description: Your reference for the sale transaction that the dispute relates to.
+        primerAccountId:
+          title: Primer Account ID
+          type: string
+          description: A unique identifier for your Primer merchant account.
+    PaymentMethodTypeEnum:
+      title: PaymentMethodTypeEnum
+      type: string
+      description: '[The list of available payment methods and their `PAYMENT_METHOD_TYPE` can be found here.](https://primer.io/docs/connections/payment-methods/available-payment-methods)
+
+        '
