@@ -87,28 +87,10 @@ paths:
           description: Return a 200 status to indicate that the data was received successfully
 components:
   schemas:
-    CardNetworkEnum:
-      title: CardNetworkEnum
+    PaymentMethodTypeEnum:
+      title: PaymentMethodTypeEnum
       type: string
-      enum:
-      - AMEX
-      - DANKORT
-      - DINERS_CLUB
-      - DISCOVER
-      - ENROUTE
-      - ELO
-      - HIPER
-      - INTERAC
-      - JCB
-      - MAESTRO
-      - MASTERCARD
-      - MIR
-      - PRIVATE_LABEL
-      - UNIONPAY
-      - VISA
-      - CARTES_BANCAIRES
-      - OTHER
-      description: 'The list of available card networks.
+      description: '[The list of available payment methods and their `PAYMENT_METHOD_TYPE` can be found here.](https://primer.io/docs/connections/payment-methods/available-payment-methods)
 
         '
     DisputeStatusWebhookPayload:
@@ -275,9 +257,27 @@ components:
           title: Primer Account ID
           type: string
           description: A unique identifier for your Primer merchant account.
-    PaymentMethodTypeEnum:
-      title: PaymentMethodTypeEnum
+    CardNetworkEnum:
+      title: CardNetworkEnum
       type: string
-      description: '[The list of available payment methods and their `PAYMENT_METHOD_TYPE` can be found here.](https://primer.io/docs/connections/payment-methods/available-payment-methods)
+      enum:
+      - AMEX
+      - DANKORT
+      - DINERS_CLUB
+      - DISCOVER
+      - ENROUTE
+      - ELO
+      - HIPER
+      - INTERAC
+      - JCB
+      - MAESTRO
+      - MASTERCARD
+      - MIR
+      - PRIVATE_LABEL
+      - UNIONPAY
+      - VISA
+      - CARTES_BANCAIRES
+      - OTHER
+      description: 'The list of available card networks.
 
         '
