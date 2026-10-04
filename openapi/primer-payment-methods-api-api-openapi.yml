@@ -171,6 +171,45 @@ paths:
                   diagnosticsId: '1234567898'
 components:
   schemas:
+    ErrorObject:
+      title: Error
+      type: object
+      description: An object containing information about the error that occurred.
+      required:
+      - errorId
+      - description
+      properties:
+        errorId:
+          title: Error ID
+          type: string
+          description: An error ID
+        description:
+          title: Error description
+          type: string
+          description: A human readable description of the error
+        recoverySuggestion:
+          title: Recovery Suggestion
+          type: string
+          description: A suggestion on how to recover from the error.
+        diagnosticsId:
+          title: Error diagnostics ID
+          type: string
+          description: An ID that you can quote when contacting the Primer support team via our [Support Portal](https://primerapi.atlassian.net/servicedesk/customer/portal/11).
+        validationErrors:
+          title: Validation Errors
+          type: array
+          items:
+            type: object
+          description: Returned in case of a badly formed request
+    CardAccountNumberTypeEnum:
+      title: CardAccountNumberTypeEnum
+      enum:
+      - PRIMARY_ACCOUNT_NUMBER
+      - NETWORK_TOKEN
+      - DIGITAL_PAN
+      - UNKNOWN
+      type: string
+      description: An enumeration.
     KlarnaSessionDetailsAPISchema:
       title: KlarnaSessionDetailsAPISchema
       required:
@@ -203,101 +242,131 @@ components:
           items: {}
         tokenDetails:
           $ref: '#/components/schemas/KlarnaTokenDetails'
-    400ErrorResponse:
-      title: 400ErrorResponse
-      type: object
+    PaymentCardTokenAPISchema:
+      title: PaymentCardTokenAPISchema
       required:
-      - error
-      properties:
-        error:
-          allOf:
-          - $ref: '#/components/schemas/ErrorObject'
-          - type: object
-            properties:
-              paymentId:
-                title: Payment ID
-                type: string
-                description: Payment ID of the related pay
-              paymentStatus:
-                title: Status
-                type: string
-                description: Status of the related payment
-    KlarnaTokenDetails:
-      title: KlarnaTokenDetails
-      required:
-      - type
+      - last4Digits
+      - expirationMonth
+      - expirationYear
       type: object
       properties:
-        type:
-          title: Type
+        first6Digits:
+          title: Payment card's first six digits
+          maxLength: 6
+          minLength: 6
           type: string
-        brand:
-          title: Brand
+        last4Digits:
+          title: Payment card's last four digits
+          maxLength: 4
+          minLength: 4
           type: string
-        masked_number:
-          title: Masked Number
+        expirationMonth:
+          title: Expiration month
+          maxLength: 2
+          minLength: 2
           type: string
-        expiry_date:
-          title: Expiry Date
+        expirationYear:
+          title: Expiration year
+          maxLength: 4
+          minLength: 4
           type: string
-    VaultPaymentMethodAPIRequest:
-      title: VaultPaymentMethodAPIRequest
+        cardholderName:
+          title: Cardholder's name
+          type: string
+        network:
+          title: Card network
+          type: string
+        isNetworkTokenized:
+          title: Is represented by a digital PAN
+          type: boolean
+          default: false
+        binData:
+          $ref: '#/components/schemas/BinDataAPISchema'
+    BinDataAPISchema:
+      title: BinDataAPISchema
       required:
-      - customerId
+      - network
+      - regionalRestriction
+      - accountNumberType
+      - accountFundingType
+      - prepaidReloadableIndicator
+      - productUsageType
+      - productCode
+      - productName
       type: object
       properties:
-        customerId:
-          title: Customer ID
-          minLength: 1
+        network:
+          $ref: '#/components/schemas/CardNetworkEnum'
+        issuerCountryCode:
+          $ref: '#/components/schemas/CountryCodeEnum'
+        issuerName:
+          title: Issuername
           type: string
-          description: The ID representing the customer
-      additionalProperties: false
-    PayPalBillingAgreementAPISchema:
-      title: PayPalBillingAgreementAPISchema
+        issuerCurrencyCode:
+          $ref: '#/components/schemas/Currency'
+        regionalRestriction:
+          $ref: '#/components/schemas/CardRegionRestrictionEnum'
+        accountNumberType:
+          $ref: '#/components/schemas/CardAccountNumberTypeEnum'
+        accountFundingType:
+          $ref: '#/components/schemas/AccountFundingTypeEnum'
+        prepaidReloadableIndicator:
+          $ref: '#/components/schemas/PrepaidReloadableEnum'
+        productUsageType:
+          $ref: '#/components/schemas/CardProductTypeEnum'
+        productCode:
+          title: Productcode
+          type: string
+        productName:
+          title: Productname
+          type: string
+    KlarnaCustomerTokenAPISchema:
+      title: KlarnaCustomerTokenAPISchema
       required:
-      - paypalBillingAgreementId
+      - klarnaCustomerToken
+      - sessionData
       type: object
       properties:
-        paypalBillingAgreementId:
-          title: Paypalbillingagreementid
+        klarnaCustomerToken:
+          title: Klarnacustomertoken
           type: string
-        externalPayerInfo:
-          $ref: '#/components/schemas/PayPalExternalPayerInfoAPISchema'
-          title: Payer Info
-          description: Information about the PayPal customer
-        shippingAddress:
-          $ref: '#/components/schemas/AddressAPISchema'
-          title: Shipping address
-          description: The PayPal customer's shipping address
-        paypalStatus:
-          title: PayPal order status
-          type: string
-    ApayaCustomerTokenAPISchema:
-      title: ApayaCustomerTokenAPISchema
-      required:
-      - mx
-      type: object
-      properties:
-        mx:
-          title: Mx
-          type: string
-        mnc:
-          title: Mnc
-          type: integer
-          format: int64
-        mcc:
-          title: Mcc
-          type: integer
-          format: int64
-    PrepaidReloadableEnum:
-      title: PrepaidReloadableEnum
+        sessionData:
+          $ref: '#/components/schemas/KlarnaSessionDetailsAPISchema'
+    CardNetworkEnum:
+      title: CardNetworkEnum
       enum:
-      - RELOADABLE
-      - NON_RELOADABLE
-      - NOT_APPLICABLE
-      - UNKNOWN
+      - AMEX
+      - DANKORT
+      - DINERS_CLUB
+      - DISCOVER
+      - EFTPOS
+      - ENROUTE
+      - ELO
+      - HIPER
+      - INTERAC
+      - JCB
+      - MAESTRO
+      - MASTERCARD
+      - MIR
+      - PRIVATE_LABEL
+      - UNIONPAY
+      - VISA
+      - CARTES_BANCAIRES
+      - OTHER
       type: string
-      description: An enumeration.
+      description: 'The list of available card networks.
+
+        '
+    GoCardlessMandateAPISchema:
+      title: GoCardlessMandateAPISchema
+      required:
+      - gocardlessMandateId
+      type: object
+      properties:
+        gocardlessMandateId:
+          title: Mandate agreement ID
+          type: string
+          description: Unique identifier of a GoCardless mandate agreement
     PaymentMethodTypeEnum:
       title: PaymentMethodTypeEnum
       enum:
@@ -401,16 +470,49 @@ components:
       - MONEXT_CPAY
       type: string
       description: Payment method type, where `OFF_SESSION_PAYMENT` is used for APM (Alternative Payment Method) payments and `PAYMENT_CARD` for traditional debit or credit cards. Please note that this list is different from one indicated on [available payment methods](/docs/connections/payment-methods/available-payment-methods) page and values of this field will be changed in the future versions of the API.
-    GoCardlessMandateAPISchema:
-      title: GoCardlessMandateAPISchema
+    PayPalBillingAgreementAPISchema:
+      title: PayPalBillingAgreementAPISchema
       required:
-      - gocardlessMandateId
+      - paypalBillingAgreementId
       type: object
       properties:
-        gocardlessMandateId:
-          title: Mandate agreement ID
+        paypalBillingAgreementId:
+          title: Paypalbillingagreementid
           type: string
-          description: Unique identifier of a GoCardless mandate agreement
+        externalPayerInfo:
+          $ref: '#/components/schemas/PayPalExternalPayerInfoAPISchema'
+          title: Payer Info
+          description: Information about the PayPal customer
+        shippingAddress:
+          $ref: '#/components/schemas/AddressAPISchema'
+          title: Shipping address
+          description: The PayPal customer's shipping address
+        paypalStatus:
+          title: PayPal order status
+          type: string
+    AccountFundingTypeEnum:
+      title: AccountFundingTypeEnum
+      enum:
+      - CREDIT
+      - DEBIT
+      - PREPAID
+      - CHARGE
+      - DEFERRED_DEBIT
+      - UNKNOWN
+      type: string
+      description: An enumeration.
+    VaultPaymentMethodAPIRequest:
+      title: VaultPaymentMethodAPIRequest
+      required:
+      - customerId
+      type: object
+      properties:
+        customerId:
+          title: Customer ID
+          minLength: 1
+          type: string
+          description: The ID representing the customer
+      additionalProperties: false
     MerchantPaymentMethodTokenAPIResponse:
       title: MerchantPaymentMethodTokenAPIResponse
       type: object
@@ -485,6 +587,44 @@ components:
         description: My first card
         deleted: false
         default: true
+    AddressAPISchema:
+      title: AddressAPISchema
+      required:
+      - addressLine1
+      - city
+      - countryCode
+      type: object
+      properties:
+        firstName:
+          title: First Name
+          type: string
+        lastName:
+          title: Last Name
+          type: string
+        addressLine1:
+          title: Address Line 1
+          type: string
+          description: Street name, Company name or PO Box
+        addressLine2:
+          title: Address Line 2
+          type: string
+          description: Apartment, Unit or Building number
+        city:
+          title: City
+          type: string
+          description: Name of the city, district, town or village
+        state:
+          title: State
+          type: string
+          description: State, County or Province
+        countryCode:
+          $ref: '#/components/schemas/CountryCodeEnum'
+          title: Country Code
+          description: Two letter ISO country code
+        postalCode:
+          title: Postal Code
+          type: string
+          description: Postal or ZIP code
     Currency:
       title: Currency
       enum:
@@ -661,103 +801,25 @@ components:
       - ZMW
       - ZWL
       description: "3-letter currency code in <a href='https://en.wikipedia.org/wiki/ISO_4217#Active_codes'>ISO 4217</a> format, \ne.g. <code>USD</code> for US dollars.\n"
-    AddressAPISchema:
-      title: AddressAPISchema
-      required:
-      - addressLine1
-      - city
-      - countryCode
+    400ErrorResponse:
+      title: 400ErrorResponse
       type: object
-      properties:
-        firstName:
-          title: First Name
-          type: string
-        lastName:
-          title: Last Name
-          type: string
-        addressLine1:
-          title: Address Line 1
-          type: string
-          description: Street name, Company name or PO Box
-        addressLine2:
-          title: Address Line 2
-          type: string
-          description: Apartment, Unit or Building number
-        city:
-          title: City
-          type: string
-          description: Name of the city, district, town or village
-        state:
-          title: State
-          type: string
-          description: State, County or Province
-        countryCode:
-          $ref: '#/components/schemas/CountryCodeEnum'
-          title: Country Code
-          description: Two letter ISO country code
-        postalCode:
-          title: Postal Code
-          type: string
-          description: Postal or ZIP code
-    KlarnaCustomerTokenAPISchema:
-      title: KlarnaCustomerTokenAPISchema
       required:
-      - klarnaCustomerToken
-      - sessionData
-      type: object
+      - error
       properties:
-        klarnaCustomerToken:
-          title: Klarnacustomertoken
-          type: string
-        sessionData:
-          $ref: '#/components/schemas/KlarnaSessionDetailsAPISchema'
-    CardProductTypeEnum:
-      title: CardProductTypeEnum
-      enum:
-      - CONSUMER
-      - BUSINESS
-      - GOVERNMENT
-      - UNKNOWN
-      type: string
-      description: An enumeration.
-    BinDataAPISchema:
-      title: BinDataAPISchema
-      required:
-      - network
-      - regionalRestriction
-      - accountNumberType
-      - accountFundingType
-      - prepaidReloadableIndicator
-      - productUsageType
-      - productCode
-      - productName
-      type: object
-      properties:
-        network:
-          $ref: '#/components/schemas/CardNetworkEnum'
-        issuerCountryCode:
-          $ref: '#/components/schemas/CountryCodeEnum'
-        issuerName:
-          title: Issuername
-          type: string
-        issuerCurrencyCode:
-          $ref: '#/components/schemas/Currency'
-        regionalRestriction:
-          $ref: '#/components/schemas/CardRegionRestrictionEnum'
-        accountNumberType:
-          $ref: '#/components/schemas/CardAccountNumberTypeEnum'
-        accountFundingType:
-          $ref: '#/components/schemas/AccountFundingTypeEnum'
-        prepaidReloadableIndicator:
-          $ref: '#/components/schemas/PrepaidReloadableEnum'
-        productUsageType:
-          $ref: '#/components/schemas/CardProductTypeEnum'
-        productCode:
-          title: Productcode
-          type: string
-        productName:
-          title: Productname
-          type: string
+        error:
+          allOf:
+          - $ref: '#/components/schemas/ErrorObject'
+          - type: object
+            properties:
+              paymentId:
+                title: Payment ID
+                type: string
+                description: Payment ID of the related pay
+              paymentStatus:
+                title: Status
+                type: string
+                description: Status of the related payment
     422ErrorResponse:
       title: 422ErrorResponse
       type: object
@@ -766,15 +828,12 @@ components:
       properties:
         error:
           $ref: '#/components/schemas/ErrorObject'
-    PayPalExternalPayerInfoAPISchema:
-      title: PayPalExternalPayerInfoAPISchema
+    KlarnaAddressAPISchema:
+      title: KlarnaAddressAPISchema
       type: object
       properties:
-        externalPayerId:
-          title: Externalpayerid
-          type: string
-        email:
-          title: Email
+        title:
+          title: Title
           type: string
         firstName:
           title: Firstname
@@ -782,50 +841,49 @@ components:
         lastName:
           title: Lastname
           type: string
-    AccountFundingTypeEnum:
-      title: AccountFundingTypeEnum
-      enum:
-      - CREDIT
-      - DEBIT
-      - PREPAID
-      - CHARGE
-      - DEFERRED_DEBIT
-      - UNKNOWN
-      type: string
-      description: An enumeration.
-    CardNetworkEnum:
-      title: CardNetworkEnum
-      enum:
-      - AMEX
-      - DANKORT
-      - DINERS_CLUB
-      - DISCOVER
-      - EFTPOS
-      - ENROUTE
-      - ELO
-      - HIPER
-      - INTERAC
-      - JCB
-      - MAESTRO
-      - MASTERCARD
-      - MIR
-      - PRIVATE_LABEL
-      - UNIONPAY
-      - VISA
-      - CARTES_BANCAIRES
-      - OTHER
-      type: string
-      description: 'The list of available card networks.
-
-        '
-    CardRegionRestrictionEnum:
-      title: CardRegionRestrictionEnum
-      enum:
-      - DOMESTIC_USE_ONLY
-      - NONE
-      - UNKNOWN
-      type: string
-      description: An enumeration.
+        email:
+          title: Email
+          type: string
+        phoneNumber:
+          title: Phonenumber
+          type: string
+        addressLine1:
+          title: Addressline1
+          type: string
+        addressLine2:
+          title: Addressline2
+          type: string
+        addressLine3:
+          title: Addressline3
+          type: string
+        city:
+          title: City
+          type: string
+        state:
+          title: State
+          type: string
+        countryCode:
+          $ref: '#/components/schemas/CountryCodeEnum'
+        postalCode:
+          title: Postalcode
+          type: string
+    ApayaCustomerTokenAPISchema:
+      title: ApayaCustomerTokenAPISchema
+      required:
+      - mx
+      type: object
+      properties:
+        mx:
+          title: Mx
+          type: string
+        mnc:
+          title: Mnc
+          type: integer
+          format: int64
+        mcc:
+          title: Mcc
+          type: integer
+          format: int64
     CountryCodeEnum:
       title: CountryCodeEnum
       enum:
@@ -1079,45 +1137,24 @@ components:
       - ZM
       - ZW
       description: "2-letter country code in <a href='https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements'>ISO 3166-1 alpha</a> format, \ne.g. <code>FR</code> for France and <code>GB</code> for the United Kingdom.\n"
-    KlarnaAddressAPISchema:
-      title: KlarnaAddressAPISchema
-      type: object
-      properties:
-        title:
-          title: Title
-          type: string
-        firstName:
-          title: Firstname
-          type: string
-        lastName:
-          title: Lastname
-          type: string
-        email:
-          title: Email
-          type: string
-        phoneNumber:
-          title: Phonenumber
-          type: string
-        addressLine1:
-          title: Addressline1
-          type: string
-        addressLine2:
-          title: Addressline2
-          type: string
-        addressLine3:
-          title: Addressline3
-          type: string
-        city:
-          title: City
-          type: string
-        state:
-          title: State
-          type: string
-        countryCode:
-          $ref: '#/components/schemas/CountryCodeEnum'
-        postalCode:
-          title: Postalcode
-          type: string
+    CardProductTypeEnum:
+      title: CardProductTypeEnum
+      enum:
+      - CONSUMER
+      - BUSINESS
+      - GOVERNMENT
+      - UNKNOWN
+      type: string
+      description: An enumeration.
+    PrepaidReloadableEnum:
+      title: PrepaidReloadableEnum
+      enum:
+      - RELOADABLE
+      - NON_RELOADABLE
+      - NOT_APPLICABLE
+      - UNKNOWN
+      type: string
+      description: An enumeration.
     MerchantPaymentMethodTokenListAPIResponse:
       title: MerchantPaymentMethodTokenListAPIResponse
       type: object
@@ -1127,85 +1164,48 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MerchantPaymentMethodTokenAPIResponse'
-    CardAccountNumberTypeEnum:
-      title: CardAccountNumberTypeEnum
+    KlarnaTokenDetails:
+      title: KlarnaTokenDetails
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          title: Type
+          type: string
+        brand:
+          title: Brand
+          type: string
+        masked_number:
+          title: Masked Number
+          type: string
+        expiry_date:
+          title: Expiry Date
+          type: string
+    CardRegionRestrictionEnum:
+      title: CardRegionRestrictionEnum
       enum:
-      - PRIMARY_ACCOUNT_NUMBER
-      - NETWORK_TOKEN
-      - DIGITAL_PAN
+      - DOMESTIC_USE_ONLY
+      - NONE
       - UNKNOWN
       type: string
       description: An enumeration.
-    PaymentCardTokenAPISchema:
-      title: PaymentCardTokenAPISchema
-      required:
-      - last4Digits
-      - expirationMonth
-      - expirationYear
+    PayPalExternalPayerInfoAPISchema:
+      title: PayPalExternalPayerInfoAPISchema
       type: object
       properties:
-        first6Digits:
-          title: Payment card's first six digits
-          maxLength: 6
-          minLength: 6
+        externalPayerId:
+          title: Externalpayerid
           type: string
-        last4Digits:
-          title: Payment card's last four digits
-          maxLength: 4
-          minLength: 4
+        email:
+          title: Email
           type: string
-        expirationMonth:
-          title: Expiration month
-          maxLength: 2
-          minLength: 2
+        firstName:
+          title: Firstname
           type: string
-        expirationYear:
-          title: Expiration year
-          maxLength: 4
-          minLength: 4
+        lastName:
+          title: Lastname
           type: string
-        cardholderName:
-          title: Cardholder's name
-          type: string
-        network:
-          title: Card network
-          type: string
-        isNetworkTokenized:
-          title: Is represented by a digital PAN
-          type: boolean
-          default: false
-        binData:
-          $ref: '#/components/schemas/BinDataAPISchema'
-    ErrorObject:
-      title: Error
-      type: object
-      description: An object containing information about the error that occurred.
-      required:
-      - errorId
-      - description
-      properties:
-        errorId:
-          title: Error ID
-          type: string
-          description: An error ID
-        description:
-          title: Error description
-          type: string
-          description: A human readable description of the error
-        recoverySuggestion:
-          title: Recovery Suggestion
-          type: string
-          description: A suggestion on how to recover from the error.
-        diagnosticsId:
-          title: Error diagnostics ID
-          type: string
-          description: An ID that you can quote when contacting the Primer support team via our [Support Portal](https://primerapi.atlassian.net/servicedesk/customer/portal/11).
-        validationErrors:
-          title: Validation Errors
-          type: array
-          items:
-            type: object
-          description: Returned in case of a badly formed request
   parameters:
     ApiVersionHeader:
       required: true

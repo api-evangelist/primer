@@ -87,6 +87,30 @@ paths:
           description: Return a 200 status to indicate that the data was received successfully
 components:
   schemas:
+    CardNetworkEnum:
+      title: CardNetworkEnum
+      type: string
+      enum:
+      - AMEX
+      - DANKORT
+      - DINERS_CLUB
+      - DISCOVER
+      - ENROUTE
+      - ELO
+      - HIPER
+      - INTERAC
+      - JCB
+      - MAESTRO
+      - MASTERCARD
+      - MIR
+      - PRIVATE_LABEL
+      - UNIONPAY
+      - VISA
+      - CARTES_BANCAIRES
+      - OTHER
+      description: 'The list of available card networks.
+
+        '
     PaymentMethodTypeEnum:
       title: PaymentMethodTypeEnum
       type: string
@@ -257,27 +281,3 @@ components:
           title: Primer Account ID
           type: string
           description: A unique identifier for your Primer merchant account.
-    CardNetworkEnum:
-      title: CardNetworkEnum
-      type: string
-      enum:
-      - AMEX
-      - DANKORT
-      - DINERS_CLUB
-      - DISCOVER
-      - ENROUTE
-      - ELO
-      - HIPER
-      - INTERAC
-      - JCB
-      - MAESTRO
-      - MASTERCARD
-      - MIR
-      - PRIVATE_LABEL
-      - UNIONPAY
-      - VISA
-      - CARTES_BANCAIRES
-      - OTHER
-      description: 'The list of available card networks.
-
-        '
