@@ -1,0 +1,37 @@
+slug: primer
+provider: Primer
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Payments API
+  spec_file: primer-payments-api-api-openapi.yml
+  capability_id: BC-4250.40
+  capability_id_l1: BC-4250
+  capability_name: Payment Collection & Dunning
+  confidence: 0.75
+  evidence: '"Authorize a payment", "Capture a payment", "Refund a payment", "Adjust authorized amount"'
+  reason: Core payment authorisation, capture, cancel and refund operations — payment authorisation and
+    collection. The frame offers no generic merchant-acquiring capability, so Payment Collection & Dunning
+    ('payment authorisation') is the closest honest fit; confidence tempered since dunning/subscription
+    framing is not present.
+- tag: Payment Methods API
+  spec_file: primer-payment-methods-api-api-openapi.yml
+  capability_id: BC-4250.40
+  capability_id_l1: BC-4250
+  capability_name: Payment Collection & Dunning
+  confidence: 0.7
+  evidence: '"Save a payment method token", "List saved payment methods", "Update the default saved payment
+    method"'
+  reason: Operations are vaulting, listing, defaulting and deleting stored payment instruments — squarely
+    'payment-method management' as described by Payment Collection & Dunning. Confidence held at 0.7 because
+    this is merchant acquiring rather than a subscription-billing context.

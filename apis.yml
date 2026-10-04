@@ -136,6 +136,9 @@ apis:
   - type: Sandbox
     url: https://api.sandbox.primer.io
 common:
+- type: CapabilityMap
+  url: capabilities/primer-capability-edges.yml
+  name: Primer Business Capability Map
 - type: AgenticAccess
   url: agentic-access/primer-agentic-access.yml
 - type: TrustCenter
