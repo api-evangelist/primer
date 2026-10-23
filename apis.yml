@@ -136,6 +136,8 @@ apis:
   - type: Sandbox
     url: https://api.sandbox.primer.io
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/primer/overview
 - type: CapabilityMap
   url: capabilities/primer-capability-edges.yml
   name: Primer Business Capability Map
