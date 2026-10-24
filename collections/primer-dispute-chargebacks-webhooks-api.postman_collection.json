@@ -1,41 +1,32 @@
 {
+  "info": {
+    "_postman_id": "8005e2d4-0e6d-4ae6-b80e-1cacaa7f9993",
+    "name": "Primer Webhooks Dispute & Chargebacks Webhooks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T20:12:57.000Z",
+    "updatedAt": "2026-10-21T20:12:57.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8005e2d4-0e6d-4ae6-b80e-1cacaa7f9993"
+  },
   "item": [
     {
-      "id": "041685cc-d293-4c93-8dbc-c31676f1c207",
-      "name": "Dispute & Chargebacks Webhooks",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "dispute-opened",
       "item": [
         {
-          "id": "0641f643-ba69-4bfe-8a94-803931efad76",
           "name": "Dispute Open",
+          "id": "42317fe2-6d21-4a87-9c53-119c48ed9dda",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Dispute Open",
-            "description": {
-              "content": "Primer notifies you with a `DISPUTE.OPENED` webhook on newly opened disputes or chargebacks. This notification is unified across all processors.\n\nLearn more about [how Primer handles webhooks](/docs/api-reference/get-started/configure-webhooks).\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "dispute-opened"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
+            "method": "POST",
             "header": [
               {
-                "disabled": false,
                 "description": "(Required) An [HMAC signature](https://en.wikipedia.org/wiki/HMAC) generated using the webhook payload and a shared signing secret. This is then converted to a base64 encoded string.",
                 "key": "X-Signature-Primary",
                 "value": "<string>"
               },
               {
-                "disabled": false,
                 "description": "(Required) A secondary signature that is added when you have rotated your secret within the past 24 hours.",
                 "key": "X-Signature-Secondary",
                 "value": "<string>"
@@ -45,112 +36,109 @@
                 "value": "application/json"
               }
             ],
-            "method": "POST",
-            "auth": null,
             "body": {
               "mode": "raw",
               "raw": "{\n  \"eventType\": \"<string>\",\n  \"processorId\": \"<string>\",\n  \"processorDisputeId\": \"<string>\",\n  \"paymentId\": \"<string>\",\n  \"transactionId\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"primerAccountId\": \"<string>\"\n}",
               "options": {
                 "raw": {
+                  "headerFamily": "json",
                   "language": "json"
                 }
               }
-            }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dispute-opened",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dispute-opened"
+              ]
+            },
+            "description": "Primer notifies you with a `DISPUTE.OPENED` webhook on newly opened disputes or chargebacks. This notification is unified across all processors.\n\nLearn more about how Primer handles webhooks."
           },
           "response": [
             {
-              "id": "102e1f3d-34d2-4f6e-84d9-496f94459214",
+              "id": "e69e616b-f571-44cf-8b3b-d88256f10ca3",
               "name": "Return a 200 status to indicate that the data was received successfully",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "dispute-opened"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "X-API-KEY",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
                     "description": "(Required) An [HMAC signature](https://en.wikipedia.org/wiki/HMAC) generated using the webhook payload and a shared signing secret. This is then converted to a base64 encoded string.",
                     "key": "X-Signature-Primary",
                     "value": "<string>"
                   },
                   {
-                    "disabled": false,
                     "description": "(Required) A secondary signature that is added when you have rotated your secret within the past 24 hours.",
                     "key": "X-Signature-Secondary",
                     "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"eventType\": \"<string>\",\n  \"processorId\": \"<string>\",\n  \"processorDisputeId\": \"<string>\",\n  \"paymentId\": \"<string>\",\n  \"transactionId\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"primerAccountId\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/dispute-opened",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "dispute-opened"
+                  ]
                 }
               },
               "status": "OK",
               "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
+              "_postman_previewlanguage": "text",
+              "header": [],
               "cookie": [],
-              "_postman_previewlanguage": "text"
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-10-21T20:12:57.000Z",
+              "updatedAt": "2026-10-21T20:12:57.000Z",
+              "uid": "35240-e69e616b-f571-44cf-8b3b-d88256f10ca3"
             }
           ],
-          "event": [],
+          "createdAt": "2026-10-21T20:12:57.000Z",
+          "updatedAt": "2026-10-21T20:12:57.000Z",
+          "uid": "35240-42317fe2-6d21-4a87-9c53-119c48ed9dda"
+        }
+      ],
+      "id": "e2023c52-c1b9-4d5f-9b3a-860a9766b5f0",
+      "createdAt": "2026-10-21T20:12:57.000Z",
+      "updatedAt": "2026-10-21T20:12:57.000Z",
+      "uid": "35240-e2023c52-c1b9-4d5f-9b3a-860a9766b5f0"
+    },
+    {
+      "name": "dispute-status",
+      "item": [
+        {
+          "name": "Dispute Status",
+          "id": "17edaa1b-5553-430d-85c0-a97320637e21",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "de87fe6e-77e3-46ba-8350-1d15d259e533",
-          "name": "Dispute Status",
+          },
           "request": {
-            "name": "Dispute Status",
-            "description": {
-              "content": "Primer notifies you with a `DISPUTE.STATUS` webhook that will provide information on retrievals, disputes (also known as chargebacks), and preabritration filings.\n\nThis notification is supported for processors Adyen, Braintree, Checkout.com & PayPal.\n\nThe `DISPUTE.STATUS` event can be used to proactively communicate with customers, issue refunds, send disputes to risk tools, or to proactively defend disputes.\n\nThe `DISPUTE.STATUS` event is currently in an open beta stage, as we continue to add more processors.\n\nLearn more about [managing disputes at Primer](/docs/disputes/manage-disputes).\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "dispute-status"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
+            "method": "POST",
             "header": [
               {
-                "disabled": false,
                 "description": "(Required) An [HMAC signature](https://en.wikipedia.org/wiki/HMAC) generated using the webhook payload and a shared signing secret. This is then converted to a base64 encoded string.",
                 "key": "X-Signature-Primary",
                 "value": "<string>"
               },
               {
-                "disabled": false,
                 "description": "(Required) A secondary signature that is added when you have rotated your secret within the past 24 hours.",
                 "key": "X-Signature-Secondary",
                 "value": "<string>"
@@ -160,120 +148,96 @@
                 "value": "application/json"
               }
             ],
-            "method": "POST",
-            "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"eventType\": \"<string>\",\n  \"version\": \"<string>\",\n  \"type\": \"<string>\",\n  \"status\": \"<string>\",\n  \"primerAccountId\": \"<string>\",\n  \"transactionId\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"paymentId\": \"<string>\",\n  \"paymentMethod\": {\n    \"paymentMethodType\": \"<string>\",\n    \"paymentMethodData\": {\n      \"network\": \"<string>\"\n    }\n  },\n  \"processor\": \"<string>\",\n  \"processorDisputeId\": \"<string>\",\n  \"receivedAt\": \"<dateTime>\",\n  \"challengeRequiredBy\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"reasonCode\": \"<string>\",\n  \"processorReason\": \"<string>\",\n  \"amount\": \"<long>\",\n  \"currency\": \"<string>\",\n  \"merchantId\": \"<string>\"\n}",
+              "raw": "{\n  \"eventType\": \"<string>\",\n  \"version\": \"<string>\",\n  \"type\": \"DISPUTE\",\n  \"status\": \"ACCEPTED\",\n  \"primerAccountId\": \"<string>\",\n  \"transactionId\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"paymentId\": \"<string>\",\n  \"paymentMethod\": {\n    \"paymentMethodType\": \"<string>\",\n    \"paymentMethodData\": {\n      \"network\": \"PRIVATE_LABEL\"\n    }\n  },\n  \"processor\": \"ADYEN\",\n  \"processorDisputeId\": \"<string>\",\n  \"receivedAt\": \"<dateTime>\",\n  \"challengeRequiredBy\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"reasonCode\": \"<string>\",\n  \"processorReason\": \"<string>\",\n  \"amount\": \"<long>\",\n  \"currency\": \"<string>\",\n  \"merchantId\": \"<string>\"\n}",
               "options": {
                 "raw": {
+                  "headerFamily": "json",
                   "language": "json"
                 }
               }
-            }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dispute-status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dispute-status"
+              ]
+            },
+            "description": "Primer notifies you with a `DISPUTE.STATUS` webhook that will provide information on retrievals, disputes (also known as chargebacks), and preabritration filings.\n\nThis notification is supported for processors Adyen, Braintree, Checkout.com & PayPal.\n\nThe `DISPUTE.STATUS` event can be used to proactively communicate with customers, issue refunds, send disputes to risk tools, or to proactively defend disputes.\n\nThe `DISPUTE.STATUS` event is currently in an open beta stage, as we continue to add more processors.\n\nLearn more about managing disputes at Primer."
           },
           "response": [
             {
-              "id": "e011d4ba-cf42-4cc0-a048-187d63142676",
+              "id": "39bd70f7-d8be-4a27-85cb-a1e2c9fb3634",
               "name": "Return a 200 status to indicate that the data was received successfully",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "dispute-status"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "X-API-KEY",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "disabled": false,
                     "description": "(Required) An [HMAC signature](https://en.wikipedia.org/wiki/HMAC) generated using the webhook payload and a shared signing secret. This is then converted to a base64 encoded string.",
                     "key": "X-Signature-Primary",
                     "value": "<string>"
                   },
                   {
-                    "disabled": false,
                     "description": "(Required) A secondary signature that is added when you have rotated your secret within the past 24 hours.",
                     "key": "X-Signature-Secondary",
                     "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"eventType\": \"<string>\",\n  \"version\": \"2.4\",\n  \"type\": \"<string>\",\n  \"status\": \"<string>\",\n  \"primerAccountId\": \"<string>\",\n  \"transactionId\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"paymentId\": \"<string>\",\n  \"paymentMethod\": {\n    \"paymentMethodType\": \"<string>\",\n    \"paymentMethodData\": {\n      \"network\": \"<string>\"\n    }\n  },\n  \"processor\": \"<string>\",\n  \"processorDisputeId\": \"<string>\",\n  \"receivedAt\": \"<dateTime>\",\n  \"challengeRequiredBy\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"reasonCode\": \"<string>\",\n  \"processorReason\": \"<string>\",\n  \"amount\": \"<long>\",\n  \"currency\": \"<string>\",\n  \"merchantId\": \"<string>\"\n}",
+                  "raw": "{\n  \"eventType\": \"<string>\",\n  \"version\": \"<string>\",\n  \"type\": \"DISPUTE\",\n  \"status\": \"ACCEPTED\",\n  \"primerAccountId\": \"<string>\",\n  \"transactionId\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"paymentId\": \"<string>\",\n  \"paymentMethod\": {\n    \"paymentMethodType\": \"<string>\",\n    \"paymentMethodData\": {\n      \"network\": \"PRIVATE_LABEL\"\n    }\n  },\n  \"processor\": \"ADYEN\",\n  \"processorDisputeId\": \"<string>\",\n  \"receivedAt\": \"<dateTime>\",\n  \"challengeRequiredBy\": \"<dateTime>\",\n  \"reason\": \"<string>\",\n  \"reasonCode\": \"<string>\",\n  \"processorReason\": \"<string>\",\n  \"amount\": \"<long>\",\n  \"currency\": \"<string>\",\n  \"merchantId\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/dispute-status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "dispute-status"
+                  ]
                 }
               },
               "status": "OK",
               "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
+              "_postman_previewlanguage": "text",
+              "header": [],
               "cookie": [],
-              "_postman_previewlanguage": "text"
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-10-21T20:12:57.000Z",
+              "updatedAt": "2026-10-21T20:12:57.000Z",
+              "uid": "35240-39bd70f7-d8be-4a27-85cb-a1e2c9fb3634"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-21T20:12:57.000Z",
+          "updatedAt": "2026-10-21T20:12:57.000Z",
+          "uid": "35240-17edaa1b-5553-430d-85c0-a97320637e21"
         }
       ],
-      "event": []
+      "id": "1b17a8b2-ae69-489c-8ced-12fc24806061",
+      "createdAt": "2026-10-21T20:12:57.000Z",
+      "updatedAt": "2026-10-21T20:12:57.000Z",
+      "uid": "35240-1b17a8b2-ae69-489c-8ced-12fc24806061"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.sandbox.primer.io",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.sandbox.primer.io"
     }
-  ],
-  "auth": {
-    "type": "apikey",
-    "apikey": [
-      {
-        "key": "key",
-        "value": "X-API-KEY"
-      },
-      {
-        "key": "value",
-        "value": "{{apiKey}}"
-      },
-      {
-        "key": "in",
-        "value": "header"
-      }
-    ]
-  },
-  "info": {
-    "_postman_id": "be49fcdc-8d03-47df-b391-ff2270029090",
-    "name": "Primer Client Session API Dispute & Chargebacks Webhooks API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "This API enforces a timeout of 90 seconds for all requests. A 504 response indicates a timeout occurred.",
-      "type": "text/plain"
-    }
-  }
+  ]
 }
